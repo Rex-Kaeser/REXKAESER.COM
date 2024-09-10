@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+
+    <!-- Change the description wrt project -->
+    <meta
+      name="Util"
+      content=":/"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- You can add your own fonts from fonts.google.com -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./public/css/basic.css">
+
+    <!-- Default Script tags -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
+
+    <!-- Replace the title name -->
+    <title>Server Setup</title>
+
+</head>
+<body style="font-family: 'Barlow', sans-serif" class="bg-gradient-to-r from-slate-900 via-gray-800 to-zinc-900 text-white">
+
+  <script src="public/js/login.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
+  <script type="text/javascript">
+    window.onload = async function(){
+      const encryptionServiceTag = await GetEncrptionService();
+      const valid = await openConnection(true);
+      clearConsole();
+      if (!valid){
+        logConsoleText("Disconnected...", "red-500");
+      }else{
+        logConsoleText("Connected...", "emerald-500");
+      }
+
+      if (!valid && true == false){
+        window.location = "./setup.html"
+      }
+      toContent();
+    };
+    function toMenu(){
+      document.getElementById('menu').classList.remove('hidden')
+      document.getElementById('content').classList.add('hidden')
+    }
+    function toContent(){
+      document.getElementById('menu').classList.add('hidden')
+      document.getElementById('content').classList.remove('hidden')
+    }
+  </script>
+  <div id="menu" class="flex h-screen justify-center hidden">
+    <div class="mx-5 w-full max-w-sm items-left place-content-center flex justify-center inline-block align-middle flex-col text-3xl text-gray-200">
+        <h1 class="text-4xl h-12">Menu</h1>
+        <ul>
+          <p class="align-left analog-font text-lg text-gray-400">Status ...</p>
+          <div id="console" class="analog-box analog-grey  text-gray-600">
+          </div>
+        </ul>
+        <div class="my-3"></div>
+        <a class="w-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="toContent()">
+          <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+          <span class="relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center">
+            <p class="analog-font">Close</p>
+          </span>
+        </a>
+        <div class="my-2"></div>
+        <a class="w-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" href="./setup.html">
+          <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+          <span class="relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center">
+            <p class="analog-font">Setup Server</p>
+          </span>
+        </a>
+    </div>
+  </div>
+  <div id="content" class="h-screen">
+    <nav class="bg-neutral-950">
+      <div class="mx-0 px-2 ">
+        <div class="align-right xl:align-right grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 2xl:grid-cols-7   py-2">
+          <h1 class="text-4xl h-12 m-2 grid-cols-1 sm:col-span-2 md:col-span-4 2xl:col-span-3">Directory - /</h1>
+          <div class="m-2">
+            <a class="w-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="toMenu()">
+              <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+              <span class="relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center">
+                <p class="analog-font">Menu</p>
+              </span>
+            </a>
+          </div>
+          <div class="m-2">
+            <a class="w-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" href="./setup.html">
+              <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+              <span class="flex  relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center">
+                <p class="analog-font">Sort</p> 
+                <div class="border-2 border-gray-500 p-1 mx-4 text-xs h-full"><p class="normal-font">Method</p> </div>
+              </span>
+            </a>
+          </div>
+          <div class="m-2">
+            <a class="w-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" href="./setup.html">
+              <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+              <span class="flex relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center">
+                <p class="analog-font">Type</p> 
+                <div class="border-2 border-gray-500 p-1 mx-4 text-xs h-full"><p class="normal-font">Any</p> </div>
+              </span>
+            </a>
+          </div>
+          <div class="m-2">
+            <a class="w-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" href="./setup.html">
+              <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+              <span class="relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center">
+                <p class="analog-font">Slideshow</p>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Mobile menu, show/hide based on menu state. -->
+      
+    </nav>
+  </div>
+
+</body>
+</html>
+
+
+</body>
+</html>

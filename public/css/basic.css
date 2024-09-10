@@ -58,7 +58,6 @@ div.flex-tile-clean {
 }
 div.debug {
     border-radius: 2px;
-    padding: 0px;
     border: 1px solid #ff00ff;
 }
 div.flex-tag {
@@ -92,6 +91,30 @@ div.analog-grey {
     border: 2px solid #9ca3af;
     color: #9ca3af;
 }
+div.analog-blue {
+    border: 2px solid #7790bb;
+    color: #7790bb;
+}
+
+div.screen-width{
+        position: absolute;
+        left: 0;
+        right: 0;
+        /* transform: translateX(-100%); */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.ignore-overflow-clip {
+    overflow-clip: unset !important;
+  }
 
 
 
