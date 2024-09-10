@@ -83,6 +83,10 @@ div.analog-green {
     border: 2px solid #04A777;
     color: #04A777;
 }
+div.analog-yellow {
+    border: 2px solid #a7a404;
+    color: #a7a404;
+}
 div.analog-red {
     border: 2px solid #a70404;
     color: #a70404;
@@ -120,6 +124,32 @@ div.screen-width{
 
 div.analog-box {
     background-image: linear-gradient(to bottom right, #1f1f1f,#070707);
+    border-radius: 1px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+div.analog-clear {
+    border-radius: 1px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+div.analog-box-green {
+    background-image: linear-gradient(to bottom right, #364e34,#346948);
+    border-radius: 1px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+div.analog-box-yellow {
+    background-image: linear-gradient(to bottom right, #706a3d,#887628);
     border-radius: 1px;
     padding-left: 8px;
     padding-right: 8px;

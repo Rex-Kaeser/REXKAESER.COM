@@ -45,11 +45,12 @@
 
 </head>
 <body style="font-family: 'Barlow', sans-serif" class="bg-gradient-to-r from-slate-900 via-gray-800 to-zinc-900 bg-slate-900 text-white">
+  
 
-
-  <div class="flex  justify-center">
+  <div class="flex  justify-center
+  snap-y scroll-auto snap-mandatory snap-always overflow-y-scroll no-scrollbar">
     <div class="h-dvh mx-5 w-full xl:w-2/3  2xl:w-1/2 items-left place-content-center flex justify-center inline-block align-middle flex-col text-3xl text-gray-200">
-      <div class="max-h-dvh snap-y scroll-auto snap-mandatory snap-always overflow-y-scroll no-scrollbar">
+      <div class="max-h-dvh ">
         <div class="snap-center max-h-dvh overflow-y-scroll overflow-x-clip no-scrollbar">
           <a class="mt-6 sm:mt-12 lg:mt-24 w-full group relative inline-block text-3xl font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="toMenu()">
             <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
@@ -106,43 +107,45 @@
           </div>
         </div>
         <div class="snap-center snap-always h-dvh overflow-x-clip ">
-          <div class="flex flex-col h-dvh pt-2 pb-4 sm:pt-2  ">
+          <div class="flex flex-col h-dvh pt-2 pb-4 sm:pt-2  max-h-dvh">
             
             <p class="align-left analog-font text-lg">Qualifications Controls</p>
             <div class="flex w-full gap-y-4 sm:gap-y-1 gap-x-4 pb-4">
-              <div>
-                <ul>
-                  <a class="w-max group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="qualPrev()">
-                      <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
-                      <span class="relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="analog-font">&lt;</p></span>
-                    </a>
+              <div class="h-full grow-0">
+                <ul class="h-full">
+                  <a class="w-max h-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="qualPrev()">
+                      <span class="absolute h-full inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                      <span class="relative h-full w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="h-full analog-font text-center">&lt;</p></span>
+                    </a> 
                 </ul>
               </div>
-              <div class="grow">
-                <ul>
-                  <a class="w-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick>
+              <div class="grow h-full">
+                <ul class="h-full w-full">
+                  <a class="w-full h-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="qualNext()">
                       <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
-                      <span class="relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="analog-font">Experience</p></span>
-                    </a>
+                      <span class="relative block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p id="qualifications-title" class="h-min analog-font text-center">&gt;</p></span>
+                    </a> 
                 </ul>
               </div>
-              <div>
-                <ul>
-                  <a class="w-max group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="qualNext()">
-                      <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
-                      <span class="relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="analog-font">&gt;</p></span>
-                    </a>
+              <div class="h-full grow-0">
+                <ul class="h-full">
+                  <a class="w-max h-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="qualNext()">
+                      <span class="absolute h-full inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                      <span class="relative h-full w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="h-min analog-font text-center">&gt;</p></span>
+                    </a> 
                 </ul>
               </div>
             </div>
 
-            <div class=" grow w-full">
-              <div id="content" class="analog-box analog-grey w-full h-full  text-gray-600">
-                <p class="align-left analog-font text-lg text-red-100">Error Loading Section</p>
+            <div class="relative grow w-full">
+              <div class="absolute inset-0">
+                <div id="qualifications-content" class="overflow-y-scroll overflow-x-clip overflow-y-hidden no-scrollbar analog-box analog-grey w-full h-full  text-gray-600">
+                  Error Loading Qualifications!
+                </div>
               </div>
             </div>
           
-            <script src="/public/js/mainCarousel.js"></script>
+            <script src="/public/js/qualificationsCarousel.js"></script>
                 
           </div>
           
@@ -197,6 +200,43 @@
     </div>
   </div>
 
+  <div id="popup-div" class="hidden absolute inset-0 w-dvh h-dvh bg-gradient-to-r from-black/100 to-black/75 flex items-center justify-center">
+    <div class="w-dvw h-dvh">
+      <div class="mx-4 flex flex-col h-dvh pt-2 pb-4 sm:pt-2  max-h-dvh items-center justify-center">
+        <div class="w-full xl:w-2/3  2xl:w-1/2">
+          <p class="align-left analog-font text-lg">Additional Information</p>
+          <div class="flex gap-y-4 sm:gap-y-1 gap-x-4 pb-4">
+            <div class="grow h-full">
+              <ul class="h-full w-full">
+                <a class="w-full h-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" >
+                    <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                    <span class="relative block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p id="popup-title" class="h-min analog-font text-center">Popup Title</p></span>
+                  </a> 
+              </ul>
+            </div>
+            <div class="h-full grow-0">
+              <ul class="h-full">
+                <a class="w-max h-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="closePopup()">
+                    <span class="absolute h-full inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                    <span class="relative h-full w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="h-min analog-font text-center">X</p></span>
+                  </a> 
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="relative grow w-full">
+          <div class="absolute inset-0">
+            <div id="popup-content" class="w-full h-full  text-gray-600">
+              Popup Content
+            </div>
+          </div>
+        </div>
+          
+        <script src="/public/js/popupControl.js"></script>
+
+      </div>
+    </div>
+  </div>
 </body>
 </html>
 
