@@ -72,7 +72,7 @@ div.flex-tag {
 }
 
 p.analog-font, div.analog-box {
-    font-family: "SUSE";
+    font-family: "Pixelify Sans";
 }
 
 p.normal-font {
@@ -124,7 +124,6 @@ div.screen-width{
     overflow-clip: unset !important;
   }
 
-
 .w-semesterStack {
     width: 24rem;
 }
@@ -135,10 +134,8 @@ div.screen-width{
     }
 }
 
-
-
 div.analog-corners, div.analog-box, div.analog-box-green, div.analog-box-yellowm div.analog-box-red {
-    border-radius: 2px;
+    border-radius: 1px;
 }
 
 
@@ -172,4 +169,3 @@ div.analog-box-yellow {
     padding-top: 4px;
     padding-bottom: 4px;
 }
-
