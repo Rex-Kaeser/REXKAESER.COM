@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <base id="base" href="/">
+
+    <!-- Change the description wrt project -->
+    <meta
+      name="Util"
+      content=":/"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet">
+
+    <!-- You can add your own fonts from fonts.google.com -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./public/css/basic.css">
+
+    <!-- Default Script tags -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
+
+    <!-- Replace the title name -->
+    <title>404</title>
+
+</head>
+<body style="font-family: 'Barlow', sans-serif" class="bg-gradient-to-r from-slate-900 via-gray-800 to-zinc-900 bg-slate-900 text-white">
+
+  <script src="public/js/packages/hybrid-crypto.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="public/js/encryptionService.js"></script>
+  <script src="public/js/login.js"></script>
+
+
+  <div class="flex h-screen justify-center">
+    <div class="mx-5 w-full max-w-sm items-left place-content-center flex justify-center inline-block align-middle flex-col text-3xl text-gray-200">
+        <h1 class="text-4xl h-12 header-font">Error 404</h1>
+
+        <div class="my-3"></div>
+        <ul>
+            <p class="align-left analog-font text-lg text-gray-400">Status ...</p>
+            <div id="console" class="analog-box analog-grey  text-gray-600">
+                <p class="align-left analog-font text-lg text-red-500">Page Not Found</p>
+            </div>
+        </ul>
+        <div class="my-3"></div>
+        <ul id="confirm">
+            <p class="align-left analog-font text-lg">Links</p>
+            <a class="w-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" href="./">
+                <span
+                    class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
+                ></span>
+
+                <span class="relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="analog-font">Home</p></span>
+                </a>
+        </ul>
+    </div>
+  </div>
+
+</body>
+</html>
+
+
+</body>
+</html>
