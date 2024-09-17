@@ -17,7 +17,7 @@ function RevalidateScripts(node)
 
 void function (script) {
     //const { searchParams } = new URL(script.src);
-    var fetchLocation = script.getAttribute("fetch")
+    var fetchLocation = script.getAttribute("fetch");
     fetch(fetchLocation).then(r => r.text()).then(content => {
         if (script.hasAttribute("rep")) {
             content = content.replace(script.getAttribute("rep"), script.innerHTML)
