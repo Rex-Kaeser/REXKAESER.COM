@@ -1,0 +1,2 @@
+Mines Class Timeline
+./public/html/timelines/mines.html
