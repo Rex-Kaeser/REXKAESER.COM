@@ -33,6 +33,7 @@
 
     <!-- Default Script tags -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/public/js/hireMe.js"></script>
 
     <script>
       tailwind.config = {
@@ -98,6 +99,15 @@
                 <p class="align-left analog-font text-lg text-gray-400">Status ...</p>
                 <div class="analog-box analog-green text-gray-600 flex" >
                   <p class="align-left analog-font text-lg">Looking for work...</p>
+                
+                </div>
+                <div class="mt-4">
+                  <ul>
+                    <a class="w-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" target=”_blank” onclick="HireMe()">
+                        <span class="analog-corners absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                        <span class="analog-corners relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="analog-font">Hire Me</p></span>
+                      </a>
+                  </ul>
                 </div>
             </ul>
             <div class="my-6"></div>
