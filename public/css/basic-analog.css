@@ -127,12 +127,35 @@ div.screen-width{
 .w-semesterStack {
     width: 24rem;
 }
+.w-descriptionSemesterStack {
+    width: 16rem;
+}
+
+.w-wideSemesterStack {
+    width: 48rem;
+}
 
 @media (max-width: 640px) {
     .w-semesterStack {
         width: 90%;
     }
+    .w-descriptionSemesterStack {
+        width: 90%;
+    }
+    .w-wideSemesterStack {
+        width: 90%;
+    }
 }
+
+@media (min-width: 640px) {
+    .w-descriptionSemesterStack {
+        width: 25%;
+    }
+    .w-wideSemesterStack {
+        width: 65%;
+    }
+}
+
 
 div.analog-corners, div.analog-box, div.analog-box-green, div.analog-box-yellowm div.analog-box-red {
     border-radius: 1px;
