@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+
+    <!-- Change the description wrt project -->
+    <meta
+      name="Util"
+      content=":/"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- You can add your own fonts from fonts.google.com -->
+    <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet">
+    <!-- You can add your own fonts from fonts.google.com -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/basic.css">
+
+    <!-- Default Script tags -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
+
+    <!-- Replace the title name -->
+    <title>Minecraft Servers...</title>
+    <style>
+      @media (min-width: 768px) {
+        div.size-fix {
+          zoom: 150%;
+        }
+      }
+      p.server-players { white-space: pre-line; }
+    </style>
+</head>
+<body style="font-family: 'Barlow', sans-serif" class="bg-gradient-to-r from-slate-900 via-gray-800 to-zinc-900 bg-slate-900 text-white">
+
+  <script src="public/js/packages/hybrid-crypto.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <div class="flex h-screen justify-center">
+    <div class="mx-5 w-full max-w-xl items-left place-content-center flex justify-center inline-block align-middle flex-col text-3xl text-gray-200">
+      <div class="size-fix">
+        <p class="text-4xl analog-font h-12">MC.REXKAESER.COM</p>
+        <ul>
+          <p class="align-left analog-font text-lg">Server Name</p>
+          <div class="analog-box analog-green text-gray-600 flex" >
+              <p   class="bg-transparent text-lg focus:outline-none text-gray-400">Weep</p>
+          </div>
+        </ul>
+        <ul>
+          <p class="align-left analog-font text-lg">Server Version</p>
+          <div class="analog-box analog-green text-gray-600 flex" >
+            <p class="bg-transparent text-lg focus:outline-none text-gray-400">FORGE 1.7.10</p>
+          </div>
+        </ul>
+        <div class="my-3"></div>
+        <ul>
+          <p class="align-left analog-font text-lg text-gray-400">Server Status ...</p>
+          <div class="analog-box analog-grey  text-gray-600">
+              <p class="align-left analog-font text-lg server-status" serverIP="mc.rexkaeser.com">SERVER STATUS TEXT</p>
+          </div>
+          <div class="my-2 analog-box analog-grey  text-gray-600">
+              <p class="align-left analog-font text-lg server-players" serverIP="mc.rexkaeser.com">SERVER PLAYERS TEXT</p>
+          </div>
+        </ul>
+        <div class="my-3"></div>
+        <ul>
+          <p class="align-left analog-font text-lg">Download Modpack</p>
+          <a class="download-btn w-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" filepath="files/Weep/1.bin" realname="Weep v1.mrpack">
+            <span
+                class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
+            ></span>
+
+            <span class="relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="download-btn-text analog-font no-select">DOWNLOAD BUTTON TEXT</p></span>
+          </a>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const toMB = (bytes) => (bytes / (1024 * 1024)).toFixed(1);
+      const toKBps = (bps) => Math.max(0, bps / 1024).toFixed(0); // KB/s as integer
+    
+      function formatMinutes(seconds) {
+        if (!isFinite(seconds) || seconds < 0) return "";
+        const mins = Math.ceil(seconds / 60);
+        return `${mins} min`;
+      }
+    
+      document.querySelectorAll(".download-btn").forEach((btn) => {
+        let downloading = false;
+    
+        const realname = btn.getAttribute("realname") || "download";
+        const textEl = btn.querySelector(".download-btn-text") || btn;
+        textEl.textContent = realname;
+    
+        btn.addEventListener("click", async (ev) => {
+          ev.preventDefault();
+          if (downloading) return;
+    
+          const filepath = btn.getAttribute("filepath");
+          if (!filepath) return;
+    
+          downloading = true;
+          btn.disabled = true;
+    
+          try {
+            const url = new URL(filepath, location.href).href;
+            const start = performance.now();
+    
+            const resp = await fetch(url, {
+              credentials: "same-origin",
+              cache: "no-store",
+            });
+    
+            if (!resp.ok || !resp.body) {
+              textEl.textContent = realname;
+              alert(`Download failed: ${resp.status} ${resp.statusText}`);
+              return;
+            }
+    
+            const totalBytes = Number(resp.headers.get("Content-Length")) || 0;
+            const totalMB = totalBytes ? toMB(totalBytes) : null;
+    
+            const reader = resp.body.getReader();
+            const chunks = [];
+            let loaded = 0;
+    
+            while (true) {
+              const { value, done } = await reader.read();
+              if (done) break;
+              chunks.push(value);
+              loaded += value.length;
+    
+              const elapsedSec = (performance.now() - start) / 1000;
+              const speedBps = elapsedSec > 0 ? loaded / elapsedSec : 0;
+              const speedKBps = toKBps(speedBps);
+    
+              if (totalMB) {
+                const remainingBytes = totalBytes - loaded;
+                const etaSec = speedBps > 0 ? remainingBytes / speedBps : Infinity;
+                textEl.textContent =
+                  `${toMB(loaded)}/${totalMB} MB — ${speedKBps} KB/s — ${formatMinutes(etaSec)}`;
+              } else {
+                textEl.textContent =
+                  `${toMB(loaded)} MB — ${speedKBps} KB/s`;
+              }
+            }
+    
+            const blob = new Blob(chunks);
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = realname;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    
+            textEl.textContent = realname; // reset after completion
+          } catch (err) {
+            console.error(err);
+            textEl.textContent = realname;
+            alert("Download error. See console for details.");
+          } finally {
+            downloading = false;
+            btn.disabled = false;
+          }
+        });
+      });
+    });
+  </script>
+
+<script>
+  const STATUS_SELECTOR = ".server-status";
+  const PLAYERS_SELECTOR = ".server-players";
+  const REFRESH_MS = 60000; // 60 seconds
+  const apiUrlFor = ip => `https://api.mcsrvstat.us/2/${encodeURIComponent(ip)}?t=${Date.now()}`;
+
+  const CLASS_CLEAR = ["text-green-500","text-red-500","text-gray-400","text-grey-400","text-yellow-500"];
+
+  function setStatus(el, state, detail = "") {
+    CLASS_CLEAR.forEach(c => el.classList.remove(c));
+    if (state === "checking") {
+      el.textContent = "Checking ...";
+      el.classList.add("text-yellow-500");
+    } else if (state === "active") {
+      el.textContent = detail ? `Active — ${detail} ...` : "Active ...";
+      el.classList.add("text-green-500");
+    } else {
+      el.textContent = "Inactive ...";
+      el.classList.add("text-red-500");
+    }
+  }
+
+  // ——— Helpers to robustly parse the API ———
+
+  function getPlayerCounts(data) {
+    const p = data && data.players ? data.players : {};
+    const online = Number(p.online ?? 0); // coerce string/undefined → number
+    const max = (p.max != null && !isNaN(p.max)) ? Number(p.max) : null;
+    return { online, max };
+  }
+
+  function getPlayerNames(data) {
+    const p = data && data.players ? data.players : {};
+    const list = Array.isArray(p.list) ? p.list : [];
+
+    // Normalize: strings → name; objects → prefer .name or .player
+    return list.map(item => {
+      if (typeof item === "string") return item;
+      if (item && typeof item === "object") {
+        return item.name || item.player || JSON.stringify(item);
+      }
+      return String(item);
+    });
+  }
+
+  function renderPlayersBlocks(els, data) {
+    const { online } = getPlayerCounts(data);
+    let block;
+    if (!online) {
+      block = "None Online ...";
+    } else {
+      const names = getPlayerNames(data);
+      // If API doesn’t return names, still indicate someone’s online
+      block = names.length ? names.join("\n") : "Players online (names hidden)";
+    }
+    els.forEach(pEl => { pEl.textContent = block; });
+  }
+
+  function findPlayerElementsForIP(ip) {
+    return Array.from(document.querySelectorAll(PLAYERS_SELECTOR))
+      .filter(n => n.getAttribute("serverIP") === ip);
+  }
+
+  async function checkOne(el) {
+    const ip = el.getAttribute("serverIP");
+    if (!ip) return;
+
+    setStatus(el, "checking");
+    const peerPlayers = findPlayerElementsForIP(ip);
+    if (peerPlayers.length) {
+      peerPlayers.forEach(p => (p.textContent = "Checking players ..."));
+    }
+
+    try {
+      const resp = await fetch(apiUrlFor(ip), { cache: "no-store" });
+      const data = await resp.json();
+
+      if (data && data.online) {
+        const { online, max } = getPlayerCounts(data);
+        const detail = online > 0
+          ? `${online}${(max != null ? `/${max}` : "")} online`
+          : ""; // leave blank if zero to avoid misleading “0 online”
+
+        setStatus(el, "active", detail);
+        if (peerPlayers.length) renderPlayersBlocks(peerPlayers, data);
+      } else {
+        setStatus(el, "inactive");
+        if (peerPlayers.length) peerPlayers.forEach(p => (p.textContent = "None Online ..."));
+      }
+    } catch (e) {
+      setStatus(el, "inactive");
+      if (peerPlayers.length) peerPlayers.forEach(p => (p.textContent = "None Online ..."));
+    }
+  }
+
+  function init() {
+    const nodes = document.querySelectorAll(STATUS_SELECTOR);
+    nodes.forEach(el => {
+      checkOne(el);
+      setInterval(() => checkOne(el), REFRESH_MS);
+    });
+  }
+
+  init();
+</script>
+
+
+
+
+
+  <style>
+    .no-select {
+      user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
+  </style>
+</body>
+</html>
+
