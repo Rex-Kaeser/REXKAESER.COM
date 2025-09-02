@@ -1,0 +1,52 @@
+? SECTION_FILE section_3.html
+? TEXT_COLOR text-blue-100
+
+# Laboratory & Fabrication
+## Hands-on experience with machining, prototyping, and fabrication processes including additive and subtractive methods. Skilled in inspection and supplier validation using advanced tools like FARO Arm and data acquisition systems.
+? BOX_COLOR analog-red
+* Lathe
+* Bridgeport
+* CNC Machining
+* 3D Printing
+* Waterjet
+* Electrical Prototyping
+* Analytical Data Acquisition Systems
+* FARO Arm (LIDAR & probe)
+* Supplier Part Validation
+
+# CAD & Simulation
+## Proficient in SolidWorks design and simulation, including certification in CSWP and CSWA. Experienced with PDM, engineering drawings, FEA, and tolerance analysis for accurate and reliable designs.
+? BOX_COLOR analog-green
+* SolidWorks (CSWP)
+* SolidWorks Simulation (CSWA)
+* SolidWorks PDM
+* Engineering Drawing Creation
+* FEA
+* Tolerance Analysis
+
+# Engineering Tools
+## Skilled with product lifecycle management, testing procedures, and industry-standard inspection methods. Experienced in applying thermal, shock, and vibration testing while following strict internal engineering standards.
+? BOX_COLOR analog-yellow
+* Agile PLM
+* PolyWorks
+* Thermal Testing Procedures
+* Shock & Vibration Testing
+* Inspection & Metrology
+* Adherence to Internal Standards
+
+# Programming & Software
+## Strong background in scripting, automation, and application development across multiple languages. Experienced with technical computing tools, Microsoft Office, and lightweight coding in Python, C++, and CSS.
+? BOX_COLOR analog-blue
+* Lua
+* Arduino
+* LabVIEW
+* Microsoft Excel
+* Microsoft PowerPoint
+* Microsoft Word
+* JavaScript
+* HTML
+* Java
+* C#
+* Python (light)
+* C++ (light)
+* CSS (light)

@@ -1,0 +1,26 @@
+# Interests
+
+? SECTION_FILE section_3.html
+
+? BOX_COLOR analog-red
+
+* Cars
+* Engine Repair
+* Engine Modding
+* Machining
+
+? BOX_COLOR analog-green
+
+* Skiing
+* Snowboarding
+* Mountain Biking
+
+
+# Community Service
+
+? SECTION_FILE section_1.html
+
+? BOX_COLOR analog-blue
+
+* Summit County Senior Center
+* Jefferson County Parks and Recreation

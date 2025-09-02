@@ -1,0 +1,21 @@
+# SolidWorks
+
+? SECTION_FILE section_1.html
+? BOX_COLOR analog-green
+
+* CSWP Mechanical Design
+
+? BOX_COLOR analog-blue
+
+* CSWP Mechanical Design
+
+# Colorado Technology Student Association
+## Colorado (TSA) is a high school 3 day even where schools from accross the state compete in tech competitions.
+
+? BOX_COLOR analog-green
+
+* 1st Place Problem Solving
+
+? BOX_COLOR analog-yellow
+
+* 2nd Place Coding
