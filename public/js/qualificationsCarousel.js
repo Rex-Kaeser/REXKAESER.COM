@@ -1,6 +1,6 @@
-const screensNames = ["Education", "Experience", "Certifications & Awards", "Skills", "Employment", "Interests & Community Service"]
-const screensHashNames = ["education", "experience", "certs_awards", "skills", "employment", "intrests_service"]
-const screensPaths = ["./public/html/qualifications/education.html", "./public/html/qualifications/experience.html", "./public/html/qualifications/certandawards.html", "./public/html/qualifications/skills.html", "./public/html/qualifications/employment.html",  "./public/html/qualifications/interestsandservice.html"]
+const screensNames = ["Education", "Experience", "Projects", "Certifications & Awards", "Skills", "Interests & Community Service"]
+const screensHashNames = ["education", "experience", "projects", "certs_awards", "skills", "intrests_service"]
+const screensPaths = ["./public/html/qualifications/education.html", "./public/html/qualifications/experience.html", "./public/html/qualifications/projects.html", "./public/html/qualifications/certandawards.html", "./public/html/qualifications/skills.html",  "./public/html/qualifications/interestsandservice.html"]
 
 var screen = 0;
 
