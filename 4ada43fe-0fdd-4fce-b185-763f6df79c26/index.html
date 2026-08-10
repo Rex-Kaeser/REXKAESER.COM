@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design for the Ending — Rex Kaeser</title>
+<meta name="description" content="An argument about infrastructure, uncertainty, and the Klamath River dam removals — why 'end of life' has to be a design spec from day one.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2305080b'/%3E%3Cpath d='M8 55 Q 25 32, 42 55 T 76 55 T 108 55' stroke='%232dd4bf' stroke-width='9' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div id="progress" aria-hidden="true"></div>
+
+<a class="brand" href="#top" aria-label="Back to top">
+  <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="22" fill="#0a1119"/><path d="M8 55 Q 25 32, 42 55 T 76 55 T 108 55" stroke="#2dd4bf" stroke-width="9" fill="none" stroke-linecap="round"/></svg>
+  R. KAESER
+</a>
+
+<nav class="dotnav" aria-label="Section navigation">
+  <a href="#top" aria-label="Start"><span>Start</span></a>
+  <a href="#why" aria-label="Why I'm asking this"><span>Why I'm asking</span></a>
+  <a href="#denial" aria-label="Part I: The Denial Culture"><span>I — Denial culture</span></a>
+  <a href="#relative" aria-label="Part II: A River, Not a Resource"><span>II — A river, not a resource</span></a>
+  <a href="#uncertainty-argument" aria-label="Part III: Where they meet"><span>III — Uncertainty</span></a>
+  <a href="#widget" aria-label="Interactive"><span>Try it</span></a>
+  <a href="#timeline" aria-label="Timeline"><span>Timeline</span></a>
+  <a href="#contribution" aria-label="Why this matters beyond the Klamath"><span>Beyond the Klamath</span></a>
+  <a href="#sources" aria-label="Sources"><span>Sources</span></a>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <canvas id="riverCanvas" aria-hidden="true"></canvas>
+  <div class="container">
+    <p class="kicker">An argument about infrastructure, uncertainty, and the Klamath River</p>
+    <h1 class="hero-title">Design<br>for the<br>Ending.</h1>
+    <p class="hero-sub">We engineer dams to last a hundred years, then act surprised when they don't make it. <strong>This is about what changes when the ending is a design spec from day one</strong> — and why a river in northern California is the reason I started asking.</p>
+    <a href="#why" class="scrollcue">
+      Keep scrolling
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- ================= WHY I'M ASKING THIS ================= -->
+<section class="section" id="why">
+  <div class="container">
+    <p class="kicker reveal">Where this started</p>
+    <h2 class="h2 reveal">Why I'm asking this</h2>
+    <div class="reveal">
+      <p>I'm a mechanical engineering student. Most of this year's coursework has been fluid systems, and my capstone project has me thinking, more than I expected to, about the far end of a machine's life — not how it gets built, but how it eventually stops being used.</p>
+      <p>Here's what bothers me about that: almost nothing I've been taught treats the ending as part of the design. We size pumps, spec penstocks, run the numbers on turbines and spillway gates — all of it assuming decades of service, none of it seriously asking what happens when that service has to stop, especially if it stops early.</p>
+      <p>Then I watched <em>Guardians of the River</em>, a short documentary about the Klamath River dam removals — the largest dam removal project in U.S. history — and the thing that stuck with me wasn't the engineering. It was that the Yurok and Karuk Nations, whose river this is, don't talk about four aging hydroelectric dams. They talk about ecological debt: what's owed back to a river that's been run like a machine part for a century.</p>
+      <p>That reframing is the reason this page exists. Not because I think engineers are the villains here — several of the sources below are written by engineers who see the problem clearly. It's because "the dam's useful life" and "the river's life" turned out to be two completely different clocks, and only one of them got taken seriously at the start.</p>
+    </div>
+
+    <div class="reveal video-frame">
+      <iframe src="https://www.youtube-nocookie.com/embed/e5lcP_9ateE" title="Guardians of the River — American Rivers &amp; Swiftwater Films" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p class="reveal video-caption">"Guardians of the River" (2020) — American Rivers &amp; Swiftwater Films, directed by Shane Anderson. Featuring Yurok Vice Chair Frankie Myers, Ancestral Guard director Sammy Gensaw, and Yurok fisheries biologist Barry McCovey.</p>
+  </div>
+</section>
+
+<!-- ================= PART I: DENIAL CULTURE ================= -->
+<section class="section" id="denial">
+  <div class="container">
+    <p class="kicker reveal">Part I</p>
+    <h2 class="h2 reveal">The <span class="accent-amber">denial culture</span></h2>
+    <p class="lede reveal">Start with the engineering literature, because it already knows this is a problem.</p>
+
+    <div class="reveal">
+      <p>In 2020, a team of infrastructure researchers — D.C. Invernizzi, G. Locatelli, A. Velenturf, P.E. Love, P. Purnell, and N.J. Brookes — published a paper in <em>Energy Policy</em> arguing that the energy sector has "focused historically on the planning, design and construction of energy infrastructures, while typically overlooking the processes required for the management of their end-of-life." Their conclusion is blunt: for new infrastructure, "the design should start with decommissioning in mind" — what they call, in the paper's own words, <strong>"design for decommissioning."</strong> <a class="source-refs" href="#src-1">[1]</a></p>
+
+      <p>That's not a fringe position. It's also not what happens in practice. Six years earlier, in the <em>Journal of Petroleum Technology</em>, writer Pam Boschee described what she called a "denial culture" in how the oil and gas industry treats end-of-life costs — engineers and operators who treat decommissioning as, in their own words, "not on my watch" or "it's not my business, I produce oil." <a class="source-refs" href="#src-2">[2]</a></p>
+
+      <blockquote class="pullquote amber">
+        "There generally is no coaching, and the end-of-life stage is often thought of as 'not on my watch.'"
+        <cite>— Pam Boschee, Journal of Petroleum Technology, 2014</cite>
+      </blockquote>
+
+      <p>The problem isn't that nobody knows how to plan for an ending. It's that admitting the ending exists costs money now, for a bill someone else pays decades later — so it gets deferred, and deferred, and deferred.</p>
+
+      <p>The engineering firm Kleinschmidt Group — which reports managing dam-safety and removal projects across North America — describes dam decommissioning on its own site as work that "demands more than engineering," requiring "insight, collaboration, and a clear understanding of environmental, regulatory, and community dynamics." <a class="source-refs" href="#src-3">[3]</a> Which tells you something useful: the removability engineering already exists. Fish passage, structural staging, modular removal sequencing — none of it is new. It's just applied after removal has already been forced, instead of built into the design from day one.</p>
+    </div>
+
+    <div class="reveal stat-strip">
+      <div class="stat">
+        <span class="stat-number" data-count="6">6</span>
+        <span class="stat-label">years between Boschee naming the "denial culture" (2014) and Invernizzi et al. naming its fix, "design for decommissioning" (2020)</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number" data-count="17">17</span>
+        <span class="stat-label">decommissioning projects Kleinschmidt Group reports managing over the past decade, across 35 dams in North America</span>
+      </div>
+    </div>
+
+    <div class="reveal diagram-pair">
+      <figure class="figure-inline">
+        <img src="images/klamath-pre-removal-diagram.jpg" alt="USGS diagram of the Klamath River before dam removal, showing dams blocking sediment and trapping flow." loading="lazy" width="1600" height="900">
+        <figcaption>Before: Iron Gate, Copco 1 &amp; 2, and JC Boyle trap sediment and limit flow. USGS California Water Science Center. Public domain.</figcaption>
+      </figure>
+      <figure class="figure-inline">
+        <img src="images/klamath-post-removal-diagram.jpg" alt="USGS diagram of the Klamath River after dam removal, showing sediment and flow released downstream." loading="lazy" width="1600" height="900">
+        <figcaption>After: the river flows freely through the former hydroelectric reach, releasing stored sediment. USGS California Water Science Center. Public domain.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- photo break: 2009 Iron Gate, before removal -->
+<figure class="photo-break reveal" style="background-image:url('images/iron-gate-dam-2009.jpg');">
+  <div class="scrim">
+    <figcaption>
+      <strong>Iron Gate Dam and Hatchery, Klamath River, California — photographed July 8, 2009.</strong>
+      USGS California Water Science Center. Public domain.
+    </figcaption>
+  </div>
+</figure>
+
+<!-- ================= PART II: A RIVER, NOT A RESOURCE ================= -->
+<section class="section" id="relative">
+  <div class="container">
+    <p class="kicker reveal">Part II</p>
+    <h2 class="h2 reveal">A river, <span class="accent">not a resource</span></h2>
+    <p class="lede reveal">Here's where the engineering framing runs out of language.</p>
+
+    <div class="reveal">
+      <p>When engineers talk about a dam's "useful life," they're describing the dam. When the Yurok Tribe talks about the Klamath, they're describing the river — and the difference isn't semantic.</p>
+
+      <p>In 2019, the Yurok Tribal Council passed a resolution declaring that the Klamath River "possesses inherent rights to exist, flourish, and naturally evolve" — widely reported as the first rights-of-nature declaration granted to a river in North America. <a class="source-refs" href="#src-6">[6]</a> That's not a metaphor in a press release. It's governance: a legal document stating that the river's wellbeing is not subordinate to whatever the dams upstream were built to do.</p>
+
+      <p>This wasn't a one-time statement. Three years later, in February 2022, the Tribe's own press office was still making the same case, in a coalition running from the Karuk Tribe to American Rivers to the Pacific Coast Federation of Fishermen's Associations — with Yurok Vice Chairman Frankie Myers stating plainly that "a thorough analysis by experts reveals dam removal as key for restoring Klamath fisheries and improving water quality." <a class="source-refs" href="#src-5">[5]</a> Sustained, formal, institutional — not one person's feeling.</p>
+    </div>
+
+    <blockquote class="pullquote reveal">
+      "The Klamath River possesses inherent rights to exist, flourish, and naturally evolve."
+      <cite>— Yurok Tribal Council Resolution, 2019</cite>
+    </blockquote>
+
+    <div class="reveal">
+      <p>Brook Thompson — an enrolled Yurok Tribal member with Karuk ancestry, and a water-resources engineer herself — put it more directly in a 2021 essay for <em>High Country News</em>: "The salmon are my relatives." <a class="source-refs" href="#src-4">[4]</a> She's not writing from outside the engineering profession looking in. She's both: someone who can run the hydrology, and who also writes, in the same piece, about the trauma her community carries from the 1970s "fish wars" — when Native people were banned from fishing their own river — and from the loss of water and sovereignty that followed. Her case for removal isn't only ecological. It's that dispossession and infrastructure are the same story, told from two directions.</p>
+
+      <p>The Smithsonian's National Museum of the American Indian puts a number on what that story cost: more than 90 percent of the salmon central to Yurok and Karuk nutrition, tradition, and religion are gone — down from an estimated 880,000 fish that once migrated up the Klamath every year. <a class="source-refs" href="#src-7">[7]</a> That's the actual scoreboard here. Not turbine output. Not a structural rating. A fish population that a century of "useful life" calculations never had a line item for.</p>
+    </div>
+
+    <div class="reveal salmon-panel">
+      <div class="salmon-head">
+        <span>Historical Klamath Chinook run: ~880,000 fish/year</span>
+        <span>Today: <span class="accent" style="color:var(--teal-bright)">&lt;10%</span> remain</span>
+      </div>
+      <div class="salmon-bar-track">
+        <div class="salmon-bar-fill" style="--target: 9%;"></div>
+      </div>
+      <p class="salmon-caption">Source: National Museum of the American Indian, "A River's Rebirth: Klamath Dam Removals," <em>American Indian Magazine</em>, Spring 2024. <a class="source-refs" href="#src-7">[7]</a></p>
+    </div>
+
+    <figure class="reveal figure-inline">
+      <img src="images/chinook-salmon.jpg" alt="A Chinook salmon held above water, showing its distinctive silver body and dark spots." loading="lazy" width="1600" height="1200">
+      <figcaption>Chinook salmon — the species at the center of this argument, though this individual is from the Feather River, not the Klamath. California Department of Fish and Wildlife. CC BY 2.0.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- photo break: aerial, reservoirs just before breach -->
+<figure class="photo-break reveal" style="background-image:url('images/klamath-reservoirs-aerial-2023.jpg');">
+  <div class="scrim">
+    <figcaption>
+      <strong>The lower Klamath basin, still dammed — aerial photo from December 23, 2023, shortly before the reservoirs were breached.</strong>
+      NASA Earth Observatory. Public domain.
+    </figcaption>
+  </div>
+</figure>
+
+<!-- ================= PART III: UNCERTAINTY ================= -->
+<section class="section" id="uncertainty-argument">
+  <div class="container">
+    <p class="kicker reveal">Part III</p>
+    <h2 class="h2 reveal">Where they meet: <span class="accent">uncertainty</span></h2>
+    <p class="lede reveal">It would be easy to write this up as engineers versus the Yurok Tribe — two worldviews, pick a side. That's not the argument the sources actually pushed me toward.</p>
+
+    <div class="reveal">
+      <p>Oregon State University's engineering school runs a podcast called <em>Engineering Out Loud</em>, and in one episode Brook Thompson talks about witnessing the 2002 Klamath fish kill firsthand — tens of thousands of salmon dead on the riverbanks after water got diverted for agriculture upstream. <a class="source-refs" href="#src-8">[8]</a> She says organizers were told for years that dam removal "would never happen," that it was a "pipe dream." By her own account, it took roughly thirty years of sustained organizing before it did.</p>
+
+      <p>That timeline is the actual point. Nobody designed the dams to fail their license renewal fight. Nobody designed them to run into a legally binding rights-of-nature resolution, or a fish kill that galvanized thirty years of organizing. The dams were engineered for a projected service life measured in generations. What actually determined when they came down wasn't the engineering. It was everything the engineering didn't plan for.</p>
+
+      <p><strong>That's uncertainty, not culture war — and uncertainty doesn't care whose worldview you find more persuasive.</strong> An infrastructure project can get forced into an early ending by a funding shortfall, a safety failure, a legal challenge, a natural disaster, a change in who has standing to say no. The Klamath dams happened to hit theirs from a coalition of tribal governance and salmon biology. The next piece of infrastructure that gets forced into an early ending might hit it from somewhere else entirely. If you only design for the hundred-year plan, you have no plan for the other outcome — and infrastructure this large doesn't get a version of "oops, no big deal."</p>
+    </div>
+  </div>
+</section>
+
+<!-- photo break: removal in progress -->
+<figure class="photo-break reveal" style="background-image:url('images/iron-gate-removal-2024.jpg');">
+  <div class="scrim">
+    <figcaption>
+      <strong>Iron Gate Dam removal in progress — photographed July 18, 2024.</strong>
+      Bob Pagliuco / NOAA Office of Habitat Conservation. Public domain.
+    </figcaption>
+  </div>
+</figure>
+
+<!-- ================= INTERACTIVE WIDGET ================= -->
+<section class="section" id="widget">
+  <div class="container">
+    <p class="kicker reveal">Try it</p>
+    <h2 class="h2 reveal">You don't get to pick which ending you plan for</h2>
+    <p class="lede reveal">Below is roughly what every large piece of infrastructure is actually working with: a planned service life, and a wide field of ways that timeline can get cut short. Run it a few times.</p>
+
+    <div class="reveal widget-shell">
+      <p class="widget-caption">This isn't a statistical model — years are illustrative, not measured. It's a way of seeing that the "planned" line and the "actual" line are almost never the same line.</p>
+      <div class="track-wrap">
+        <div class="widget-track" id="widgetTrack">
+          <span class="track-startlabel">Year 0 — built</span>
+          <span class="track-endlabel">Year 100 — planned end of life</span>
+          <div class="track-fill"></div>
+          <div class="track-start"></div>
+          <div class="track-end"></div>
+        </div>
+      </div>
+      <div class="widget-legend" id="widgetLegend"></div>
+      <button class="btn-reroll" id="rerollBtn" type="button">Run it again ↻</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TIMELINE ================= -->
+<section class="section" id="timeline">
+  <div class="container">
+    <p class="kicker reveal">How thirty years actually happened</p>
+    <h2 class="h2 reveal">A timeline, not a plan</h2>
+    <p class="lede reveal">None of this was on the original schedule. That's the point.</p>
+
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <span class="tl-year">1918 – 1962</span>
+        <h4>Four dams, built across 44 years</h4>
+        <p>Copco No. 1 (1918), Copco No. 2 (1925), John C. Boyle (1958), and Iron Gate (1962) go up on the Klamath — later consolidated under one federal hydropower license (issued 1954), each engineered for decades of operating life.</p>
+      </div>
+      <div class="tl-item hi">
+        <span class="tl-year">2002</span>
+        <h4>The fish kill</h4>
+        <p>Tens of thousands of salmon die on the riverbanks after water is diverted for agriculture upstream — the event Brook Thompson and other organizers point to as the start of serious, sustained pressure for removal.</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">March 2006</span>
+        <h4>The original license runs out</h4>
+        <p>The Klamath Hydroelectric Project's federal operating license expires. The dams keep running on annual extensions while a relicensing fight — one nobody planned for at construction — drags on for years.</p>
+      </div>
+      <div class="tl-item hi">
+        <span class="tl-year">2019</span>
+        <h4>The river gets rights</h4>
+        <p>The Yurok Tribal Council passes a resolution declaring the Klamath River "possesses inherent rights to exist, flourish, and naturally evolve" — reframing what "end of life" even means for the dams upstream.</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">November 2022</span>
+        <h4>Federal approval</h4>
+        <p>FERC approves the license surrender and removal of all four dams, clearing the way for what becomes the largest dam removal project in U.S. history.</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">2023 – 2024</span>
+        <h4>Removal</h4>
+        <p>Copco No. 2 comes out first, in October 2023. Drawdown of the remaining three reservoirs begins January 2024. The project finishes in October 2024 — ahead of schedule and on budget.</p>
+      </div>
+      <div class="tl-item hi">
+        <span class="tl-year">October 3, 2024</span>
+        <h4>The salmon come back</h4>
+        <p>Sonar monitoring records Chinook salmon moving upstream past the former dam sites for the first time in over a century.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- photo break: after removal -->
+<figure class="photo-break reveal" style="background-image:url('images/former-iron-gate-site-2024.jpg');">
+  <div class="scrim">
+    <figcaption>
+      <strong>The former site of Iron Gate Dam, river running free — photographed September 27, 2024.</strong>
+      Wikimedia Commons user KMashian. CC0 (public domain).
+    </figcaption>
+  </div>
+</figure>
+
+<!-- ================= CONTRIBUTION ================= -->
+<section class="section" id="contribution">
+  <div class="container">
+    <p class="kicker reveal">Why this isn't just about one river</p>
+    <h2 class="h2 reveal">Beyond the Klamath</h2>
+
+    <div class="reveal">
+      <p>My actual contribution here isn't the Klamath case — eight sources and a synthesis don't make new tribal policy or new engineering standards. It's the move to strip the Klamath-specific parts away and see what's left.</p>
+
+      <p>What's left is this: every large piece of infrastructure — every dam, every offshore platform, every power plant, every pipeline — carries the same unstated bet. The bet is that it gets to live out its planned useful life before anyone has to seriously plan for taking it apart. The Klamath dams show what happens when that bet is wrong: decades of legal fights, a fish population gutted past 90 percent, and a removal that ended up costing more and taking longer than it would have if "how do we eventually take this down" had been a real design question in 1918 instead of a crisis question in 2002.</p>
+    </div>
+
+    <div class="reveal infra-row">
+      <span class="infra-chip">Dams</span>
+      <span class="infra-chip">Offshore platforms</span>
+      <span class="infra-chip">Nuclear plants</span>
+      <span class="infra-chip">Pipelines</span>
+      <span class="infra-chip">Bridges</span>
+      <span class="infra-chip">Wind farms</span>
+      <span class="infra-chip">Any structure built to outlive the people who designed it</span>
+    </div>
+
+    <p class="reveal">That's not an argument that only applies to dams on Indigenous land, or only to hydropower. It's an argument that "useful life" is a planning fiction every large infrastructure project makes — and that uncertainty, not sentiment, not politics, is reason enough to plan for the version where the fiction breaks early.</p>
+  </div>
+</section>
+
+<!-- ================= SOURCES ================= -->
+<section class="section" id="sources">
+  <div class="container">
+    <p class="kicker reveal">Annotated bibliography</p>
+    <h2 class="h2 reveal">Sources</h2>
+    <p class="lede reveal">Every source I actually built this argument from — numbered to match the [N] citations above.</p>
+
+    <div class="source-list reveal">
+
+      <article class="source-item" id="src-1">
+        <div class="source-top">
+          <p class="source-title">[1] Invernizzi, D.C., Locatelli, G., Velenturf, A., Love, P.E., Purnell, P., &amp; Brookes, N.J. — "Developing policies for the end-of-life of energy infrastructure: Coming to terms with the challenges of decommissioning"</p>
+          <span class="source-tag">Peer-reviewed</span>
+        </div>
+        <p class="source-meta"><em>Energy Policy</em>, vol. 144 (2020), article 111677 · DOI: 10.1016/j.enpol.2020.111677 · <a href="https://www.sciencedirect.com/science/article/pii/S0301421520304067" target="_blank" rel="noopener">sciencedirect.com</a></p>
+        <p class="source-note">The paper that names the idea "design for decommissioning" and argues, in a mainstream energy-policy journal, that engineers should treat an asset's ending as a planning question from day one. Shows this isn't a fringe position — the field already knows what it should be doing.</p>
+      </article>
+
+      <article class="source-item" id="src-2">
+        <div class="source-top">
+          <p class="source-title">[2] Boschee, P. — "Engineering for Decommissioning During Project Design Reduces Costs"</p>
+          <span class="source-tag">Trade publication</span>
+        </div>
+        <p class="source-meta"><em>Journal of Petroleum Technology</em>, Society of Petroleum Engineers, July 3, 2014 · <a href="https://jpt.spe.org/engineering-decommissioning-during-project-design-reduces-costs" target="_blank" rel="noopener">jpt.spe.org</a></p>
+        <p class="source-note">Names the attitude I'm actually arguing against: a "denial culture" where decommissioning gets treated as someone else's problem, decades out. Written for working engineers, not about them from the outside — the profession diagnosing itself.</p>
+      </article>
+
+      <article class="source-item" id="src-3">
+        <div class="source-top">
+          <p class="source-title">[3] Kleinschmidt Group — "Dam Safety and Water Infrastructure Engineering"</p>
+          <span class="source-tag">Practitioner source</span>
+        </div>
+        <p class="source-meta">Firm practice page · <a href="https://www.kleinschmidtgroup.com/our-expertise/dam-safety-and-water-infrastructure-engineering/" target="_blank" rel="noopener">kleinschmidtgroup.com</a></p>
+        <p class="source-note">An engineering firm's own description of its dam-decommissioning work, including experience on Iron Gate. It's marketing copy, so I read it as evidence of current practice, not neutral analysis: proof the removability engineering already exists — it just gets applied at the end instead of the start.</p>
+      </article>
+
+      <article class="source-item" id="src-4">
+        <div class="source-top">
+          <p class="source-title">[4] Thompson, B. — "The familial bond between the Klamath River and the Yurok people"</p>
+          <span class="source-tag">Indigenous-authored essay</span>
+        </div>
+        <p class="source-meta"><em>High Country News</em>, September 2021 · <a href="https://www.hcn.org/issues/53-9/indigenous-affairs-klamath-basin-the-familial-bond-between-the-klamath-river-and-the-yurok-people/" target="_blank" rel="noopener">hcn.org</a></p>
+        <p class="source-note">Written by a Yurok tribal member with Karuk ancestry who is also a water-resources engineer — the person this whole page is imagining. The primary source for the river-as-relative framing, in her own words.</p>
+      </article>
+
+      <article class="source-item" id="src-5">
+        <div class="source-top">
+          <p class="source-title">[5] Yurok Tribe — "Press Release: Klamath Dam Removal Process Enters Home Stretch"</p>
+          <span class="source-tag">Tribal government</span>
+        </div>
+        <p class="source-meta">February 25, 2022 · <a href="https://www.yuroktribe.org/post/press-release-klamath-dam-removal-process-enters-home-stretch" target="_blank" rel="noopener">yuroktribe.org</a></p>
+        <p class="source-note">The Tribe's own official statement, not a secondhand paraphrase. Names the coalition behind removal and shows this is a formal governance position, not one person's feeling.</p>
+      </article>
+
+      <article class="source-item" id="src-6">
+        <div class="source-top">
+          <p class="source-title">[6] Yurok Tribal Council — "Resolution Establishing the Rights of the Klamath River"</p>
+          <span class="source-tag">Primary legal document</span>
+        </div>
+        <p class="source-meta">2019, via Eco Jurisprudence Monitor · <a href="https://ecojurisprudence.org/initiatives/resolution-establishing-rights-of-the-klamath-river/" target="_blank" rel="noopener">ecojurisprudence.org</a></p>
+        <p class="source-note">The hinge of this whole argument: a primary legal document granting the river itself inherent rights to exist, flourish, and evolve. If the river has legal standing, "useful life" can't be defined by turbine output alone.</p>
+      </article>
+
+      <article class="source-item" id="src-7">
+        <div class="source-top">
+          <p class="source-title">[7] National Museum of the American Indian — "A River's Rebirth: Klamath Dam Removals"</p>
+          <span class="source-tag">Indigenous-institution publication</span>
+        </div>
+        <p class="source-meta"><em>American Indian Magazine</em>, Smithsonian, Spring 2024 · <a href="https://www.americanindianmagazine.org/story/klamath-river-dam-removals" target="_blank" rel="noopener">americanindianmagazine.org</a></p>
+        <p class="source-note">Puts the actual numbers behind the loss — over 90% of the salmon central to Yurok and Karuk nutrition, tradition, and religion, gone. Keeps salmon, not the dam, at the center of what "end of life" should be measured against.</p>
+      </article>
+
+      <article class="source-item" id="src-8">
+        <div class="source-top">
+          <p class="source-title">[8] Oregon State University College of Engineering — "What is behind the Klamath dam removals?"</p>
+          <span class="source-tag">Multimedia — podcast</span>
+        </div>
+        <p class="source-meta"><em>Engineering Out Loud</em>, Season 14, Episode 1 · <a href="https://engineering.oregonstate.edu/engineering-out-loud/season-14/what-behind-klamath-dam-removals-s14e1" target="_blank" rel="noopener">engineering.oregonstate.edu</a></p>
+        <p class="source-note">An engineering school's own podcast platforming Brook Thompson on the 2002 fish kill and the thirty years of organizing that followed — an engineering program putting an Indigenous engineer's account front and center.</p>
+      </article>
+
+      <article class="source-item" id="src-video">
+        <div class="source-top">
+          <p class="source-title">American Rivers &amp; Swiftwater Films, dir. Shane Anderson — "Guardians of the River"</p>
+          <span class="source-tag">Documentary</span>
+        </div>
+        <p class="source-meta">2020 · <a href="https://www.youtube.com/watch?v=e5lcP_9ateE" target="_blank" rel="noopener">youtube.com</a></p>
+        <p class="source-note">The documentary that started this whole project for me. Featuring Yurok Vice Chair Frankie Myers, Ancestral Guard director Sammy Gensaw, and tribal fisheries biologist Barry McCovey.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACCURACY STATEMENT ================= -->
+<section class="section" id="accuracy">
+  <div class="container">
+    <p class="kicker reveal">Required statement</p>
+    <h2 class="h2 reveal">Accuracy &amp; AI use</h2>
+
+    <div class="reveal accuracy-box">
+      <h3>What I checked</h3>
+      <p>Every quote, statistic, date, and link on this page, I personally checked against its original source before publishing this — including re-verifying the exact wording of every quoted phrase (like "design for decommissioning," "denial culture," and the Klamath rights-of-nature language) against the primary documents themselves, not secondhand summaries. Dates in the timeline (dam construction years, the 2006 license expiration, the 2022 FERC approval, and the 2023–2024 removal dates) were cross-checked against multiple independent sources, including federal agencies (USGS, NOAA, FERC) and contemporaneous reporting.</p>
+      <h3 style="margin-top:24px;">Where I used AI</h3>
+      <p>I used AI (Claude) throughout this touchpoint: to help draft and edit prose, to design this page's layout and visual system, to help locate and verify sources and license-cleared images, and to build the interactive elements. Back in Touchpoint 2, I also used AI to generate long candidate-source lists before I picked, clustered, and annotated the ones that made it into my actual source map myself — noted again here for full transparency. The argument itself — the synthesis in Touchpoint 3 that this page develops — is mine. If anything here turns out to be wrong, that's on me, not the tool.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Rex Kaeser — EDNS 315, Touchpoint 4 — 2026</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
