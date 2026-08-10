@@ -3,7 +3,7 @@
 ? SECTION_FILE section_1.html
 ? BOX_COLOR analog-green
 
-* CSWP Mechanical Design
+* CSWA Simulation
 
 ? BOX_COLOR analog-blue
 
