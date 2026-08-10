@@ -89,6 +89,26 @@
       transition: opacity 0.25s ease, transform 0.25s ease;
     }
 
+    /* nothing here quite sits square — small fixed offsets per line, not random,
+       so it reads as worn-in rather than as a rendering bug */
+    .line.show.t1 { transform: translateY(0) rotate(-0.7deg) translateX(6px); margin-top: -1px; }
+    .line.show.t2 { transform: translateY(0) rotate(0.5deg) translateX(-4px); margin-top: 3px; }
+    .line.show.t3 { transform: translateY(0) rotate(-0.35deg) translateX(11px); margin-top: -2px; }
+    .line.show.t5 { transform: translateY(0) rotate(-0.5deg) translateX(3px); margin-top: 5px; }
+
+    .warped-box {
+      transform: rotate(1.3deg) translateX(-8px) skewX(-0.8deg);
+      border-width: 3px 1px 3px 5px !important;
+      box-shadow: 3px 4px 0 rgba(0,0,0,0.4);
+    }
+    .line.show.warped-box { transform: translateY(0) rotate(1.3deg) translateX(-8px) skewX(-0.8deg); }
+
+    .settle { animation: settle 6.5s ease-in-out infinite; transform-origin: 40% 50%; }
+    @keyframes settle {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      50% { transform: rotate(0.25deg) translateY(1px); }
+    }
+
     .glitch {
       position: relative;
       display: inline-block;
@@ -130,14 +150,14 @@
   <canvas id="grid"></canvas>
   <div class="scanline"></div>
 
-  <div class="relative z-10 w-full max-w-xl px-6 term text-base sm:text-lg leading-relaxed">
-    <p id="l1" class="line text-gray-500">&gt; connecting to rexkaeser.com …</p>
-    <p id="l2" class="line text-gray-500">&gt; resolving route <span class="text-gray-300">/</span> …</p>
-    <p id="l3" class="line text-gray-500">&gt; scanning for content … <span class="text-[#04A777]">0 pages found</span></p>
-    <div id="l4" class="line my-5 analog-box analog-red analog-corners inline-block px-4 py-3">
+  <div class="settle relative z-10 w-full max-w-xl px-6 term text-base sm:text-lg leading-relaxed">
+    <p id="l1" class="line t1 text-gray-500">&gt; connecting to rexkaeser.com …</p>
+    <p id="l2" class="line t2 text-gray-500">&gt; resolving route <span class="text-gray-300">/</span> …</p>
+    <p id="l3" class="line t3 text-gray-500">&gt; scanning for content … <span class="text-[#04A777]">0 pages found</span></p>
+    <div id="l4" class="line warped-box my-5 analog-box analog-red analog-corners inline-block px-4 py-3">
       <span class="glitch flicker text-2xl sm:text-3xl tracking-wide" data-text="THERE IS NO PAGE HERE">THERE IS NO PAGE HERE</span>
     </div>
-    <p id="l5" class="line text-gray-500 cursor">&gt; you're in the right place. there's just nothing here.</p>
+    <p id="l5" class="line t5 text-gray-500 cursor">&gt; you're in the right place. there's just nothing here.</p>
   </div>
 
   <script>
