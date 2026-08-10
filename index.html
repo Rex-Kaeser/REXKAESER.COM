@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <base id="base" href="/">
+
+  <meta name="description" content="There is no page here." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./public/css/basic.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: "class" };
+  </script>
+
+  <title>rexkaeser.com</title>
+
+  <style>
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      background: #050607;
+      background-image:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(4,167,119,0.08), transparent 70%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0px, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 3px);
+    }
+
+    #grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.35;
+    }
+
+    .scanline {
+      position: fixed;
+      left: 0; right: 0;
+      height: 140px;
+      background: linear-gradient(to bottom, transparent, rgba(4,167,119,0.06), transparent);
+      animation: sweep 7s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes sweep {
+      0% { top: -140px; }
+      100% { top: 100vh; }
+    }
+
+    .crt::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      background: repeating-linear-gradient(
+        0deg, rgba(0,0,0,0.12) 0px, rgba(0,0,0,0.12) 1px,
+        transparent 1px, transparent 2px
+      );
+      mix-blend-mode: multiply;
+    }
+
+    .term { font-family: "Jersey 10", monospace; }
+    .flicker { animation: flicker 6s infinite; }
+    @keyframes flicker {
+      0%, 96%, 100% { opacity: 1; }
+      97% { opacity: 0.72; }
+      98% { opacity: 1; }
+      99% { opacity: 0.85; }
+    }
+
+    .cursor::after {
+      content: "▌";
+      margin-left: 6px;
+      color: #04A777;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .line { opacity: 0; transform: translateY(2px); }
+    .line.show {
+      opacity: 1; transform: translateY(0);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .glitch {
+      position: relative;
+      display: inline-block;
+    }
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%;
+      overflow: hidden;
+      opacity: 0.8;
+    }
+    .glitch::before {
+      color: #a70404;
+      clip-path: inset(0 0 0 0);
+      animation: glitchTop 3.4s infinite linear;
+    }
+    .glitch::after {
+      color: #04A777;
+      clip-path: inset(0 0 0 0);
+      animation: glitchBottom 3.9s infinite linear;
+    }
+    @keyframes glitchTop {
+      0%, 92%, 100% { clip-path: inset(0 0 96% 0); transform: translate(0,0); opacity: 0; }
+      93% { clip-path: inset(0 0 60% 0); transform: translate(-2px,-1px); opacity: 0.7; }
+      94% { clip-path: inset(20% 0 40% 0); transform: translate(2px,0); opacity: 0.7; }
+      95% { clip-path: inset(0 0 96% 0); transform: translate(0,0); opacity: 0; }
+    }
+    @keyframes glitchBottom {
+      0%, 90%, 100% { clip-path: inset(96% 0 0 0); transform: translate(0,0); opacity: 0; }
+      91% { clip-path: inset(60% 0 0 0); transform: translate(2px,1px); opacity: 0.7; }
+      92% { clip-path: inset(30% 0 20% 0); transform: translate(-2px,0); opacity: 0.7; }
+      93% { clip-path: inset(96% 0 0 0); transform: translate(0,0); opacity: 0; }
+    }
+  </style>
+</head>
+<body class="crt text-gray-200 h-screen w-screen flex items-center justify-center">
+
+  <canvas id="grid"></canvas>
+  <div class="scanline"></div>
+
+  <div class="relative z-10 w-full max-w-xl px-6 term text-base sm:text-lg leading-relaxed">
+    <p id="l1" class="line text-gray-500">&gt; connecting to rexkaeser.com …</p>
+    <p id="l2" class="line text-gray-500">&gt; resolving route <span class="text-gray-300">/</span> …</p>
+    <p id="l3" class="line text-gray-500">&gt; scanning for content … <span class="text-[#04A777]">0 pages found</span></p>
+    <div id="l4" class="line my-5 analog-box analog-red analog-corners inline-block px-4 py-3">
+      <span class="glitch flicker text-2xl sm:text-3xl tracking-wide" data-text="THERE IS NO PAGE HERE">THERE IS NO PAGE HERE</span>
+    </div>
+    <p id="l5" class="line text-gray-500 cursor">&gt; you're in the right place. there's just nothing here.</p>
+  </div>
+
+  <script>
+    var lines = ["l1", "l2", "l3", "l4", "l5"];
+    lines.forEach(function (id, i) {
+      setTimeout(function () {
+        var el = document.getElementById(id);
+        if (el) el.classList.add("show");
+      }, 260 * (i + 1));
+    });
+
+    // faint ambient grid, drifting slowly — no interaction required
+    (function () {
+      var canvas = document.getElementById("grid");
+      var ctx = canvas.getContext("2d");
+      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var w, h, dpr;
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resize();
+      window.addEventListener("resize", resize);
+      window.addEventListener("load", resize);
+
+      var spacing = 42;
+      var running = true;
+
+      function draw(t) {
+        ctx.clearRect(0, 0, w, h);
+        var offset = reduceMotion ? 0 : (t || 0) * 0.006 % spacing;
+        ctx.strokeStyle = "rgba(4,167,119,0.05)";
+        ctx.lineWidth = 1;
+        for (var x = -spacing; x < w + spacing; x += spacing) {
+          ctx.beginPath();
+          ctx.moveTo(x + offset, 0);
+          ctx.lineTo(x + offset, h);
+          ctx.stroke();
+        }
+        for (var y = -spacing; y < h + spacing; y += spacing) {
+          ctx.beginPath();
+          ctx.moveTo(0, y + offset);
+          ctx.lineTo(w, y + offset);
+          ctx.stroke();
+        }
+        if (running && !reduceMotion) requestAnimationFrame(draw);
+      }
+      draw(0);
+      document.addEventListener("visibilitychange", function () {
+        running = !document.hidden;
+        if (running && !reduceMotion) requestAnimationFrame(draw);
+      });
+    })();
+  </script>
+
+</body>
+</html>
