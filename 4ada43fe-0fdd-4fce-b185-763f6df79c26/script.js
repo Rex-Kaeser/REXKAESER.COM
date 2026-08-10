@@ -65,8 +65,11 @@
 
   /* ---------------- animated stat numbers ---------------- */
 
+  // The HTML already shows each stat's correct final value by default, so if this
+  // animation never triggers (slow scroll, thrown error elsewhere, old browser) the
+  // page still reads correctly — this only adds a count-up flourish on top.
   var statEls = document.querySelectorAll("[data-count]");
-  if (statEls.length) {
+  if (statEls.length && !reduceMotion) {
     var countIo = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
@@ -75,12 +78,8 @@
           countIo.unobserve(el);
           var target = parseInt(el.getAttribute("data-count"), 10);
           var suffix = el.getAttribute("data-suffix") || "";
-          if (reduceMotion) {
-            el.textContent = target + suffix;
-            return;
-          }
           var start = 0;
-          var duration = 1400;
+          var duration = 1200;
           var startTime = null;
           function step(ts) {
             if (!startTime) startTime = ts;
@@ -89,11 +88,12 @@
             var val = Math.round(start + (target - start) * eased);
             el.textContent = val + suffix;
             if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = target + suffix;
           }
           requestAnimationFrame(step);
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.3, rootMargin: "0px 0px -40px 0px" }
     );
     statEls.forEach(function (el) { countIo.observe(el); });
   }
@@ -194,34 +194,25 @@
     }
   ];
 
-  function renderWidget() {
+  // Build each dot + legend card ONCE and reuse them on every reroll (only updating
+  // position/text). Destroying and recreating elements each time — the original bug
+  // here — meant the CSS "left" transition had nothing to animate between, since a
+  // transition can't interpolate across two different DOM nodes. Reusing the same
+  // nodes is what makes the reroll actually visibly slide instead of silently no-op.
+  function buildWidget() {
     if (!track || !legend) return;
-    // clear old dots
-    track.querySelectorAll(".disruption-dot").forEach(function (d) { d.remove(); });
-    legend.innerHTML = "";
-
-    var placed = disruptions
-      .map(function (d) {
-        var year = Math.round(d.range[0] + Math.random() * (d.range[1] - d.range[0]));
-        return { def: d, year: year };
-      })
-      .sort(function (a, b) { return a.year - b.year; });
-
-    placed.forEach(function (item, idx) {
+    disruptions.forEach(function (d) {
       var dot = document.createElement("button");
       dot.className = "disruption-dot";
       dot.type = "button";
-      dot.style.left = item.year + "%";
-      dot.setAttribute("aria-label", item.def.label + ", year " + item.year);
-      dot.title = item.def.label + " — year " + item.year;
       track.appendChild(dot);
 
       var card = document.createElement("div");
       card.className = "legend-item";
-      card.innerHTML =
-        '<span class="yr">Year ' + item.year + " of 100</span>" +
-        "<h4>" + item.def.label + "</h4>" +
-        "<p>" + item.def.detail + "</p>";
+      legend.appendChild(card);
+
+      d._dot = dot;
+      d._card = card;
 
       dot.addEventListener("mouseenter", function () { card.classList.add("hot"); });
       dot.addEventListener("mouseleave", function () { card.classList.remove("hot"); });
@@ -232,15 +223,40 @@
         card.classList.add("hot");
         setTimeout(function () { card.classList.remove("hot"); }, 1400);
       });
+    });
+  }
 
+  function randomizeWidget() {
+    if (!track || !legend) return;
+    var placed = disruptions
+      .map(function (d) {
+        var year = Math.round(d.range[0] + Math.random() * (d.range[1] - d.range[0]));
+        return { def: d, year: year };
+      })
+      .sort(function (a, b) { return a.year - b.year; });
+
+    placed.forEach(function (item) {
+      var dot = item.def._dot;
+      var card = item.def._card;
+      dot.style.left = item.year + "%";
+      dot.setAttribute("aria-label", item.def.label + ", year " + item.year);
+      dot.title = item.def.label + " — year " + item.year;
+      card.innerHTML =
+        '<span class="yr">Year ' + item.year + " of 100</span>" +
+        "<h4>" + item.def.label + "</h4>" +
+        "<p>" + item.def.detail + "</p>";
+      // re-append in sorted order so the legend grid reads left-to-right by year
       legend.appendChild(card);
+      card.classList.add("hot");
+      setTimeout(function () { card.classList.remove("hot"); }, 900);
     });
   }
 
   if (track && legend) {
-    renderWidget();
+    buildWidget();
+    randomizeWidget();
     if (rerollBtn) {
-      rerollBtn.addEventListener("click", renderWidget);
+      rerollBtn.addEventListener("click", randomizeWidget);
     }
   }
 
