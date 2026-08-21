@@ -70,7 +70,15 @@
         if (!r.ok) throw new Error("could not load " + src);
         return r.text();
       })
-      .then(function (md) { memoBody.innerHTML = renderMarkdown(md); })
+      .then(function (md) {
+        // A server can hand back a 200-ish response for a fallback/error page instead
+        // of a real 404, so also reject anything that looks like HTML rather than
+        // markdown, otherwise a misconfigured host would render raw page source here.
+        if (/^\s*<(!doctype|html)/i.test(md)) {
+          throw new Error("got HTML instead of markdown for " + src);
+        }
+        memoBody.innerHTML = renderMarkdown(md);
+      })
       .catch(function () {
         memoBody.innerHTML = '<p class="memo-loading">Couldn\'t load this file.</p>';
       });
