@@ -7,6 +7,93 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ---------------- memo overlay (revision memo / project reflection) ---------------- */
+
+  // Small, deliberately narrow markdown -> HTML renderer. Only supports the subset
+  // used in memo/*.md (headers, bold, italic, links, unordered lists, hr, paragraphs) —
+  // no external markdown library, so the page stays self-contained.
+  function renderMarkdown(md) {
+    function escapeHtml(s) {
+      return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    function inline(s) {
+      s = escapeHtml(s);
+      s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+      s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+      s = s.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+      return s;
+    }
+    var blocks = md.replace(/\r\n/g, "\n").trim().split(/\n\s*\n/);
+    return blocks
+      .map(function (block) {
+        var lines = block.split("\n").filter(function (l) { return l.trim().length; });
+        if (!lines.length) return "";
+        if (lines.every(function (l) { return /^-\s+/.test(l.trim()); })) {
+          return (
+            "<ul>" +
+            lines.map(function (l) { return "<li>" + inline(l.trim().replace(/^-\s+/, "")) + "</li>"; }).join("") +
+            "</ul>"
+          );
+        }
+        if (/^###\s+/.test(lines[0])) return "<h3>" + inline(lines[0].replace(/^###\s+/, "")) + "</h3>";
+        if (/^##\s+/.test(lines[0])) return "<h2>" + inline(lines[0].replace(/^##\s+/, "")) + "</h2>";
+        if (/^#\s+/.test(lines[0])) return "<h1>" + inline(lines[0].replace(/^#\s+/, "")) + "</h1>";
+        if (lines[0].trim() === "---") return "<hr>";
+        return "<p>" + lines.map(inline).join(" ") + "</p>";
+      })
+      .join("\n");
+  }
+
+  var memoOverlay = document.getElementById("memoOverlay");
+  var memoBody = document.getElementById("memoBody");
+  var memoKicker = document.getElementById("memoKicker");
+  var memoClose = document.getElementById("memoClose");
+
+  function closeMemo() {
+    if (!memoOverlay) return;
+    memoOverlay.classList.add("hidden");
+    setTimeout(function () {
+      if (memoOverlay.classList.contains("hidden")) memoOverlay.style.display = "none";
+    }, 320);
+  }
+
+  function openMemo(src, title) {
+    if (!memoOverlay || !memoBody) return;
+    memoOverlay.style.display = "flex";
+    // reflow before removing "hidden" so the opacity transition actually plays
+    void memoOverlay.offsetHeight;
+    memoOverlay.classList.remove("hidden");
+    if (memoKicker) memoKicker.textContent = title || "";
+    memoBody.innerHTML = '<p class="memo-loading">Loading…</p>';
+    fetch(src)
+      .then(function (r) {
+        if (!r.ok) throw new Error("could not load " + src);
+        return r.text();
+      })
+      .then(function (md) { memoBody.innerHTML = renderMarkdown(md); })
+      .catch(function () {
+        memoBody.innerHTML = '<p class="memo-loading">Couldn\'t load this file.</p>';
+      });
+  }
+
+  if (memoOverlay) {
+    if (memoClose) memoClose.addEventListener("click", closeMemo);
+    memoOverlay.addEventListener("click", function (e) {
+      if (e.target === memoOverlay) closeMemo();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeMemo();
+    });
+    openMemo(memoOverlay.getAttribute("data-memo-src"), memoOverlay.getAttribute("data-memo-title"));
+  }
+
+  document.querySelectorAll("[data-memo-src]").forEach(function (btn) {
+    if (btn === memoOverlay) return;
+    btn.addEventListener("click", function () {
+      openMemo(btn.getAttribute("data-memo-src"), btn.getAttribute("data-memo-title"));
+    });
+  });
+
   /* ---------------- scroll progress bar ---------------- */
 
   var progressBar = document.getElementById("progress");
@@ -168,29 +255,29 @@
 
   var disruptions = [
     {
-      label: "Funding disappears",
+      label: "Funding Disappears",
       range: [8, 42],
-      detail: "A budget line gets cut, an operator changes hands, or the economics that justified the project stop working — long before the concrete does."
+      detail: "A budget line gets cut, an operator changes hands, or the economics that justified the project stop working, long before the concrete does."
     },
     {
-      label: "Safety failure",
+      label: "Safety Failure",
       range: [4, 55],
       detail: "An inspection turns up something the original design never accounted for. The clock doesn't wait for the planned service life to finish."
     },
     {
-      label: "License or rights challenge",
+      label: "License or Rights Challenge",
       range: [30, 88],
       detail: "This is what actually hit the Klamath dams: their federal operating license expired in 2006, decades before anyone had a real plan for what came next."
     },
     {
-      label: "Natural disaster",
+      label: "Natural Disaster",
       range: [2, 78],
       detail: "Flood, fire, earthquake. Infrastructure doesn't get to finish its story on schedule just because the engineering was sound."
     },
     {
-      label: "Sustained opposition",
+      label: "Sustained Opposition",
       range: [15, 96],
-      detail: "Organizers behind the Klamath removals were told for years it would never happen. It took roughly thirty years of pressure before it did."
+      detail: "Organized, persistent pressure, protests, lawsuits, public campaigns, can force an early ending on its own, no single disaster required. Klamath organizers were told for years it would never happen, and it took roughly thirty years of pressure before it did."
     }
   ];
 
@@ -240,7 +327,7 @@
       var card = item.def._card;
       dot.style.left = item.year + "%";
       dot.setAttribute("aria-label", item.def.label + ", year " + item.year);
-      dot.title = item.def.label + " — year " + item.year;
+      dot.title = item.def.label + ", year " + item.year;
       card.innerHTML =
         '<span class="yr">Year ' + item.year + " of 100</span>" +
         "<h4>" + item.def.label + "</h4>" +

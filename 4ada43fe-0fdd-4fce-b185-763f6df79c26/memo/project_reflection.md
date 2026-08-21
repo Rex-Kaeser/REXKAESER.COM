@@ -1,0 +1,14 @@
+# Project reflection
+
+Looking back, because of the way the touchpoints were structured, I picked out my sources before I really picked my topic of argument. After watching the documentary on the Klamath dam removals, I just though it would be a interesting topic to write about. The idea I came up with later about all infrastructure needing to be designed for decommissioning was when I was thinking about my senior design project and how we are thinking about full life spans, when I was just wondering, how do we even know it will last that long before someone comes up with a better solution. That decision and thinking on the topic was mostly in touchpoint 2, where I had to logically cluster the sources, and that idea really stood out as a good way to organize.
+
+The synthesis in touchpoint 3 though, was the hardest part of the whole project. I had to figure out what I was framing the problem as, and pick a side, and that’s when I decided I really couldn’t pick a side because all the sides agreed that removal should be planned but disagree on who should be doing it. After a few crappy drafts I decided uncertainty should be the side I’m “against” because uncertainty is why a infrastructure project should be planned to commission, because there is no right answer on lifespan or why it will be removed, but the uncertainty that it could be removed.
+
+Touchpoint 4 was just a large mix of AI website building with me effectively going back and forth for 10 hours asking it to change stuff, add stuff, and make it nicer. The AI really struggled with making something nice to read beyond making it look pretty, so a lot of the additional features, like the little interactable timeline generator, had to be programmed outside of the project and added to it after it was working. I had to also push around the sections, and verify a lot of the fact, but I think after reorganizing the page a few times, as well as having the AI write a lot of the sections to read a lot better then what I had originally, made a pretty nice to read experience for the reviewer.
+
+I think the Peer review in touchpoint 5 really showed the result of my efforts with the reviewer being positive to my interactable elements and layout, with the big ones being the style of the background, which I kept because I liked (and cant figure out how to change without making it look weird), and additional images, which I have added.
+
+In the end, taking the Yurok rights-of-nature resolution like it was actual governance instead of a reservoir, helped me think of all engineering projects as being possibly similar, if you think of everything a engineering project touches as alive, then a plan of decommission is the same thing as what to do after a scar heals, everything you do to another “person” needs to have a plan when what you do is “done”.
+
+
+

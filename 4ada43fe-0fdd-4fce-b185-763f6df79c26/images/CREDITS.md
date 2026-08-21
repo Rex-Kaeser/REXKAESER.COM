@@ -37,3 +37,9 @@ All images on this page are U.S. government works (public domain) or explicitly 
    https://commons.wikimedia.org/wiki/File:Chinook_salmon_(32849474990).jpg
    License: CC BY 2.0 — attribution: California Department of Fish and Wildlife
    Note: this photo is from the Feather River, not the Klamath — same species (Chinook salmon), used as a representative illustration of the fish central to the argument, captioned accordingly on the page.
+
+8. **klamath-salmon-fry.jpg**
+   Source: USGS Western Fisheries Research Center, "The Klamath Dams Are Down: A Closer Look at Juvenile Salmon Migration"
+   https://www.usgs.gov/centers/western-fisheries-research-center/news/klamath-dams-are-down-a-closer-look-juvenile-salmon
+   License: Public domain (U.S. government work)
+   Added in response to peer review asking for more wildlife imagery. Deliberately did not add photos of Yurok people or ceremonies from the Tribe's own site — couldn't independently confirm those images carry a license clearing them for reuse, unlike this and the other federal-agency photos on the page.

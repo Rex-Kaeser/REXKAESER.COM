@@ -650,6 +650,110 @@ footer p {
   font-family: var(--mono);
   font-size: 12.5px;
   color: var(--text-dimmer);
+  margin-bottom: 18px;
+}
+
+.memo-trigger {
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-dim);
+  background: transparent;
+  border: 1px solid var(--line-bright);
+  border-radius: 999px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.memo-trigger:hover {
+  color: var(--bg);
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+/* ---------- memo overlay (revision memo / project reflection) ---------- */
+
+.memo-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(5, 8, 11, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+.memo-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.memo-card {
+  position: relative;
+  max-width: 920px;
+  width: 100%;
+  max-height: 84vh;
+  overflow-y: auto;
+  background: var(--bg-panel);
+  border: 1px solid var(--line-bright);
+  border-radius: var(--radius);
+  padding: 34px 36px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+}
+.memo-card .kicker { margin-bottom: 20px; }
+.memo-card h1 { font-size: 24px; color: #fff; margin: 0 0 16px; }
+.memo-card h2 {
+  font-size: 16px;
+  color: var(--teal-bright);
+  font-family: var(--serif-display);
+  margin: 26px 0 10px;
+}
+.memo-card h2:first-of-type { margin-top: 0; }
+.memo-card p {
+  font-size: 14.5px;
+  color: var(--text-dim);
+  line-height: 1.65;
+  margin: 0 0 14px;
+}
+.memo-card ul { margin: 0 0 16px; padding-left: 20px; }
+.memo-card li {
+  font-size: 14.5px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.memo-card strong { color: #fff; }
+.memo-card a { color: var(--teal-bright); }
+.memo-card hr { border: none; border-top: 1px solid var(--line); margin: 20px 0; }
+.memo-loading { font-family: var(--mono); font-size: 13px; color: var(--text-dimmer); }
+
+.memo-close {
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  top: 18px; right: 18px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--line-bright);
+  background: var(--bg-panel-2);
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.memo-close:hover { background: var(--teal); color: var(--bg); }
+
+@media (max-width: 640px) {
+  .memo-card { padding: 26px 22px; }
 }
 
 /* ---------- contribution icons ---------- */
