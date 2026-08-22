@@ -491,13 +491,20 @@ body {
 .detail-card {
   width: 100%;
   max-width: 420px;
-  max-height: 82vh;
+  /* % of the overlay's own (fixed, inset:0) box rather than a "vh" unit —
+     on mobile browsers with a dynamic address bar, "vh" can be based on the
+     largest possible viewport rather than what's actually visible, letting
+     the card grow taller than the real screen with no way to scroll to the
+     clipped bottom (where the notes live). A %, resolved against the overlay's
+     actual rendered box, can never exceed the real visible area. */
+  max-height: calc(100% - 24px);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
   border: 1px solid var(--accent);
   border-radius: 14px 14px 0 0;
   box-shadow: 0 0 50px rgba(67, 217, 255, 0.18);
-  padding: 22px 22px 26px;
+  padding: 22px 22px calc(26px + env(safe-area-inset-bottom));
   position: relative;
   transform: translateY(16px);
   transition: transform 0.18s ease;
