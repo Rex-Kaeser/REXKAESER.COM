@@ -227,6 +227,16 @@ body {
   border-top: 1px solid var(--line);
 }
 
+/* Current-time marker — today's column/panel only, positioned and shown/hidden
+   in JS (updateNowLines). No highlight, just a plain accent-colored line. */
+.now-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--accent);
+  pointer-events: none;
+}
+
 .event-block {
   position: absolute;
   border-radius: 6px;
@@ -400,6 +410,14 @@ body {
   right: calc(-0.4 * var(--panel-pad));
   border-top-width: 2.1px; /* 60% of 3.5px (still 175% of the normal tick) */
   border-top-color: var(--line-strong);
+}
+
+/* Same treatment as the noon line (thickness, padding-bleed reach), just
+   further out (50% vs 40%) and in the blue "now" color instead of --line-strong. */
+.day-panel__grid .now-line {
+  left: calc(-0.5 * var(--panel-pad));
+  right: calc(-0.5 * var(--panel-pad));
+  border-top-width: 2.1px;
 }
 
 .day-panel__empty {

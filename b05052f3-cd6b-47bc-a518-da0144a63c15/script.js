@@ -161,13 +161,19 @@
     // layout, so this is safe to call immediately (no rAF needed — rAF is
     // throttled/never fires in a backgrounded tab, e.g. a hidden preview pane).
     scrollToToday();
+
+    updateNowLines();
+    if (!nowLineInterval) nowLineInterval = setInterval(updateNowLines, 60 * 1000);
   }
+
+  var nowLineInterval = null;
 
   // Re-fits the mobile day view to the viewport (orientation change, browser
   // chrome showing/hiding, etc.) and re-centers on today afterward.
   function rebuildMobileDayView() {
     buildDayScrollerView(timedClassesCache, computeMobileHourPx());
     scrollToToday();
+    updateNowLines();
   }
 
   function buildAsyncStrip(asyncClasses) {
@@ -227,6 +233,10 @@
         hl.style.top = ((mm - GRID_START_MIN) / 60 * HOUR_PX) + "px";
         col.appendChild(hl);
       });
+
+      if (dayIdx === todayIdx) {
+        col.appendChild(makeNowLine(HOUR_PX));
+      }
 
       var dayEvents = classes.filter(function (c) {
         return c.days.indexOf(dayName) !== -1;
@@ -353,6 +363,36 @@
 
   var NOON_MIN = 12 * 60;
 
+  // "Now" indicator — one per today's column/panel. Position is stamped with
+  // the px-per-hour scale it was built at (desktop's fixed HOUR_PX or
+  // mobile's viewport-fit hourPx) so updateNowLines can reposition it
+  // correctly without needing to know which view it belongs to.
+  function makeNowLine(scale) {
+    var line = document.createElement("div");
+    line.className = "now-line";
+    line.dataset.hourPx = String(scale);
+    line.hidden = true; // updateNowLines sets the real state immediately after
+    return line;
+  }
+
+  // Moves every "now" line to the current time and shows/hides it — hidden
+  // whenever the current moment falls outside the grid's displayed hours
+  // (before the first class's -30min padding or after the last one's).
+  // Today's column/panel is fixed at page-load (todayIdx), same as the rest
+  // of the app, so this doesn't roll over at midnight if left open.
+  function updateNowLines() {
+    var now = new Date();
+    var nowMin = now.getHours() * 60 + now.getMinutes();
+    var inRange = now.getDay() === todayIdx && nowMin >= GRID_START_MIN && nowMin <= GRID_END_MIN;
+
+    document.querySelectorAll(".now-line").forEach(function (line) {
+      line.hidden = !inRange;
+      if (!inRange) return;
+      var scale = parseFloat(line.dataset.hourPx);
+      line.style.top = ((nowMin - GRID_START_MIN) / 60 * scale) + "px";
+    });
+  }
+
   // Mobile hour axis: bare hour number, no AM/PM (repeating it on every tick
   // is noise) — the switch from AM to PM is marked instead by a thicker
   // divider line at noon, drawn in buildDayScrollerView below.
@@ -413,6 +453,10 @@
         hl.style.top = ((mm - GRID_START_MIN) / 60 * hourPx) + "px";
         grid.appendChild(hl);
       });
+
+      if (dayIdx === todayIdx) {
+        grid.appendChild(makeNowLine(hourPx));
+      }
 
       var dayEvents = classes.filter(function (c) {
         return c.days.indexOf(dayName) !== -1;
