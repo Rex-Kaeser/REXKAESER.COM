@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
 
 :root {
+  /* Same intent as the color-scheme meta tag in index.html: this page is
+     always dark, so don't let the browser apply its own dark-mode pass
+     (auto-invert, native form-control recoloring, etc.) on top of it. */
+  color-scheme: dark only;
   --bg-0: #05070c;
   --bg-1: #0a0e18;
   --bg-2: #0f1424;
@@ -381,21 +385,41 @@ body {
 
 .day-panel__grid .hour-line {
   position: absolute;
-  left: 0;
-  right: 0;
-  border-top: 1px solid var(--line);
+  /* Two hierarchies at once: reach (a normal tick bleeds 20% of the way
+     through the panel's padding gap, past the class tiles' edges but short
+     of the panel border) and thickness (noon is 175% of this, below). */
+  left: calc(-0.2 * var(--panel-pad));
+  right: calc(-0.2 * var(--panel-pad));
+  border-top: 1.2px solid var(--line); /* 60% of 2px */
+}
+
+/* The hour axis drops AM/PM from every label to cut the noise — this marks
+   the one place it actually matters (noon) instead. */
+.day-panel__grid .hour-line--noon {
+  left: calc(-0.4 * var(--panel-pad));
+  right: calc(-0.4 * var(--panel-pad));
+  border-top-width: 2.1px; /* 60% of 3.5px (still 175% of the normal tick) */
+  border-top-color: var(--line-strong);
 }
 
 .day-panel__empty {
   position: absolute;
   left: 0;
   right: 0;
-  top: 40%;
-  color: var(--ink-dim);
+  color: var(--line-strong); /* matches the noon line it sits on */
   font-family: var(--font-display);
   font-size: 0.62rem;
   letter-spacing: 0.1em;
   text-align: center;
+  /* top is set inline in JS, pinned to the noon divider's actual y position */
+  transform: translateY(-50%);
+}
+
+.day-panel__empty span {
+  position: relative;
+  display: inline-block;
+  padding: 0 10px;
+  background: var(--bg-1);
 }
 
 .day-panel__grid .event-block__title {
@@ -565,6 +589,13 @@ body {
   gap: 14px;
   padding: 9px 0;
   border-top: 1px solid var(--line);
+}
+
+/* Author `display` above beats the browser's default [hidden]{display:none}
+   (author styles always win over the user-agent stylesheet) — without this,
+   setting .hidden = true in JS does nothing and the row stays visible. */
+.detail-row[hidden] {
+  display: none;
 }
 
 .detail-row__label {

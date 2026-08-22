@@ -4,8 +4,11 @@
   var DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   var DAY_FULL = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-  var GRID_START_MIN = 7 * 60;   // 7:00 AM
-  var GRID_END_MIN = 16 * 60;    // 4:00 PM
+  // Recomputed per-render from the actual schedule (see computeGridBounds) —
+  // these defaults only matter if something reads them before the first
+  // render completes.
+  var GRID_START_MIN = 7 * 60;
+  var GRID_END_MIN = 16 * 60;
   var HOUR_PX = 64;
 
   var app = document.getElementById("app");
@@ -82,6 +85,38 @@
     return h12 + (m ? ":" + (m < 10 ? "0" : "") + m : ":00") + " " + suffix;
   }
 
+  // Grid spans 30 min before the earliest class start and 30 min after the
+  // latest class end, across every day of the week (not per-day — the desktop
+  // grid and every mobile day panel share one scale, so the bound has to be
+  // the widest one needed by any day).
+  function computeGridBounds(timedClasses) {
+    var starts = [];
+    var ends = [];
+    timedClasses.forEach(function (c) {
+      starts.push(timeToMinutes(c.start));
+      ends.push(timeToMinutes(c.end));
+    });
+    if (!starts.length) return { start: 8 * 60, end: 17 * 60 };
+    var minStart = Math.min.apply(null, starts);
+    var maxEnd = Math.max.apply(null, ends);
+    return {
+      start: Math.max(0, minStart - 30),
+      end: Math.min(24 * 60, maxEnd + 30)
+    };
+  }
+
+  // Hour ticks (for grid lines + axis labels) always land on the clock hour,
+  // even though GRID_START_MIN/GRID_END_MIN themselves usually don't (they're
+  // padded by 30 min from computeGridBounds) — so the first/last tick sits
+  // inset from the grid's top/bottom edge rather than glued to it.
+  function getHourTicks() {
+    var ticks = [];
+    var first = Math.ceil(GRID_START_MIN / 60) * 60;
+    var last = Math.floor(GRID_END_MIN / 60) * 60;
+    for (var m = first; m <= last; m += 60) ticks.push(m);
+    return ticks;
+  }
+
   function formatDate(iso) {
     if (!iso) return "";
     var d = new Date(iso + "T00:00:00");
@@ -110,6 +145,10 @@
       buildAsyncStrip(asyncClasses);
       asyncSection.hidden = false;
     }
+
+    var bounds = computeGridBounds(timedClasses);
+    GRID_START_MIN = bounds.start;
+    GRID_END_MIN = bounds.end;
 
     timedClassesCache = timedClasses;
     buildGridView(timedClasses);
@@ -163,16 +202,18 @@
     var totalMinutes = GRID_END_MIN - GRID_START_MIN;
     var totalHeight = (totalMinutes / 60) * HOUR_PX;
 
+    var hourTicks = getHourTicks();
+
     var timeColBody = document.createElement("div");
     timeColBody.className = "time-col";
     timeColBody.style.height = totalHeight + "px";
-    for (var m = GRID_START_MIN; m <= GRID_END_MIN; m += 60) {
+    hourTicks.forEach(function (m) {
       var label = document.createElement("div");
       label.className = "time-col__label";
       label.style.top = ((m - GRID_START_MIN) / 60 * HOUR_PX) + "px";
       label.textContent = formatTime(minutesToTimeStr(m));
       timeColBody.appendChild(label);
-    }
+    });
     gridBody.appendChild(timeColBody);
 
     DAY_NAMES.forEach(function (dayName, dayIdx) {
@@ -180,12 +221,12 @@
       col.className = "day-col" + (dayIdx === todayIdx ? " is-today" : "");
       col.style.height = totalHeight + "px";
 
-      for (var mm = GRID_START_MIN; mm <= GRID_END_MIN; mm += 60) {
+      hourTicks.forEach(function (mm) {
         var hl = document.createElement("div");
         hl.className = "hour-line";
         hl.style.top = ((mm - GRID_START_MIN) / 60 * HOUR_PX) + "px";
         col.appendChild(hl);
-      }
+      });
 
       var dayEvents = classes.filter(function (c) {
         return c.days.indexOf(dayName) !== -1;
@@ -310,16 +351,27 @@
     return Math.max(MOBILE_HOUR_PX_MIN, Math.min(HOUR_PX, hourPx));
   }
 
+  var NOON_MIN = 12 * 60;
+
+  // Mobile hour axis: bare hour number, no AM/PM (repeating it on every tick
+  // is noise) — the switch from AM to PM is marked instead by a thicker
+  // divider line at noon, drawn in buildDayScrollerView below.
+  function formatHourOnly(mins) {
+    var h = Math.floor(mins / 60) % 12;
+    if (h === 0) h = 12;
+    return String(h);
+  }
+
   function buildHourAxis(hourPx) {
     dayHours.innerHTML = "";
-    for (var m = GRID_START_MIN; m <= GRID_END_MIN; m += 60) {
+    getHourTicks().forEach(function (m) {
       var label = document.createElement("div");
       label.className = "day-scroller__hour-label";
       var tickY = (m - GRID_START_MIN) / 60 * hourPx;
       label.style.top = (tickY - HOUR_LABEL_H / 2) + "px";
-      label.textContent = formatTime(minutesToTimeStr(m));
+      label.textContent = formatHourOnly(m);
       dayHours.appendChild(label);
-    }
+    });
   }
 
   function buildDayScrollerView(classes, hourPx) {
@@ -330,6 +382,7 @@
     var totalMinutes = GRID_END_MIN - GRID_START_MIN;
     var gridHeight = (totalMinutes / 60) * hourPx;
     dayHours.style.height = gridHeight + "px";
+    var hourTicks = getHourTicks();
 
     DAY_NAMES.forEach(function (dayName, dayIdx) {
       var panel = document.createElement("div");
@@ -354,12 +407,12 @@
       grid.className = "day-panel__grid";
       grid.style.height = gridHeight + "px";
 
-      for (var mm = GRID_START_MIN; mm <= GRID_END_MIN; mm += 60) {
+      hourTicks.forEach(function (mm) {
         var hl = document.createElement("div");
-        hl.className = "hour-line";
+        hl.className = "hour-line" + (mm === NOON_MIN ? " hour-line--noon" : "");
         hl.style.top = ((mm - GRID_START_MIN) / 60 * hourPx) + "px";
         grid.appendChild(hl);
-      }
+      });
 
       var dayEvents = classes.filter(function (c) {
         return c.days.indexOf(dayName) !== -1;
@@ -368,7 +421,14 @@
       if (dayEvents.length === 0) {
         var empty = document.createElement("div");
         empty.className = "day-panel__empty";
-        empty.textContent = "— NO CLASSES —";
+        empty.innerHTML = "<span>NO CLASSES</span>";
+        // Sit right on the noon divider — falls back to a fixed mid-grid
+        // position if a future schedule ever pushes noon outside the grid's
+        // (dynamically computed) start/end bounds.
+        var noonInRange = NOON_MIN >= GRID_START_MIN && NOON_MIN <= GRID_END_MIN;
+        empty.style.top = noonInRange
+          ? ((NOON_MIN - GRID_START_MIN) / 60 * hourPx) + "px"
+          : "40%";
         grid.appendChild(empty);
       } else {
         var laidOut = layoutOverlaps(dayEvents);
@@ -453,6 +513,7 @@
       document.getElementById("detailCo").textContent = c.coInstructors.join(", ");
     } else {
       coRow.hidden = true;
+      document.getElementById("detailCo").textContent = "—";
     }
 
     var loc = c.room && c.room !== "—" ? c.building + " — Room " + c.room : c.building;
