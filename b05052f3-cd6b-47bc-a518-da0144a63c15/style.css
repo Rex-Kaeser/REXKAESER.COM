@@ -412,12 +412,11 @@ body {
   border-top-color: var(--line-strong);
 }
 
-/* Same treatment as the noon line (thickness, padding-bleed reach), just
-   further out (50% vs 40%) and in the blue "now" color instead of --line-strong. */
+/* Same reach treatment as the noon line, just further out (50% vs 40%).
+   Thickness (1px, inherited from .now-line) matches today's panel border. */
 .day-panel__grid .now-line {
   left: calc(-0.5 * var(--panel-pad));
   right: calc(-0.5 * var(--panel-pad));
-  border-top-width: 2.1px;
 }
 
 .day-panel__empty {
