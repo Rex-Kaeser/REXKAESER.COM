@@ -1,0 +1,6 @@
+# Which schedule config file should the page load?
+# Put ONLY a filename (or relative path) on the first non-comment line below.
+# To switch to a new semester, drop in a new .json file next to this one
+# and change the line below to point at it.
+
+schedule.fall2026.json

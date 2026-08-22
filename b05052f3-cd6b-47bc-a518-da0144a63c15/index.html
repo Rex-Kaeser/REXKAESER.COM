@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Class Schedule</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+
+<header class="hud-header">
+  <div class="hud-header__title">
+    <span class="bracket">[</span>SCHEDULE<span class="bracket">]</span>
+  </div>
+  <div class="hud-header__term" id="termLabel">LOADING…</div>
+</header>
+
+<main id="app" aria-live="polite">
+  <div class="loading" id="loadingMsg">
+    <div class="loading__ring"></div>
+    <div>ESTABLISHING LINK…</div>
+  </div>
+</main>
+
+<!-- Desktop / tablet: full week grid -->
+<section class="grid-view" id="gridView" hidden>
+  <div class="grid-view__frame">
+    <div class="grid-scroll">
+      <div class="grid-header" id="gridHeader"></div>
+      <div class="grid-body" id="gridBody"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Mobile: horizontal snap-scrolling day panels, arranged as time grids like the desktop view -->
+<section class="day-scroller" id="dayScroller" hidden>
+  <div class="day-scroller__viewport">
+    <div class="day-scroller__body">
+      <div class="day-scroller__hours" id="dayHours"></div>
+      <div class="day-scroller__track" id="dayTrack"></div>
+    </div>
+  </div>
+  <div class="day-scroller__dots" id="dayDots"></div>
+</section>
+
+<!-- Async / online-only classes, shown below the scheduled classes -->
+<section class="async-section" id="asyncSection" hidden>
+  <div class="async-section__label">Online / Async</div>
+  <div class="async-strip" id="asyncStrip"></div>
+</section>
+
+<!-- Detail popup, shared by both views -->
+<div class="overlay" id="overlay">
+  <div class="detail-card" id="detailCard" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+    <button class="detail-card__close" id="detailClose" aria-label="Close">✕</button>
+    <div class="detail-card__type" id="detailType">TYPE</div>
+    <h2 class="detail-card__title" id="detailTitle">Course Title</h2>
+    <div class="detail-card__code" id="detailCode">CODE</div>
+
+    <div class="detail-row">
+      <span class="detail-row__label">Professor</span>
+      <span class="detail-row__value" id="detailProf">—</span>
+    </div>
+    <div class="detail-row" id="detailCoRow" hidden>
+      <span class="detail-row__label">With</span>
+      <span class="detail-row__value" id="detailCo">—</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">Location</span>
+      <span class="detail-row__value" id="detailLoc">—</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">Time</span>
+      <span class="detail-row__value" id="detailTime">—</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">Term</span>
+      <span class="detail-row__value" id="detailTerm">—</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-row__label">CRN</span>
+      <span class="detail-row__value" id="detailCrn">—</span>
+    </div>
+    <div class="detail-card__notes" id="detailNotes" hidden></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
