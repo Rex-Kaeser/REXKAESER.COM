@@ -423,7 +423,7 @@ body {
 }
 
 .day-panel__grid .event-block__title {
-  font-size: 0.6rem;
+  font-size: 0.51rem; /* 15% smaller than 0.6rem */
   line-height: 1.2;
 }
 
