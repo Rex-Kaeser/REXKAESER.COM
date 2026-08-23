@@ -330,15 +330,25 @@ body {
 .day-scroller__track {
   flex: 1 1 auto;
   min-width: 0;
+  /* CSS's scroll-snap-align:center centers a panel against the scroll
+     container's OWN box, not the page. Without this, the track's box only
+     spans (100vw - hours-w) — offset from the hour axis — so every snapped
+     panel sits hours-w/2 right of true page-center, not just Sun/Sat. This
+     margin mirrors the hour axis on the other side, making the track's box
+     symmetric around true viewport center, which is what scroll-snap centers
+     against. */
+  margin-right: var(--hours-w);
   display: flex;
   gap: var(--day-gap);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  /* (100vw - hours-w) is the track's true rendered width; centering padding
-     must be computed against that, not the track's own "%" (see note above). */
-  padding: 10px calc((100vw - var(--hours-w) - var(--day-w)) / 2) 6px;
+  /* (100vw - 2*hours-w) is the track's true rendered width now that the
+     margin above claims a second hours-w — centering padding must be
+     computed against that, not the track's own "%" (percentages on a flex
+     item resolve against the flex CONTAINER's width, not the item's own). */
+  padding: 10px calc((100vw - 2 * var(--hours-w) - var(--day-w)) / 2) 6px;
 }
 .day-scroller__track::-webkit-scrollbar { display: none; }
 
