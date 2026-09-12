@@ -33,7 +33,7 @@ function renderProfile(p) {
   document.getElementById("topbar-rev").textContent = `${p.revision} · SCALE ${p.scale}`;
 
   document.getElementById("hero-name").innerHTML =
-    `Building hardware that <span class="accent">has to work.</span>`;
+    `Building hardware that <span class="accent">goes fast.</span>`;
   document.getElementById("hero-tagline").textContent = p.tagline;
 
   const meta = document.getElementById("hero-meta");
@@ -156,6 +156,65 @@ function renderInterests(data) {
 }
 
 /* ---------- Education ---------- */
+const CHEVRON_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+
+function buildCourseRow(c) {
+  const row = el("div", { class: "course-row" });
+  const stack = el("div", { class: "face-stack" }, [
+    el("div", { class: "face face-code" }, [
+      el("span", { class: "ccode" }, c.code),
+      el("span", { class: "cgrade-tag" }, c.grade),
+    ]),
+    el("div", { class: "face face-name" }, [
+      el("span", { class: "ctitle" }, c.title),
+      el("span", { class: "cgrade-tag" }, c.grade),
+    ]),
+  ]);
+  row.appendChild(stack);
+  row.addEventListener("click", () => {
+    const flipped = row.getAttribute("data-flipped") === "true";
+    row.setAttribute("data-flipped", flipped ? "false" : "true");
+  });
+  return row;
+}
+
+function buildTermCard(term) {
+  const card = el("div", { class: `term-card ${term.status === "in-progress" ? "in-progress" : ""}` });
+  card.append(
+    el("div", { class: "term-head" }, [
+      document.createTextNode(term.term),
+      el("span", {}, term.status === "in-progress" ? "IN PROGRESS" : ""),
+    ]),
+    el("div", { class: "courses" }, term.courses.map(buildCourseRow))
+  );
+  return card;
+}
+
+function toggleDegreeDetail(button, detail) {
+  const expanded = button.getAttribute("aria-expanded") === "true";
+  if (expanded) {
+    // Coming from maxHeight:"none" — pin to a concrete pixel value first so the
+    // browser has something to animate from, then collapse on the next frame.
+    detail.style.maxHeight = detail.scrollHeight + "px";
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      detail.style.maxHeight = "0px";
+    }));
+    button.setAttribute("aria-expanded", "false");
+  } else {
+    detail.style.maxHeight = detail.scrollHeight + "px";
+    button.setAttribute("aria-expanded", "true");
+    detail.addEventListener("transitionend", function onEnd(e) {
+      if (e.propertyName !== "max-height") return;
+      detail.removeEventListener("transitionend", onEnd);
+      // Lift the cap once open so late font loads, resizes, or content
+      // changes can never clip — a one-time scrollHeight snapshot goes stale.
+      if (button.getAttribute("aria-expanded") === "true") {
+        detail.style.maxHeight = "none";
+      }
+    });
+  }
+}
+
 function renderEducation(data) {
   const degrees = document.getElementById("degree-list");
   degrees.append(...data.degrees.map(d => {
@@ -168,25 +227,22 @@ function renderEducation(data) {
       el("p", { class: "school" }, `${d.school} — ${d.location}` + (d.gpa ? ` · GPA ${d.gpa}` : "")),
     );
     if (d.note) node.append(el("div", { class: "note" }, d.note));
-    return node;
-  }));
 
-  const track = document.getElementById("timeline-track");
-  track.append(...data.timeline.map(term => {
-    const card = el("div", { class: `term-card ${term.status === "in-progress" ? "in-progress" : ""}` });
-    card.append(
-      el("div", { class: "term-head" }, [
-        document.createTextNode(term.term),
-        el("span", {}, term.status === "in-progress" ? "IN PROGRESS" : ""),
-      ]),
-      el("div", { class: "courses" }, term.courses.map(c =>
-        el("div", { class: "course-row" }, [
-          el("span", { class: "ccode" }, c.code),
-          el("span", { class: "cgrade" }, c.grade),
-        ])
-      ))
-    );
-    return card;
+    if (d.timeline && d.timeline.length) {
+      const detail = el("div", { class: "degree-detail" });
+      const inner = el("div", { class: "degree-detail-inner" });
+      inner.append(...d.timeline.map(buildTermCard));
+      detail.appendChild(inner);
+
+      const toggle = el("button", { class: "expand-toggle", type: "button", "aria-expanded": "false" }, [
+        el("span", {}, "View Transcript"),
+        el("span", { class: "chevron", html: CHEVRON_SVG }),
+      ]);
+      toggle.addEventListener("click", () => toggleDegreeDetail(toggle, detail));
+
+      node.append(toggle, detail);
+    }
+    return node;
   }));
 }
 

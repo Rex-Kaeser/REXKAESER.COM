@@ -7,7 +7,15 @@
       "start": "Aug 2026",
       "end": "Dec 2027",
       "gpa": null,
-      "note": "Anticipated"
+      "note": "Anticipated",
+      "timeline": [
+        { "term": "Spring 2026", "status": "complete", "courses": [
+          { "code": "MEGN 554", "title": "Orbital Mechanics", "grade": "B+" }
+        ]},
+        { "term": "Fall 2026", "status": "in-progress", "courses": [
+          { "code": "FEGN 525", "title": "Advanced FEA", "grade": "IP" }
+        ]}
+      ]
     },
     {
       "school": "Colorado School of Mines",
@@ -16,7 +24,64 @@
       "start": "Aug 2023",
       "end": "Dec 2026",
       "gpa": "3.26",
-      "note": "Anticipated · Honor Roll x4 · Lean Six Sigma Yellow Belt"
+      "note": "Anticipated · Honor Roll x4 · Lean Six Sigma Yellow Belt",
+      "timeline": [
+        { "term": "Fall 2023", "status": "complete", "courses": [
+          { "code": "CSCI 200", "title": "Foundations of Programming", "grade": "A-" },
+          { "code": "CSM 101", "title": "Freshman Success Seminar", "grade": "A" },
+          { "code": "EBGN 201", "title": "Principles of Economics", "grade": "A-" },
+          { "code": "MATH 213", "title": "Calc for Sci & Eng III", "grade": "B" },
+          { "code": "PHGN 100", "title": "Physics I – Mechanics", "grade": "B+" }
+        ]},
+        { "term": "Spring 2024", "status": "complete", "courses": [
+          { "code": "CEEN 241", "title": "Statics", "grade": "C+" },
+          { "code": "EDNS 151", "title": "Cornerstone Design I", "grade": "A" },
+          { "code": "HASS 100", "title": "Nature & Human Values", "grade": "B" },
+          { "code": "MATH 225", "title": "Differential Equations", "grade": "C+" },
+          { "code": "PHGN 200", "title": "Physics II – E&M / Optics", "grade": "C" }
+        ]},
+        { "term": "Fall 2024", "status": "complete", "courses": [
+          { "code": "EENG 281", "title": "Intro to Circuits", "grade": "B" },
+          { "code": "MATH 307", "title": "Intro to Scientific Computing", "grade": "C+" },
+          { "code": "MEGN 200", "title": "Programming & Hardware Interface", "grade": "A-" },
+          { "code": "MEGN 212", "title": "Solid Mechanics", "grade": "A-" },
+          { "code": "MTGN 202", "title": "Engineered Materials", "grade": "A" }
+        ]},
+        { "term": "Spring 2025", "status": "complete", "courses": [
+          { "code": "MEGN 201", "title": "Design & Fabrication", "grade": "B" },
+          { "code": "MEGN 261", "title": "Thermodynamics I", "grade": "B" },
+          { "code": "MEGN 300", "title": "Instrumentation & Automation", "grade": "B" },
+          { "code": "MEGN 315", "title": "Dynamics", "grade": "A-" },
+          { "code": "MEGN 324", "title": "Introduction to FEA", "grade": "B" }
+        ]},
+        { "term": "Fall 2025", "status": "complete", "courses": [
+          { "code": "EBGN 321", "title": "Engineering Economics", "grade": "C" },
+          { "code": "HASS 200", "title": "Global Studies", "grade": "B+" },
+          { "code": "MEGN 301", "title": "Mechanical Integration & Design", "grade": "A-" },
+          { "code": "MEGN 351", "title": "Fluid Mechanics", "grade": "B+" },
+          { "code": "MEGN 381", "title": "Manufacturing Processes", "grade": "A-" },
+          { "code": "MEGN 481", "title": "Machine Design", "grade": "B+" }
+        ]},
+        { "term": "Spring 2026", "status": "complete", "courses": [
+          { "code": "EDNS 491", "title": "Capstone Design I", "grade": "A" },
+          { "code": "EENG 284", "title": "Digital Logic", "grade": "B+" },
+          { "code": "EENG 307", "title": "Feedback Control Systems", "grade": "A-" },
+          { "code": "MEGN 451", "title": "Aerodynamics", "grade": "B+" },
+          { "code": "MEGN 471", "title": "Heat Transfer", "grade": "B+" },
+          { "code": "MEGN 554", "title": "Orbital Mechanics", "grade": "B+" }
+        ]},
+        { "term": "Summer 2026", "status": "complete", "courses": [
+          { "code": "EDNS 315", "title": "Engr. Society & Env. Responsibility", "grade": "A" },
+          { "code": "HASS 412", "title": "Literature & The Environment", "grade": "A-" }
+        ]},
+        { "term": "Fall 2026", "status": "in-progress", "courses": [
+          { "code": "EDNS 492", "title": "Capstone Design II", "grade": "IP" },
+          { "code": "EENG 383", "title": "Embedded Systems", "grade": "IP" },
+          { "code": "EENG 421", "title": "Semiconductor Device Physics & Design", "grade": "IP" },
+          { "code": "FEGN 525", "title": "Advanced FEA", "grade": "IP" },
+          { "code": "MEGN 414", "title": "Mechanics of Composite Materials", "grade": "IP" }
+        ]}
+      ]
     },
     {
       "school": "Colorado Mountain College",
@@ -25,7 +90,27 @@
       "start": "2020",
       "end": "2023",
       "gpa": "3.87",
-      "note": "Credits transferred to Mines"
+      "note": "Credits transferred to Mines",
+      "timeline": [
+        { "term": "Fall 2021", "status": "complete", "courses": [
+          { "code": "CAD 101", "title": "Computer Aided Design", "grade": "A" },
+          { "code": "CHE 111", "title": "Chemistry", "grade": "A-" }
+        ]},
+        { "term": "Spring 2022", "status": "complete", "courses": [
+          { "code": "CHE 112", "title": "Chemistry", "grade": "A" },
+          { "code": "MAT 201", "title": "Calculus I", "grade": "A" },
+          { "code": "WEL 1003", "title": "MIG and Stick Welding", "grade": "A" }
+        ]},
+        { "term": "Fall 2022", "status": "complete", "courses": [
+          { "code": "CSC 1091", "title": "Intro to Programming", "grade": "A" },
+          { "code": "MAT 2420", "title": "Calculus II", "grade": "A" },
+          { "code": "PSY 1001", "title": "General Psychology", "grade": "A-" }
+        ]},
+        { "term": "Spring 2023", "status": "complete", "courses": [
+          { "code": "CSC 1060", "title": "Computer Science I", "grade": "A" },
+          { "code": "MAT 1260", "title": "Intro to Statics", "grade": "B" }
+        ]}
+      ]
     },
     {
       "school": "Summit High School",
@@ -34,64 +119,8 @@
       "start": "2019",
       "end": "2023",
       "gpa": "4.02",
-      "note": null
+      "note": null,
+      "timeline": null
     }
-  ],
-  "timeline": [
-    { "term": "Fall 2023", "status": "complete", "courses": [
-      { "code": "CSCI 200", "title": "Foundations of Programming", "grade": "A-" },
-      { "code": "CSM 101", "title": "Freshman Success Seminar", "grade": "A" },
-      { "code": "EBGN 201", "title": "Principles of Economics", "grade": "A-" },
-      { "code": "MATH 213", "title": "Calc for Sci & Eng III", "grade": "B" },
-      { "code": "PHGN 100", "title": "Physics I – Mechanics", "grade": "B+" }
-    ]},
-    { "term": "Spring 2024", "status": "complete", "courses": [
-      { "code": "CEEN 241", "title": "Statics", "grade": "C+" },
-      { "code": "EDNS 151", "title": "Cornerstone Design I", "grade": "A" },
-      { "code": "HASS 100", "title": "Nature & Human Values", "grade": "B" },
-      { "code": "MATH 225", "title": "Differential Equations", "grade": "C+" },
-      { "code": "PHGN 200", "title": "Physics II – E&M / Optics", "grade": "C" }
-    ]},
-    { "term": "Fall 2024", "status": "complete", "courses": [
-      { "code": "EENG 281", "title": "Intro to Circuits", "grade": "B" },
-      { "code": "MATH 307", "title": "Intro to Scientific Computing", "grade": "C+" },
-      { "code": "MEGN 200", "title": "Programming & Hardware Interface", "grade": "A-" },
-      { "code": "MEGN 212", "title": "Solid Mechanics", "grade": "A-" },
-      { "code": "MTGN 202", "title": "Engineered Materials", "grade": "A" }
-    ]},
-    { "term": "Spring 2025", "status": "complete", "courses": [
-      { "code": "MEGN 201", "title": "Design & Fabrication", "grade": "B" },
-      { "code": "MEGN 261", "title": "Thermodynamics I", "grade": "B" },
-      { "code": "MEGN 300", "title": "Instrumentation & Automation", "grade": "B" },
-      { "code": "MEGN 315", "title": "Dynamics", "grade": "A-" },
-      { "code": "MEGN 324", "title": "Introduction to FEA", "grade": "B" }
-    ]},
-    { "term": "Fall 2025", "status": "complete", "courses": [
-      { "code": "EBGN 321", "title": "Engineering Economics", "grade": "C" },
-      { "code": "HASS 200", "title": "Global Studies", "grade": "B+" },
-      { "code": "MEGN 301", "title": "Mechanical Integration & Design", "grade": "A-" },
-      { "code": "MEGN 351", "title": "Fluid Mechanics", "grade": "B+" },
-      { "code": "MEGN 381", "title": "Manufacturing Processes", "grade": "A-" },
-      { "code": "MEGN 481", "title": "Machine Design", "grade": "B+" }
-    ]},
-    { "term": "Spring 2026", "status": "complete", "courses": [
-      { "code": "EDNS 491", "title": "Capstone Design I", "grade": "A" },
-      { "code": "EENG 284", "title": "Digital Logic", "grade": "B+" },
-      { "code": "EENG 307", "title": "Feedback Control Systems", "grade": "A-" },
-      { "code": "MEGN 451", "title": "Aerodynamics", "grade": "B+" },
-      { "code": "MEGN 471", "title": "Heat Transfer", "grade": "B+" },
-      { "code": "MEGN 554", "title": "Orbital Mechanics", "grade": "B+" }
-    ]},
-    { "term": "Summer 2026", "status": "complete", "courses": [
-      { "code": "EDNS 315", "title": "Engr. Society & Env. Responsibility", "grade": "A" },
-      { "code": "HASS 412", "title": "Literature & The Environment", "grade": "A-" }
-    ]},
-    { "term": "Fall 2026", "status": "in-progress", "courses": [
-      { "code": "EDNS 492", "title": "Capstone Design II", "grade": "IP" },
-      { "code": "EENG 383", "title": "Embedded Systems", "grade": "IP" },
-      { "code": "EENG 421", "title": "Semiconductor Device Physics & Design", "grade": "IP" },
-      { "code": "FEGN 525", "title": "Advanced FEA", "grade": "IP" },
-      { "code": "MEGN 414", "title": "Mechanics of Composite Materials", "grade": "IP" }
-    ]}
   ]
 }
