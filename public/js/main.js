@@ -117,53 +117,61 @@ function renderProjects(items) {
   }));
 }
 
-/* ---------- Info dot (small precise hover/tap target, not the whole row) ---------- */
-function makeInfoDot(popupBodyEl) {
-  const dot = el("span", { class: "info-dot", tabindex: "0", role: "button", "aria-label": "More information" });
-  const popup = el("div", { class: "info-popup" });
-  popup.appendChild(popupBodyEl);
-  dot.appendChild(popup);
-  dot.addEventListener("click", (e) => {
+/* ---------- Info popup: hover/tap anywhere on the host element (a tag, chip,
+   or certification row) to reveal a snippet. The dot is just a visual cue
+   that more info exists — the whole element is the trigger. ---------- */
+function attachSnippetInfo(hostEl, popupBodyEl) {
+  hostEl.classList.add("has-info");
+  hostEl.setAttribute("tabindex", "0");
+  // For rows like .compact-row (a flex line with pre-existing space-between
+  // children), anchor the dot+popup inside the leading label instead of as a
+  // new flex sibling — hover/tap still applies to the whole row via .has-info.
+  const anchor = hostEl.querySelector(".who") || hostEl;
+  anchor.appendChild(el("span", { class: "info-dot", "aria-hidden": "true" }));
+  anchor.appendChild(el("div", { class: "info-popup" }, [popupBodyEl]));
+  hostEl.addEventListener("click", (e) => {
     e.stopPropagation();
-    const willOpen = !dot.classList.contains("open");
-    document.querySelectorAll(".info-dot.open").forEach(t => t !== dot && t.classList.remove("open"));
-    dot.classList.toggle("open", willOpen);
+    const willOpen = !hostEl.classList.contains("open");
+    document.querySelectorAll(".has-info.open").forEach(t => t !== hostEl && t.classList.remove("open"));
+    hostEl.classList.toggle("open", willOpen);
   });
-  return dot;
 }
 document.addEventListener("click", () => {
-  document.querySelectorAll(".info-dot.open").forEach(t => t.classList.remove("open"));
+  document.querySelectorAll(".has-info.open").forEach(t => t.classList.remove("open"));
 });
 
-/* ---------- Topic auto-linking: any chip/tag whose text matches a topic's
-   keywords automatically gets an info dot, so "CAD", "FEA", or "SolidWorks"
-   anywhere on the site surfaces the same certification info. ---------- */
-function buildTopicPopupBody(topic, certsData) {
-  const body = el("div", {}, [el("p", { class: "info-title" }, topic.title)]);
-  if (topic.source === "certifications") {
-    const kws = topic.keywords.map(k => k.toLowerCase());
-    certsData.certifications
-      .filter(c => kws.some(k => c.name.toLowerCase().includes(k)))
-      .forEach(c => {
-        body.appendChild(el("div", { class: "info-line" }, [
-          el("span", { class: "k" }, c.name.replace(/^Certified SOLIDWORKS\s*/i, "")),
-          el("span", { class: "v" }, c.credentialId || ""),
-        ]));
-      });
-  } else if (topic.note) {
-    body.appendChild(el("p", {}, topic.note));
-  }
+/* ---------- Snippets manifest: add a keyword set + content file to
+   public/data/snippets/manifest.json and any matching tag/chip/cert row
+   anywhere on the site automatically picks it up — no code changes. ---------- */
+async function loadSnippets() {
+  const manifest = await getJSON("snippets/manifest");
+  return Promise.all(manifest.map(async (entry) => ({
+    keywords: entry.keywords,
+    content: await getJSON(`snippets/${entry.file}`),
+  })));
+}
+
+function buildSnippetPopupBody(content) {
+  const body = el("div", {}, [el("p", { class: "info-title" }, content.title)]);
+  (content.lines || []).forEach(line => {
+    body.appendChild(el("div", { class: "info-line" }, [
+      el("span", { class: "k" }, line.label),
+      el("span", { class: "v" }, line.value || ""),
+    ]));
+  });
+  if (content.note) body.appendChild(el("p", {}, content.note));
+  if (content.url) body.appendChild(el("a", { class: "info-line-link", href: content.url, target: "_blank", rel: "noopener" }, content.linkText || "Learn more ↗"));
   return body;
 }
 
-function autoLinkTopics(topics, certsData) {
-  if (!topics || !topics.length) return;
-  document.querySelectorAll(".chip, .tag").forEach(node => {
-    if (node.querySelector(".info-dot")) return;
+function autoLinkSnippets(snippets) {
+  if (!snippets || !snippets.length) return;
+  document.querySelectorAll(".chip, .tag, .compact-row").forEach(node => {
+    if (node.classList.contains("has-info")) return;
     const text = node.textContent.toLowerCase();
-    const topic = topics.find(t => t.keywords.some(k => text.includes(k.toLowerCase())));
-    if (!topic) return;
-    node.appendChild(makeInfoDot(buildTopicPopupBody(topic, certsData)));
+    const snippet = snippets.find(s => s.keywords.some(k => text.includes(k.toLowerCase())));
+    if (!snippet) return;
+    attachSnippetInfo(node, buildSnippetPopupBody(snippet.content));
   });
 }
 
@@ -179,7 +187,7 @@ function renderSkills(items) {
         const isObj = typeof i === "object" && i !== null;
         const chip = el("span", { class: "chip" }, isObj ? i.name : i);
         if (isObj && i.info) {
-          chip.appendChild(makeInfoDot(el("p", {}, i.info)));
+          attachSnippetInfo(chip, el("p", {}, i.info));
         }
         return chip;
       }))
@@ -191,21 +199,10 @@ function renderSkills(items) {
 /* ---------- Certifications ---------- */
 function renderCerts(data) {
   const list = document.getElementById("certs-grid");
-  const mk = (item, sub) => {
-    const row = el("div", { class: "compact-row" }, [
-      el("span", { class: "who" }, item.name),
-      el("span", { class: "when" }, sub || ""),
-    ]);
-    if (item.credentialId || item.info) {
-      const bodyLines = [];
-      if (item.credentialId) bodyLines.push(el("p", { class: "info-line" }, [el("span", { class: "k" }, "Credential ID"), el("span", { class: "v" }, item.credentialId)]));
-      if (item.url) bodyLines.push(el("a", { class: "info-line-link", href: item.url, target: "_blank", rel: "noopener" }, "View credential ↗"));
-      if (item.info) bodyLines.push(el("p", {}, item.info));
-      const body = el("div", {}, bodyLines);
-      row.querySelector(".who").appendChild(makeInfoDot(body));
-    }
-    return row;
-  };
+  const mk = (item, sub) => el("div", { class: "compact-row" }, [
+    el("span", { class: "who" }, item.name),
+    el("span", { class: "when" }, sub || ""),
+  ]);
   data.certifications.forEach(c => list.appendChild(mk(c, [c.issuer, c.date].filter(Boolean).join(" · "))));
   const divider = el("div", { class: "label", style: "margin-top:20px" }, "Awards");
   list.appendChild(divider);
@@ -238,7 +235,11 @@ function buildCourseRow(c) {
     ]),
   ]);
   row.appendChild(stack);
-  row.addEventListener("click", () => flipCourseRow(row));
+  row.addEventListener("click", () => {
+    const next = row.getAttribute("data-flipped") !== "true";
+    document.querySelectorAll(".course-row").forEach(r => flipCourseRow(r, next));
+    courseFlipPausedUntil = Date.now() + 15000;
+  });
   return row;
 }
 
@@ -248,8 +249,10 @@ function flipCourseRow(row, force) {
   row.setAttribute("data-flipped", next ? "true" : "false");
 }
 
+let courseFlipPausedUntil = 0;
 function initCourseAutoFlip() {
   setInterval(() => {
+    if (Date.now() < courseFlipPausedUntil) return;
     document.querySelectorAll(".course-row").forEach(row => flipCourseRow(row));
   }, 3500);
 }
@@ -411,10 +414,10 @@ function initNavSpy() {
 
 async function boot() {
   try {
-    const [profile, experience, projects, education, skills, certs, interests, highlights] = await Promise.all([
+    const [profile, experience, projects, education, skills, certs, interests, highlights, snippets] = await Promise.all([
       getJSON("profile"), getJSON("experience"), getJSON("projects"),
       getJSON("education"), getJSON("skills"), getJSON("certifications"), getJSON("interests"),
-      getJSON("highlights"),
+      getJSON("highlights"), loadSnippets(),
     ]);
     renderProfile(profile);
     renderExperience(experience);
@@ -424,6 +427,7 @@ async function boot() {
     renderCerts(certs);
     renderInterests(interests);
     renderHighlights(highlights, education, experience);
+    autoLinkSnippets(snippets);
   } catch (err) {
     console.error(err);
     document.body.insertAdjacentHTML("beforeend",

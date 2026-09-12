@@ -50,7 +50,7 @@ img { max-width: 100%; }
   inset: var(--frame-inset);
   border: 1px solid var(--line-strong);
   pointer-events: none;
-  z-index: 40;
+  z-index: -1;
   display: none;
 }
 .sheet-frame .zone {
@@ -379,21 +379,24 @@ section:last-of-type { border-bottom: none; }
 .compact-row .org { color: var(--ink-dim); }
 .compact-row .when { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); }
 
-/* Info popup — hover on desktop, tap on touch */
-.info-trigger { position: relative; cursor: pointer; }
-.info-trigger::after {
-  content: "";
-  display: inline-block;
-  width: 4px; height: 4px;
+/* Info popup — hovering/tapping anywhere on a tag, chip, or certification
+   row that carries .has-info reveals a snippet. The dot is a visual cue
+   only; the whole host element is the hover/tap target. */
+.has-info { position: relative; cursor: pointer; }
+.info-dot {
+  display: inline-flex;
+  width: 5px; height: 5px;
+  margin-left: 6px;
+  vertical-align: middle;
   background: var(--accent);
   border-radius: 50%;
-  margin-left: 6px;
-  vertical-align: super;
-  opacity: 0.85;
+  opacity: 0.8;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
+.has-info:hover .info-dot, .has-info.open .info-dot { opacity: 1; transform: scale(1.5); }
 .info-popup {
   position: absolute;
-  z-index: 80;
+  z-index: 9999;
   top: calc(100% + 8px);
   left: 0;
   min-width: 220px;
@@ -404,6 +407,7 @@ section:last-of-type { border-bottom: none; }
   font-size: 12px;
   line-height: 1.45;
   color: var(--ink-dim);
+  text-align: left;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -411,12 +415,20 @@ section:last-of-type { border-bottom: none; }
   transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
   box-shadow: 0 14px 30px -10px rgba(0,0,0,0.55);
 }
-.info-trigger:hover .info-popup,
-.info-trigger.open .info-popup {
+.has-info:hover .info-popup,
+.has-info.open .info-popup {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transform: translateY(0);
+}
+.info-popup .info-title {
+  margin: 0 0 8px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 .info-popup p { margin: 0 0 8px; }
 .info-popup p:last-child { margin-bottom: 0; }
@@ -428,8 +440,9 @@ section:last-of-type { border-bottom: none; }
   font-family: var(--font-mono);
   font-size: 11px;
 }
-.info-popup .info-line .k { color: var(--ink-faint); letter-spacing: 0.04em; }
-.info-popup .info-line .v { color: var(--accent); }
+.info-popup .info-line:last-child { margin-bottom: 0; }
+.info-popup .info-line .k { color: var(--ink-dim); font-family: var(--font-sans); letter-spacing: 0; }
+.info-popup .info-line .v { color: var(--accent); flex: none; }
 .info-popup .info-line-link { display: block; color: var(--accent); font-size: 11.5px; margin-top: 2px; }
 
 /* ===== Skills ===== */
@@ -592,7 +605,10 @@ footer.site-footer { padding: 28px max(var(--frame-inset), 20px) 60px; text-alig
 
 /* ===== Reveal-in animation ===== */
 .reveal { opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
-.reveal.in { opacity: 1; transform: translateY(0); }
+/* transform:none (not translateY(0)) once settled — any non-none transform
+   creates a stacking context, which would trap nested .info-popups below
+   the topbar/other high z-index UI regardless of the popup's own z-index. */
+.reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
