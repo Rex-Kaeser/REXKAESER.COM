@@ -1,6 +1,7 @@
 {
   "featured": [
     {
+      "id": "grad-rep",
       "title": "Mechanical Engineering Department Representative",
       "org": "Mines Graduate Student Government",
       "location": "Golden, CO",
@@ -13,6 +14,7 @@
       ]
     },
     {
+      "id": "western-digital",
       "title": "Mechanical Design Engineering Intern",
       "org": "Western Digital Corporation",
       "location": "Colorado Springs, CO",
@@ -28,6 +30,7 @@
       ]
     },
     {
+      "id": "formula-sae",
       "title": "Manufacturing Engineer & Ergonomics Mechanical Engineer",
       "org": "Mines Formula SAE",
       "location": "Golden, CO",
@@ -42,6 +45,7 @@
       ]
     },
     {
+      "id": "road-to-indy",
       "title": "Pit Crew Mechanic",
       "org": "Road to Indy (North Star Driver Development)",
       "location": "United States",

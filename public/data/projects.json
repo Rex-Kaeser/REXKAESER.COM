@@ -1,6 +1,5 @@
 [
   {
-    "code": "P-01",
     "title": "LIDAR-Guided Autonomous Alarm Clock",
     "course": "MEGN 200 — Programming & Hardware Interface",
     "location": "Golden, CO",
@@ -16,7 +15,6 @@
     ]
   },
   {
-    "code": "P-02",
     "title": "Magnetic Quick-Disconnect Air Coupler",
     "course": "EDNS 151 — Cornerstone Design",
     "location": "Golden, CO",

@@ -1,8 +1,8 @@
 {
   "certifications": [
-    { "name": "Certified SOLIDWORKS Professional – Mechanical Design (CSWP)", "issuer": "Dassault Systèmes", "date": "Oct 2023" },
-    { "name": "Certified SOLIDWORKS Associate – Mechanical Design (CSWA)", "issuer": "Dassault Systèmes", "date": "Oct 2023" },
-    { "name": "Certified SOLIDWORKS Associate – Simulation (CSWA-S)", "issuer": "Dassault Systèmes", "date": "Oct 2023" },
+    { "name": "Certified SOLIDWORKS Professional – Mechanical Design (CSWP)", "issuer": "Dassault Systèmes", "date": "Oct 2023", "credentialId": "C-FQ2B6UETK5" },
+    { "name": "Certified SOLIDWORKS Associate – Mechanical Design (CSWA)", "issuer": "Dassault Systèmes", "date": "Oct 2023", "credentialId": "C-ZRSTA3UXYD" },
+    { "name": "Certified SOLIDWORKS Associate – Simulation (CSWA-S)", "issuer": "Dassault Systèmes", "date": "Oct 2023", "credentialId": "C-36N8F9AT2S" },
     { "name": "Lean Six Sigma Yellow Belt", "issuer": "Colorado School of Mines", "date": null }
   ],
   "awards": [

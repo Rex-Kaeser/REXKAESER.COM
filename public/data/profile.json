@@ -2,14 +2,12 @@
   "name": "Rexton Kaeser",
   "shortName": "Rex Kaeser",
   "title": "Mechanical Engineering — Aerospace Track",
+  "shortTitle": "Mechanical Engineering Student",
   "tagline": "Mechanical engineering graduate student (4+1 B.S./M.S.) building hands-on hardware experience across aerospace, data storage, and motorsport.",
   "location": "Golden, Colorado",
   "email": "rexkaeser@gmail.com",
   "phone": "(970) 406-2638",
   "status": "Open to opportunities",
-  "drawingNo": "RK-2026-PORT",
-  "revision": "REV C",
-  "scale": "NTS",
   "links": [
     { "label": "LinkedIn", "url": "https://www.linkedin.com/in/rexkaeser" },
     { "label": "Email", "url": "mailto:rexkaeser@gmail.com" }

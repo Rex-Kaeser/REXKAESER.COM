@@ -1,0 +1,6 @@
+[
+  { "type": "education", "id": "bs-mines" },
+  { "type": "education", "id": "ms-mines" },
+  { "type": "experience", "id": "grad-rep" },
+  { "type": "experience", "id": "western-digital" }
+]

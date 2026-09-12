@@ -9,6 +9,7 @@ async function getJSON(name) {
 function el(tag, attrs = {}, children = []) {
   const node = document.createElement(tag);
   for (const [k, v] of Object.entries(attrs)) {
+    if (v == null) continue;
     if (k === "class") node.className = v;
     else if (k === "html") node.innerHTML = v;
     else node.setAttribute(k, v);
@@ -29,8 +30,7 @@ function renderProfile(p) {
   document.title = `${p.shortName} — ${p.title}`;
 
   document.getElementById("topbar-id").innerHTML =
-    `<b>${p.shortName}</b><span>&nbsp;/ ${p.drawingNo}</span>`;
-  document.getElementById("topbar-rev").textContent = `${p.revision} · SCALE ${p.scale}`;
+    `<b>${p.shortName}</b><span>&nbsp;/ ${p.shortTitle}</span>`;
 
   document.getElementById("hero-name").innerHTML =
     `Building hardware that <span class="accent">goes fast.</span>`;
@@ -54,8 +54,8 @@ function renderProfile(p) {
   const cells = [
     ["Name", p.name],
     ["Title", p.title],
-    ["Dwg No", p.drawingNo],
-    ["Rev", p.revision],
+    ["Location", p.location],
+    ["Status", p.status],
   ];
   tb.append(...cells.map(([k, v]) =>
     el("div", { class: "cell" }, [el("span", { class: "k" }, k.toUpperCase()), el("span", { class: "v" }, v)])
@@ -67,8 +67,8 @@ function renderProfile(p) {
 }
 
 /* ---------- Experience ---------- */
-function experienceCard(item) {
-  const card = el("article", { class: "card reveal" });
+function experienceCard(item, { assignId = true } = {}) {
+  const card = el("article", { class: "card reveal", id: (assignId && item.id) ? `exp-${item.id}` : undefined });
   card.append(
     el("div", { class: "row-head" }, [
       el("h3", {}, item.title),
@@ -109,13 +109,62 @@ function renderProjects(items) {
         el("span", { class: "when" }, whenRange(p.start, p.end)),
       ]),
       el("p", { class: "org" }, p.course + (p.location ? ` — ${p.location}` : "")),
-      el("p", { class: "code" }, p.code),
       el("p", { class: "summary" }, p.summary),
       el("ul", {}, p.bullets.map(b => el("li", {}, b))),
       el("div", { class: "tags" }, (p.tags || []).map(t => el("span", { class: "tag" }, t)))
     );
     return card;
   }));
+}
+
+/* ---------- Info dot (small precise hover/tap target, not the whole row) ---------- */
+function makeInfoDot(popupBodyEl) {
+  const dot = el("span", { class: "info-dot", tabindex: "0", role: "button", "aria-label": "More information" });
+  const popup = el("div", { class: "info-popup" });
+  popup.appendChild(popupBodyEl);
+  dot.appendChild(popup);
+  dot.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const willOpen = !dot.classList.contains("open");
+    document.querySelectorAll(".info-dot.open").forEach(t => t !== dot && t.classList.remove("open"));
+    dot.classList.toggle("open", willOpen);
+  });
+  return dot;
+}
+document.addEventListener("click", () => {
+  document.querySelectorAll(".info-dot.open").forEach(t => t.classList.remove("open"));
+});
+
+/* ---------- Topic auto-linking: any chip/tag whose text matches a topic's
+   keywords automatically gets an info dot, so "CAD", "FEA", or "SolidWorks"
+   anywhere on the site surfaces the same certification info. ---------- */
+function buildTopicPopupBody(topic, certsData) {
+  const body = el("div", {}, [el("p", { class: "info-title" }, topic.title)]);
+  if (topic.source === "certifications") {
+    const kws = topic.keywords.map(k => k.toLowerCase());
+    certsData.certifications
+      .filter(c => kws.some(k => c.name.toLowerCase().includes(k)))
+      .forEach(c => {
+        body.appendChild(el("div", { class: "info-line" }, [
+          el("span", { class: "k" }, c.name.replace(/^Certified SOLIDWORKS\s*/i, "")),
+          el("span", { class: "v" }, c.credentialId || ""),
+        ]));
+      });
+  } else if (topic.note) {
+    body.appendChild(el("p", {}, topic.note));
+  }
+  return body;
+}
+
+function autoLinkTopics(topics, certsData) {
+  if (!topics || !topics.length) return;
+  document.querySelectorAll(".chip, .tag").forEach(node => {
+    if (node.querySelector(".info-dot")) return;
+    const text = node.textContent.toLowerCase();
+    const topic = topics.find(t => t.keywords.some(k => text.includes(k.toLowerCase())));
+    if (!topic) return;
+    node.appendChild(makeInfoDot(buildTopicPopupBody(topic, certsData)));
+  });
 }
 
 /* ---------- Skills ---------- */
@@ -126,7 +175,14 @@ function renderSkills(items) {
     card.append(
       el("h3", {}, s.category),
       el("p", {}, s.description),
-      el("div", { class: "chip-row" }, s.items.map(i => el("span", { class: "chip" }, i)))
+      el("div", { class: "chip-row" }, s.items.map(i => {
+        const isObj = typeof i === "object" && i !== null;
+        const chip = el("span", { class: "chip" }, isObj ? i.name : i);
+        if (isObj && i.info) {
+          chip.appendChild(makeInfoDot(el("p", {}, i.info)));
+        }
+        return chip;
+      }))
     );
     return card;
   }));
@@ -135,14 +191,25 @@ function renderSkills(items) {
 /* ---------- Certifications ---------- */
 function renderCerts(data) {
   const list = document.getElementById("certs-grid");
-  const mk = (name, sub) => el("div", { class: "compact-row" }, [
-    el("span", { class: "who" }, name),
-    el("span", { class: "when" }, sub || ""),
-  ]);
-  data.certifications.forEach(c => list.appendChild(mk(c.name, [c.issuer, c.date].filter(Boolean).join(" · "))));
+  const mk = (item, sub) => {
+    const row = el("div", { class: "compact-row" }, [
+      el("span", { class: "who" }, item.name),
+      el("span", { class: "when" }, sub || ""),
+    ]);
+    if (item.credentialId || item.info) {
+      const bodyLines = [];
+      if (item.credentialId) bodyLines.push(el("p", { class: "info-line" }, [el("span", { class: "k" }, "Credential ID"), el("span", { class: "v" }, item.credentialId)]));
+      if (item.url) bodyLines.push(el("a", { class: "info-line-link", href: item.url, target: "_blank", rel: "noopener" }, "View credential ↗"));
+      if (item.info) bodyLines.push(el("p", {}, item.info));
+      const body = el("div", {}, bodyLines);
+      row.querySelector(".who").appendChild(makeInfoDot(body));
+    }
+    return row;
+  };
+  data.certifications.forEach(c => list.appendChild(mk(c, [c.issuer, c.date].filter(Boolean).join(" · "))));
   const divider = el("div", { class: "label", style: "margin-top:20px" }, "Awards");
   list.appendChild(divider);
-  data.awards.forEach(a => list.appendChild(mk(a.name, [a.issuer, a.date].filter(Boolean).join(" · "))));
+  data.awards.forEach(a => list.appendChild(mk(a, [a.issuer, a.date].filter(Boolean).join(" · "))));
 }
 
 /* ---------- Interests ---------- */
@@ -171,11 +238,20 @@ function buildCourseRow(c) {
     ]),
   ]);
   row.appendChild(stack);
-  row.addEventListener("click", () => {
-    const flipped = row.getAttribute("data-flipped") === "true";
-    row.setAttribute("data-flipped", flipped ? "false" : "true");
-  });
+  row.addEventListener("click", () => flipCourseRow(row));
   return row;
+}
+
+function flipCourseRow(row, force) {
+  const flipped = row.getAttribute("data-flipped") === "true";
+  const next = force != null ? force : !flipped;
+  row.setAttribute("data-flipped", next ? "true" : "false");
+}
+
+function initCourseAutoFlip() {
+  setInterval(() => {
+    document.querySelectorAll(".course-row").forEach(row => flipCourseRow(row));
+  }, 3500);
 }
 
 function buildTermCard(term) {
@@ -215,35 +291,83 @@ function toggleDegreeDetail(button, detail) {
   }
 }
 
+function buildDegreeCard(d, { withTranscript = true, assignId = true } = {}) {
+  const node = el("div", { class: "degree reveal", id: (assignId && d.id) ? `edu-${d.id}` : undefined });
+  node.append(
+    el("div", { class: "row-head" }, [
+      el("h3", {}, d.program),
+      el("span", { class: "when" }, whenRange(d.start, d.end)),
+    ]),
+    el("p", { class: "school" }, `${d.school} — ${d.location}` + (d.gpa ? ` · GPA ${d.gpa}` : "")),
+  );
+  if (d.note) node.append(el("div", { class: "note" }, d.note));
+
+  if (withTranscript && d.timeline && d.timeline.length) {
+    const detail = el("div", { class: "degree-detail" });
+    const inner = el("div", { class: "degree-detail-inner", "data-many": d.timeline.length > 4 ? "true" : "false" });
+    inner.append(...d.timeline.map(buildTermCard));
+    detail.appendChild(inner);
+
+    const toggle = el("button", { class: "expand-toggle", type: "button", "aria-expanded": "false" }, [
+      el("span", {}, "View Transcript"),
+      el("span", { class: "chevron", html: CHEVRON_SVG }),
+    ]);
+    toggle.addEventListener("click", () => toggleDegreeDetail(toggle, detail));
+
+    node.append(toggle, detail);
+  }
+  return node;
+}
+
 function renderEducation(data) {
   const degrees = document.getElementById("degree-list");
-  degrees.append(...data.degrees.map(d => {
-    const node = el("div", { class: "degree reveal" });
-    node.append(
-      el("div", { class: "row-head" }, [
-        el("h3", {}, d.program),
-        el("span", { class: "when" }, whenRange(d.start, d.end)),
-      ]),
-      el("p", { class: "school" }, `${d.school} — ${d.location}` + (d.gpa ? ` · GPA ${d.gpa}` : "")),
+  degrees.append(...data.degrees.map(d => buildDegreeCard(d)));
+}
+
+/* ---------- Hero highlights (2x2 quick-facts grid) ---------- */
+function renderHighlights(highlights, educationData, experienceData) {
+  const grid = document.getElementById("highlights-grid");
+  if (!grid) return;
+
+  const findRecord = (h) => {
+    if (h.type === "education") return educationData.degrees.find(d => d.id === h.id);
+    if (h.type === "experience") return experienceData.featured.find(x => x.id === h.id);
+    return null;
+  };
+
+  highlights.forEach(h => {
+    const record = findRecord(h);
+    if (!record) return;
+
+    const isEdu = h.type === "education";
+    const title = isEdu ? record.program : record.title;
+    const sub = isEdu ? record.school : record.org;
+    const targetId = isEdu ? `edu-${record.id}` : `exp-${record.id}`;
+
+    const tile = el("a", { class: "highlight-tile", href: `#${targetId}` });
+    tile.addEventListener("click", () => {
+      // Reveal the target synchronously so the native anchor-scroll doesn't
+      // race the scroll-reveal fade-in — otherwise the card slides into place
+      // mid-scroll and reads as the jump overshooting.
+      document.getElementById(targetId)?.classList.add("in");
+    });
+    tile.append(
+      el("div", { class: "highlight-eyebrow" }, h.type.toUpperCase()),
+      el("div", { class: "highlight-title" }, title),
+      el("div", { class: "highlight-sub" }, sub),
+      el("div", { class: "highlight-when" }, whenRange(record.start, record.end)),
     );
-    if (d.note) node.append(el("div", { class: "note" }, d.note));
 
-    if (d.timeline && d.timeline.length) {
-      const detail = el("div", { class: "degree-detail" });
-      const inner = el("div", { class: "degree-detail-inner" });
-      inner.append(...d.timeline.map(buildTermCard));
-      detail.appendChild(inner);
+    const preview = el("div", { class: "highlight-preview" });
+    const previewCard = isEdu
+      ? buildDegreeCard(record, { withTranscript: false, assignId: false })
+      : experienceCard(record, { assignId: false });
+    previewCard.classList.remove("reveal");
+    preview.appendChild(previewCard);
+    tile.appendChild(preview);
 
-      const toggle = el("button", { class: "expand-toggle", type: "button", "aria-expanded": "false" }, [
-        el("span", {}, "View Transcript"),
-        el("span", { class: "chevron", html: CHEVRON_SVG }),
-      ]);
-      toggle.addEventListener("click", () => toggleDegreeDetail(toggle, detail));
-
-      node.append(toggle, detail);
-    }
-    return node;
-  }));
+    grid.appendChild(tile);
+  });
 }
 
 /* ---------- Reveal-on-scroll ---------- */
@@ -287,9 +411,10 @@ function initNavSpy() {
 
 async function boot() {
   try {
-    const [profile, experience, projects, education, skills, certs, interests] = await Promise.all([
+    const [profile, experience, projects, education, skills, certs, interests, highlights] = await Promise.all([
       getJSON("profile"), getJSON("experience"), getJSON("projects"),
       getJSON("education"), getJSON("skills"), getJSON("certifications"), getJSON("interests"),
+      getJSON("highlights"),
     ]);
     renderProfile(profile);
     renderExperience(experience);
@@ -298,6 +423,7 @@ async function boot() {
     renderSkills(skills);
     renderCerts(certs);
     renderInterests(interests);
+    renderHighlights(highlights, education, experience);
   } catch (err) {
     console.error(err);
     document.body.insertAdjacentHTML("beforeend",
@@ -305,6 +431,7 @@ async function boot() {
   } finally {
     initReveal();
     initNavSpy();
+    initCourseAutoFlip();
     document.getElementById("year").textContent = new Date().getFullYear();
   }
 }
