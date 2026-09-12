@@ -1,0 +1,64 @@
+{
+  "featured": [
+    {
+      "title": "Mechanical Engineering Department Representative",
+      "org": "Mines Graduate Student Government",
+      "location": "Golden, CO",
+      "start": "Aug 2026",
+      "end": "Present",
+      "tags": ["Leadership", "Graduate"],
+      "bullets": [
+        "Represent Mechanical Engineering graduate students on the GSG General Council, channeling department feedback into campus-wide policy.",
+        "Serve on the EHS Safety Committee and Calendar Committee alongside administrators and fellow representatives."
+      ]
+    },
+    {
+      "title": "Mechanical Design Engineering Intern",
+      "org": "Western Digital Corporation",
+      "location": "Colorado Springs, CO",
+      "start": "May 2025",
+      "end": "Aug 2025",
+      "tags": ["Data Storage", "CAD", "Manufacturing"],
+      "bullets": [
+        "Designed an HDD handling tool from prototype through production, authoring full manufacturing documentation.",
+        "Developed modular cooling fans and surrogate HDD fixtures for airflow testing, reducing part count while holding thermal constraints.",
+        "Built thermal, shock, and vibration test setups in Python, HTML, and JavaScript; inspected supplier parts with a FARO Arm, PolyWorks, and CMMs.",
+        "Directed injection-molded and sheet-metal part design, releasing documentation through Agile PLM and SolidWorks PDM.",
+        "Rapid-prototyped design changes via 3D printing, laser cutting, waterjet, and CNC/manual machining alongside senior engineers."
+      ]
+    },
+    {
+      "title": "Manufacturing Engineer & Ergonomics Mechanical Engineer",
+      "org": "Mines Formula SAE",
+      "location": "Golden, CO",
+      "start": "Aug 2023",
+      "end": "Feb 2025",
+      "tags": ["Motorsport", "CAD", "FEA"],
+      "bullets": [
+        "Designed mechanical components in SolidWorks and validated them against specification and test data using FEA.",
+        "Performed manual machining in Mines' machine shop to fabricate and modify parts under competition deadlines.",
+        "Assisted with vehicle maintenance, troubleshooting, and technical inspection at Formula SAE Michigan 2024.",
+        "Diagnosed and machined an on-site replacement brake pedal rail after an in-competition failure, keeping the car track-ready."
+      ]
+    },
+    {
+      "title": "Pit Crew Mechanic",
+      "org": "Road to Indy (North Star Driver Development)",
+      "location": "United States",
+      "start": "Jan 2018",
+      "end": "Sep 2021",
+      "tags": ["Motorsport", "Fabrication"],
+      "bullets": [
+        "Worked as a pit crew mechanic on the Road to Indy ladder, repairing and maintaining race cars under strict time constraints.",
+        "Applied safe work practices in a high-stakes, safety-critical pit environment."
+      ]
+    }
+  ],
+  "additional": [
+    { "title": "Sales Associate", "org": "Harbor Freight Tools", "location": "Lakewood, CO", "start": "Jun 2024", "end": "May 2025" },
+    { "title": "Hardside Associate", "org": "Murdoch's Ranch & Home Supply", "location": "Silverthorne, CO", "start": "Apr 2022", "end": "Nov 2023" },
+    { "title": "Store Associate", "org": "Target", "location": "United States", "start": "Jul 2021", "end": "Oct 2021" },
+    { "title": "Ski Instructor Assistant", "org": "Arapahoe Basin Ski Area", "location": "Keystone, CO", "start": "Feb 2019", "end": "Mar 2020" },
+    { "title": "Vice President", "org": "Summit High School Tech Club", "location": "Frisco, CO", "start": "Jun 2022", "end": "May 2023" }
+  ]
+}

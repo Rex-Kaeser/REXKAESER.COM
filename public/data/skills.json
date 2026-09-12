@@ -1,0 +1,22 @@
+[
+  {
+    "category": "CAD & Simulation",
+    "description": "Proficient in SolidWorks design and simulation, certified in CSWP and CSWA, with FEA and tolerance analysis for reliable designs.",
+    "items": ["SolidWorks (CSWP)", "SolidWorks Simulation (CSWA)", "SolidWorks PDM", "Engineering Drawing Creation", "FEA", "Tolerance Analysis"]
+  },
+  {
+    "category": "Laboratory & Fabrication",
+    "description": "Hands-on experience with machining, prototyping, and fabrication across additive and subtractive methods, plus inspection and supplier validation.",
+    "items": ["Lathe", "Bridgeport", "CNC Machining", "3D Printing", "Waterjet", "Electrical Prototyping", "Data Acquisition Systems", "FARO Arm (LIDAR & Probe)", "Supplier Part Validation"]
+  },
+  {
+    "category": "Engineering Tools",
+    "description": "Skilled with product lifecycle management, testing procedures, and industry-standard inspection methods.",
+    "items": ["Agile PLM", "PolyWorks", "Thermal Testing", "Shock & Vibration Testing", "Inspection & Metrology", "Internal Engineering Standards"]
+  },
+  {
+    "category": "Programming & Software",
+    "description": "Background in scripting, automation, and application development across multiple languages and technical computing tools.",
+    "items": ["C#", "Java", "C++", "Python", "Lua", "LabVIEW", "Arduino", "JavaScript", "HTML/CSS", "Microsoft Excel/PowerPoint/Word"]
+  }
+]

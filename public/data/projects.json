@@ -1,0 +1,33 @@
+[
+  {
+    "code": "P-01",
+    "title": "LIDAR-Guided Autonomous Alarm Clock",
+    "course": "MEGN 200 — Programming & Hardware Interface",
+    "location": "Golden, CO",
+    "start": "Oct 2024",
+    "end": "Dec 2024",
+    "tags": ["Embedded", "LIDAR", "SolidWorks"],
+    "summary": "An alarm clock that runs from you: a two-wheeled robot that uses LIDAR to scan the room and dodge obstacles while fleeing, forcing you out of bed to catch it.",
+    "bullets": [
+      "Designed physical parts in SolidWorks and wired a dual-voltage battery system to power and drive the robot.",
+      "Set up and integrated LIDAR, motors, and an LCD display for real-time environmental scanning and control.",
+      "Programmed the onboard controller to interpret sensor data and make autonomous driving decisions.",
+      "Built and tested a functional prototype demonstrating reliable obstacle avoidance and mobility."
+    ]
+  },
+  {
+    "code": "P-02",
+    "title": "Magnetic Quick-Disconnect Air Coupler",
+    "course": "EDNS 151 — Cornerstone Design",
+    "location": "Golden, CO",
+    "start": "Jan 2024",
+    "end": "May 2024",
+    "tags": ["Fabrication", "Design"],
+    "summary": "A magnetic quick-coupler solving recurring air-needle bending and breakage, enabling clean, rapid disconnects under pressure.",
+    "bullets": [
+      "Designed a magnetic quick-coupler to prevent air needle damage during connect/disconnect cycles.",
+      "Oversaw precision manufacturing of components in the campus machine shop.",
+      "Validated the design through iterative prototyping, achieving reliable disconnects at pressures below 50 PSI."
+    ]
+  }
+]

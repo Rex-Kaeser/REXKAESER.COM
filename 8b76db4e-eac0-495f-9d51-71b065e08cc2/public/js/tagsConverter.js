@@ -1,6 +1,6 @@
 // /public/js/tagsConverter.js
 (() => {
-  const TPL_DIR = '/public/html/tags_content';
+  const TPL_DIR = './public/html/tags_content';
   const DEFAULTS = {
     TEXT_COLOR: 'text-blue-100',
     BOX_COLOR: 'analog-grey',
