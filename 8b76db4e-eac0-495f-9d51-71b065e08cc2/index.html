@@ -1,224 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <base id="base" href="/">
+    <meta name="description" content="
+    Rex Kaeser – Mechanical Engineering student at Colorado School of Mines. Browse projects, CAD/FEA experience, and resume. Working at Western Digital as a Hardware Development Engineering Intern for Summer 2025.
+    ">
 
-  <meta name="description" content="There is no page here." />
+    <!-- Change the description wrt project -->
+    <meta
+      name="Util"
+      content=":/"
+    />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./public/css/basic.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet">
+    <!-- You can add your own fonts from fonts.google.com -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./public/css/basic.css">
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = { darkMode: "class" };
-  </script>
+    <!-- Default Script tags -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/public/js/hireMe.js"></script>
 
-  <title>rexkaeser.com</title>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
 
-  <style>
-    html, body { height: 100%; overflow: hidden; }
-    body {
-      background: #050607;
-      background-image:
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(4,167,119,0.08), transparent 70%),
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0px, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 3px);
-    }
-
-    #grid {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      opacity: 0.35;
-    }
-
-    .scanline {
-      position: fixed;
-      left: 0; right: 0;
-      height: 140px;
-      background: linear-gradient(to bottom, transparent, rgba(4,167,119,0.06), transparent);
-      animation: sweep 7s linear infinite;
-      pointer-events: none;
-      z-index: 1;
-    }
-    @keyframes sweep {
-      0% { top: -140px; }
-      100% { top: 100vh; }
-    }
-
-    .crt::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 2;
-      background: repeating-linear-gradient(
-        0deg, rgba(0,0,0,0.12) 0px, rgba(0,0,0,0.12) 1px,
-        transparent 1px, transparent 2px
-      );
-      mix-blend-mode: multiply;
-    }
-
-    .term { font-family: "Jersey 10", monospace; }
-    .flicker { animation: flicker 6s infinite; }
-    @keyframes flicker {
-      0%, 96%, 100% { opacity: 1; }
-      97% { opacity: 0.72; }
-      98% { opacity: 1; }
-      99% { opacity: 0.85; }
-    }
-
-    .cursor::after {
-      content: "▌";
-      margin-left: 6px;
-      color: #04A777;
-      animation: blink 1s step-end infinite;
-    }
-    @keyframes blink { 50% { opacity: 0; } }
-
-    .line { opacity: 0; transform: translateY(2px); }
-    .line.show {
-      opacity: 1; transform: translateY(0);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-    }
-
-    /* nothing here quite sits square — small fixed offsets per line, not random,
-       so it reads as worn-in rather than as a rendering bug */
-    .line.show.t1 { transform: translateY(0) rotate(-0.7deg) translateX(6px); margin-top: -1px; }
-    .line.show.t2 { transform: translateY(0) rotate(0.5deg) translateX(-4px); margin-top: 3px; }
-    .line.show.t3 { transform: translateY(0) rotate(-0.35deg) translateX(11px); margin-top: -2px; }
-    .line.show.t5 { transform: translateY(0) rotate(-0.5deg) translateX(3px); margin-top: 5px; }
-
-    .warped-box {
-      transform: rotate(1.3deg) translateX(-8px) skewX(-0.8deg);
-      border-width: 3px 1px 3px 5px !important;
-      box-shadow: 3px 4px 0 rgba(0,0,0,0.4);
-    }
-    .line.show.warped-box { transform: translateY(0) rotate(1.3deg) translateX(-8px) skewX(-0.8deg); }
-
-    .settle { animation: settle 6.5s ease-in-out infinite; transform-origin: 40% 50%; }
-    @keyframes settle {
-      0%, 100% { transform: rotate(0deg) translateY(0); }
-      50% { transform: rotate(0.25deg) translateY(1px); }
-    }
-
-    .glitch {
-      position: relative;
-      display: inline-block;
-    }
-    .glitch::before, .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0; top: 0;
-      width: 100%;
-      overflow: hidden;
-      opacity: 0.8;
-    }
-    .glitch::before {
-      color: #a70404;
-      clip-path: inset(0 0 0 0);
-      animation: glitchTop 3.4s infinite linear;
-    }
-    .glitch::after {
-      color: #04A777;
-      clip-path: inset(0 0 0 0);
-      animation: glitchBottom 3.9s infinite linear;
-    }
-    @keyframes glitchTop {
-      0%, 92%, 100% { clip-path: inset(0 0 96% 0); transform: translate(0,0); opacity: 0; }
-      93% { clip-path: inset(0 0 60% 0); transform: translate(-2px,-1px); opacity: 0.7; }
-      94% { clip-path: inset(20% 0 40% 0); transform: translate(2px,0); opacity: 0.7; }
-      95% { clip-path: inset(0 0 96% 0); transform: translate(0,0); opacity: 0; }
-    }
-    @keyframes glitchBottom {
-      0%, 90%, 100% { clip-path: inset(96% 0 0 0); transform: translate(0,0); opacity: 0; }
-      91% { clip-path: inset(60% 0 0 0); transform: translate(2px,1px); opacity: 0.7; }
-      92% { clip-path: inset(30% 0 20% 0); transform: translate(-2px,0); opacity: 0.7; }
-      93% { clip-path: inset(96% 0 0 0); transform: translate(0,0); opacity: 0; }
-    }
-  </style>
+    <!-- Replace the title name -->
+    <title>Rex Kaeser</title>
+    <link rel="icon" type="image/x-icon" href="/public/images/favicon.ico">
 </head>
-<body class="crt text-gray-200 h-screen w-screen flex items-center justify-center">
+<body style="font-family: 'Barlow', sans-serif" class="bg-gradient-to-r from-slate-900 via-gray-800 to-zinc-900 bg-slate-900 text-white">
+  
 
-  <canvas id="grid"></canvas>
-  <div class="scanline"></div>
+  <div class="flex justify-center snap-y scroll-auto snap-mandatory snap-always overflow-y-scroll no-scrollbar">
+    <div class="h-dvh mx-5 w-full xl:w-2/3  2xl:w-1/2 items-left place-content-center flex justify-center inline-block align-middle flex-col text-3xl text-gray-200">
+      <div class="max-h-dvh ">
+        <div class="snap-center max-h-dvh overflow-y-scroll overflow-x-clip no-scrollbar">
+          <a class="mt-6 sm:mt-12 lg:mt-24 w-full group relative inline-block text-3xl font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500 analog-corners" onclick="toMenu()">
+            <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0 analog-corners"></span>
+            <span class="relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center analog-corners">
+              <p class="analog-font">Rex Kaeser</p>
+            </span>
+          </a>
+          <div class="pt-6 pb-0 sm:pt-8 sm:pb-2">
+          <h1 class="text-4xl h-12 header-font">> About Me</h1>
+            <div class="grid grid-cols-1 grid-rows-3 lg:grid-cols-3 lg:grid-rows-1 grid-flow-col gap-y-1 gap-x-4 pb-4">
+              <div>
+                <ul>
+                  <p class="align-left analog-font text-lg">Phone Number</p>
+                  <div class="analog-box analog-blue text-gray-600">
+                    <p class="align-left analog-font text-lg text-blue-100">(970) 406-2638</p>
+                  </div>
+                </ul>
+              </div>
+              <div>
+                <ul>
+                  <p class="align-left analog-font text-lg">Email</p>
+                  <div class="analog-box analog-blue text-gray-600">
+                    <p class="align-left analog-font text-lg text-blue-100">rex@mines.edu</p>
+                  </div>
+                </ul>
+              </div>
+              <div>
+                <ul>
+                  <p class="align-left analog-font text-lg">Location</p>
+                  <div class="analog-box analog-blue text-gray-600">
+                    <p class="align-left analog-font text-lg text-blue-100">Golden, Colorado, United States</p>
+                  </div>
+                </ul>
+              </div>
+              
+            </div>
+            
+            <ul>
+                <p class="align-left analog-font text-lg">Objective</p>
+                <div id="console" class="analog-box analog-grey  text-gray-600">
+                  <p class="align-left analog-font text-lg text-red-100">I am eager to secure a challenging internship in the field of engineering, with the sincere belief that this experience will not only accelerate my personal growth and industry-related skills but also, in turn, contribute positively to the company's success and profitability.</p>
+              </div>
+            </ul>
+            <div class="my-3"></div>
+            <ul>
+                <p class="align-left analog-font text-lg text-gray-400">Status ...</p>
+                <div class="analog-box analog-green text-gray-600 flex" >
+                  <p class="align-left analog-font text-lg">Looking for work...</p>
+                
+                </div>
+                <div class="mt-4">
+                  <ul>
+                    <a class="w-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" target=”_blank” onclick="HireMe()">
+                        <span class="analog-corners absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                        <span class="analog-corners relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="analog-font">Hire Me</p></span>
+                      </a>
+                  </ul>
+                </div>
+            </ul>
+            <div class="my-6"></div>
+            
+              
+          </div>
+        </div>
+        <div class="snap-center snap-always h-dvh overflow-x-clip ">
+          <div class="flex flex-col h-dvh pt-2 pb-4 sm:pt-2  max-h-dvh">
+            
+            <p class="align-left analog-font text-lg">Qualifications Controls</p>
+            <div class="flex w-full gap-y-4 sm:gap-y-1 gap-x-4 pb-4">
+              <div class="h-full grow-0">
+                <ul class="h-full">
+                  <a class="w-max h-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="qualPrev()">
+                      <span class="analog-corners absolute h-full inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                      <span class="analog-corners relative h-full w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="h-full analog-font text-center">&lt;</p></span>
+                    </a> 
+                </ul>
+              </div>
+              <div class="grow h-full">
+                <ul class="h-full w-full">
+                  <a class="w-full h-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="qualNext()">
+                      <span class="analog-corners absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                      <span class="analog-corners relative block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p id="qualifications-title" class="h-min analog-font text-center">&gt;</p></span>
+                    </a> 
+                </ul>
+              </div>
+              <div class="h-full grow-0">
+                <ul class="h-full">
+                  <a class="w-max h-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="qualNext()">
+                      <span class="analog-corners absolute h-full inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                      <span class="analog-corners relative h-full w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="h-min analog-font text-center">&gt;</p></span>
+                    </a> 
+                </ul>
+              </div>
+            </div>
 
-  <div class="settle relative z-10 w-full max-w-xl px-6 term text-base sm:text-lg leading-relaxed">
-    <p id="l1" class="line t1 text-gray-500">&gt; connecting to rexkaeser.com …</p>
-    <p id="l2" class="line t2 text-gray-500">&gt; resolving route <span class="text-gray-300">/</span> …</p>
-    <p id="l3" class="line t3 text-gray-500">&gt; scanning for content … <span class="text-[#04A777]">0 pages found</span></p>
-    <div id="l4" class="line warped-box my-5 analog-box analog-red analog-corners inline-block px-4 py-3">
-      <span class="glitch flicker text-2xl sm:text-3xl tracking-wide" data-text="THERE IS NO PAGE HERE">THERE IS NO PAGE HERE</span>
+            <div class="relative grow w-full">
+              <div class="absolute inset-0">
+                <div id="qualifications-content" class="overflow-y-scroll overflow-x-clip overflow-y-hidden no-scrollbar analog-box analog-grey w-full h-full  text-gray-600">
+                  Error Loading Qualifications!
+                </div>
+              </div>
+            </div>
+          
+            <script src="/public/js/qualificationsCarousel.js"></script>
+                
+          </div>
+          
+        </div>
+        <div class="snap-center max-h-dvh overflow-x-clip">
+
+          <div class="pt-2 pb-0 sm:pt-8 sm:pb-2">
+          <h1 class="text-4xl h-12 header-font">> More</h1>
+            <p class="align-left analog-font text-lg">Links</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-col gap-y-4 sm:gap-y-1 gap-x-4 pb-4">
+              <div>
+                <ul>
+                  <a class="w-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" target=”_blank” href="https://www.linkedin.com/in/rexkaeser">
+                      <span class="analog-corners absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                      <span class="analog-corners relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="analog-font">LinkedIn</p></span>
+                    </a>
+                </ul>
+              </div>
+              
+            </div>
+              
+            <div class=" w-full pt-8">
+              <div class="flex justify-center w-full">
+                <div class="max-w-full">
+                      <a class="my-4 group relative inline-block text-3xl font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="toMenu()">
+                        <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                        <span class="relative w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center">
+                          <p class="analog-font px-12">Rex Kaeser</p>
+                        </span>
+                      </a>
+                  <p class="align-left analog-font text-lg">
+                    A showcase of my technical expertise: server management, HTML, and CSS. Privately hosted.
+                  </p>
+                </div>
+              </div>
+        
+              <div class="my-4 flex justify-center w-full">
+                <div class="w-max">
+                  <p class="text-left text-sm text-gray-300 dark:text-gray-400">
+                    Copyright
+                  </p>
+                  <p class=" text-left text-sm text-gray-500 dark:text-gray-400">
+                    &copy; 2024 Rexton Kaeser. All rights reserved.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
     </div>
-    <p id="l5" class="line t5 text-gray-500 cursor">&gt; you're in the right place. there's just nothing here.</p>
   </div>
 
-  <script>
-    var lines = ["l1", "l2", "l3", "l4", "l5"];
-    lines.forEach(function (id, i) {
-      setTimeout(function () {
-        var el = document.getElementById(id);
-        if (el) el.classList.add("show");
-      }, 260 * (i + 1));
-    });
+  <div id="popup-div" class="hidden absolute inset-0 w-dvh h-dvh bg-gradient-to-r from-black/100 to-black/75 flex items-center justify-center">
+    <div class="w-dvw h-dvh">
+      <div class="mx-4 flex flex-col h-dvh pt-2 pb-4 sm:pt-2  max-h-dvh items-center justify-center">
+        <div class="w-full xl:w-2/3  2xl:w-1/2">
+          <p class="align-left analog-font text-lg">Additional Information</p>
+          <div class="flex gap-y-4 sm:gap-y-1 gap-x-4 pb-4">
+            <div class="grow h-full">
+              <ul class="h-full w-full">
+                <a class="w-full h-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" >
+                    <span class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                    <span class="relative block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p id="popup-title" class="h-min analog-font text-center">Popup Title</p></span>
+                  </a> 
+              </ul>
+            </div>
+            <div class="h-full grow-0">
+              <ul class="h-full">
+                <a class="w-max h-full group relative inline-block text-lg font-medium text-zinc-200 focus:outline-none focus:ring active:text-indigo-500" onclick="closePopup()">
+                    <span class="absolute h-full inset-0 translate-x-0.5 translate-y-0.5 bg-zinc-200 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                    <span class="relative h-full w-full block border border-current bg-zinc-900 group-hover:bg-zinc-800 p-2 px-5 align-center"><p class="h-min analog-font text-center">X</p></span>
+                  </a> 
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="relative grow w-full">
+          <div class="absolute inset-0">
+            <div id="popup-content" class="w-full h-full  text-gray-600">
+              Popup Content
+            </div>
+          </div>
+        </div>
+          
+        <script src="/public/js/popupControl.js"></script>
 
-    // faint ambient grid, drifting slowly — no interaction required
-    (function () {
-      var canvas = document.getElementById("grid");
-      var ctx = canvas.getContext("2d");
-      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      var w, h, dpr;
+      </div>
+    </div>
+  </div>
+</body>
+</html>
 
-      function resize() {
-        dpr = Math.min(window.devicePixelRatio || 1, 2);
-        w = window.innerWidth;
-        h = window.innerHeight;
-        canvas.width = w * dpr;
-        canvas.height = h * dpr;
-        canvas.style.width = w + "px";
-        canvas.style.height = h + "px";
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
-      resize();
-      window.addEventListener("resize", resize);
-      window.addEventListener("load", resize);
-
-      var spacing = 42;
-      var running = true;
-
-      function draw(t) {
-        ctx.clearRect(0, 0, w, h);
-        var offset = reduceMotion ? 0 : (t || 0) * 0.006 % spacing;
-        ctx.strokeStyle = "rgba(4,167,119,0.05)";
-        ctx.lineWidth = 1;
-        for (var x = -spacing; x < w + spacing; x += spacing) {
-          ctx.beginPath();
-          ctx.moveTo(x + offset, 0);
-          ctx.lineTo(x + offset, h);
-          ctx.stroke();
-        }
-        for (var y = -spacing; y < h + spacing; y += spacing) {
-          ctx.beginPath();
-          ctx.moveTo(0, y + offset);
-          ctx.lineTo(w, y + offset);
-          ctx.stroke();
-        }
-        if (running && !reduceMotion) requestAnimationFrame(draw);
-      }
-      draw(0);
-      document.addEventListener("visibilitychange", function () {
-        running = !document.hidden;
-        if (running && !reduceMotion) requestAnimationFrame(draw);
-      });
-    })();
-  </script>
 
 </body>
 </html>
