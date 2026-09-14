@@ -7,7 +7,7 @@
       "location": "Golden, CO",
       "start": "Aug 2026",
       "end": "Present",
-      "tags": ["Leadership", "Graduate"],
+      "tags": ["Leadership", "Graduate", "Safety Compliance", "Policy & Governance", "Stakeholder Engagement"],
       "bullets": [
         "Represent Mechanical Engineering graduate students on the GSG General Council, channeling department feedback into campus-wide policy.",
         "Serve on the EHS Safety Committee and Calendar Committee alongside administrators and fellow representatives."
@@ -15,12 +15,13 @@
     },
     {
       "id": "western-digital",
+      "type": "internship",
       "title": "Mechanical Design Engineering Intern",
       "org": "Western Digital Corporation",
       "location": "Colorado Springs, CO",
       "start": "May 2025",
       "end": "Aug 2025",
-      "tags": ["Data Storage", "CAD", "Manufacturing"],
+      "tags": ["CAD", "Thermal Testing", "Supplier Part Validation", "Agile PLM", "Rapid Prototyping", "Data Storage"],
       "bullets": [
         "Designed an HDD handling tool from prototype through production, authoring full manufacturing documentation.",
         "Developed modular cooling fans and surrogate HDD fixtures for airflow testing, reducing part count while holding thermal constraints.",
@@ -36,7 +37,7 @@
       "location": "Golden, CO",
       "start": "Aug 2023",
       "end": "Feb 2025",
-      "tags": ["Motorsport", "CAD", "FEA"],
+      "tags": ["Motorsport", "CAD", "FEA", "CNC Machining", "Root Cause Analysis"],
       "bullets": [
         "Designed mechanical components in SolidWorks and validated them against specification and test data using FEA.",
         "Performed manual machining in Mines' machine shop to fabricate and modify parts under competition deadlines.",
@@ -51,7 +52,7 @@
       "location": "United States",
       "start": "Jan 2018",
       "end": "Sep 2021",
-      "tags": ["Motorsport", "Fabrication"],
+      "tags": ["Motorsport", "Fabrication", "Time-Critical Operations", "Safety-Critical Systems"],
       "bullets": [
         "Worked as a pit crew mechanic on the Road to Indy ladder, repairing and maintaining race cars under strict time constraints.",
         "Applied safe work practices in a high-stakes, safety-critical pit environment."

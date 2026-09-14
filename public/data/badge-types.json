@@ -1,0 +1,18 @@
+{
+  "types": {
+    "masters": { "label": "Masters", "color": "#45d8ff" },
+    "bachelors": { "label": "Bachelors", "color": "#b389ff" },
+    "dual-enrollment": { "label": "Dual Enrollment", "color": "#5eead4" },
+    "high-school": { "label": "High School", "color": "#94a3b8" },
+    "internship": { "label": "Internship", "color": "#ffb454" }
+  },
+  "status": {
+    "in-progress": { "label": "In Progress", "color": "#f0554f" },
+    "current": { "label": "Currently Employed", "color": "#7ee787" }
+  },
+  "grades": {
+    "A": { "color": "#7ee787" },
+    "B": { "color": "#8fc9a8" },
+    "C": { "color": "#6b7a89" }
+  }
+}

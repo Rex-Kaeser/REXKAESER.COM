@@ -5,14 +5,19 @@
     "location": "Golden, CO",
     "start": "Oct 2024",
     "end": "Dec 2024",
-    "tags": ["Embedded", "LIDAR", "SolidWorks"],
+    "tags": ["SolidWorks", "LIDAR", "Embedded Systems", "Autonomous Navigation", "Sensor Integration"],
     "summary": "An alarm clock that runs from you: a two-wheeled robot that uses LIDAR to scan the room and dodge obstacles while fleeing, forcing you out of bed to catch it.",
     "bullets": [
       "Designed physical parts in SolidWorks and wired a dual-voltage battery system to power and drive the robot.",
       "Set up and integrated LIDAR, motors, and an LCD display for real-time environmental scanning and control.",
       "Programmed the onboard controller to interpret sensor data and make autonomous driving decisions.",
       "Built and tested a functional prototype demonstrating reliable obstacle avoidance and mobility."
-    ]
+    ],
+    "video": {
+      "embedUrl": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7272053328182714368?compact=1",
+      "linkUrl": "https://www.linkedin.com/posts/rexkaeser_for-my-megn-200-final-project-at-the-colorado-activity-7272053396021346304-RcEh",
+      "linkText": "View original LinkedIn post ↗"
+    }
   },
   {
     "title": "Magnetic Quick-Disconnect Air Coupler",
@@ -20,7 +25,7 @@
     "location": "Golden, CO",
     "start": "Jan 2024",
     "end": "May 2024",
-    "tags": ["Fabrication", "Design"],
+    "tags": ["Design", "Fabrication", "Precision Manufacturing", "Iterative Prototyping", "Pressure Testing"],
     "summary": "A magnetic quick-coupler solving recurring air-needle bending and breakage, enabling clean, rapid disconnects under pressure.",
     "bullets": [
       "Designed a magnetic quick-coupler to prevent air needle damage during connect/disconnect cycles.",

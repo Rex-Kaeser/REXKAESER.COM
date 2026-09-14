@@ -2,13 +2,15 @@
   "degrees": [
     {
       "id": "ms-mines",
+      "type": "masters",
+      "status": "in-progress",
       "school": "Colorado School of Mines",
       "location": "Golden, CO",
       "program": "M.S. Mechanical Engineering — Non-Thesis, 4+1 Accelerated Program",
       "start": "Aug 2026",
       "end": "Dec 2027",
       "gpa": "3.3",
-      "note": "Anticipated",
+      "note": null,
       "timeline": [
         { "term": "Spring 2026", "status": "complete", "courses": [
           { "code": "MEGN 554", "title": "Orbital Mechanics", "grade": "B+" }
@@ -20,13 +22,15 @@
     },
     {
       "id": "bs-mines",
+      "type": "bachelors",
+      "status": "in-progress",
       "school": "Colorado School of Mines",
       "location": "Golden, CO",
       "program": "B.S. Mechanical Engineering — Aerospace Track, Electrical Engineering Minor: Digital Systems",
       "start": "Aug 2023",
       "end": "Dec 2026",
       "gpa": "3.26",
-      "note": "Anticipated · Honor Roll x4 · Lean Six Sigma Yellow Belt",
+      "note": "Honor Roll x5 · Lean Six Sigma Yellow Belt",
       "timeline": [
         { "term": "Fall 2023", "status": "complete", "courses": [
           { "code": "CSCI 200", "title": "Foundations of Programming", "grade": "A-" },
@@ -87,6 +91,7 @@
     },
     {
       "id": "cmc",
+      "compact": true,
       "school": "Colorado Mountain College",
       "location": "Colorado",
       "program": "Dual Enrollment (High School)",
@@ -117,6 +122,7 @@
     },
     {
       "id": "summit-hs",
+      "compact": true,
       "school": "Summit High School",
       "location": "Frisco, CO",
       "program": "Honors & AP Coursework",
