@@ -260,12 +260,11 @@ function initCourseAutoFlip() {
 }
 
 function buildTermCard(term) {
-  const card = el("div", { class: `term-card ${term.status === "in-progress" ? "in-progress" : ""}` });
+  const inProgress = term.status === "in-progress";
+  const card = el("div", { class: `term-card ${inProgress ? "in-progress" : ""}` });
+  if (inProgress) card.appendChild(el("span", { class: "term-badge" }, "In Progress"));
   card.append(
-    el("div", { class: "term-head" }, [
-      document.createTextNode(term.term),
-      el("span", {}, term.status === "in-progress" ? "IN PROGRESS" : ""),
-    ]),
+    el("div", { class: "term-head" }, term.term),
     el("div", { class: "courses" }, term.courses.map(buildCourseRow))
   );
   return card;

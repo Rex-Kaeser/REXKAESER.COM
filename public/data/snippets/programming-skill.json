@@ -1,0 +1,15 @@
+{
+  "title": "Programming Skill",
+  "lines": [
+    { "label": "Java", "value": "Proficient" },
+    { "label": "C++", "value": "Intermediate" },
+    { "label": "Python", "value": "Advanced" },
+    { "label": "Lua", "value": "Expert" },
+    { "label": "LabVIEW", "value": "Intermediate" },
+    { "label": "Arduino", "value": "Expert" },
+    { "label": "JavaScript", "value": "Proficient" },
+    { "label": "HTML", "value": "Proficient" },
+    { "label": "CSS", "value": "Intermediate" }
+  ],
+  "note": "Includes self taught and class learned languages."
+}

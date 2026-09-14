@@ -512,8 +512,22 @@ section:last-of-type { border-bottom: none; }
   padding-top: 16px;
   border-top: 1px dashed var(--line);
 }
-.term-card { border: 1px solid var(--line); background: var(--bg-raised); }
+.term-card { position: relative; border: 1px solid var(--line); background: var(--bg-raised); }
 .term-card.in-progress { border-color: var(--amber); border-style: dashed; }
+.term-badge {
+  position: absolute;
+  top: -8px;
+  right: 10px;
+  background: var(--bg-raised);
+  border: 1px dashed var(--amber);
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
 @media (max-width: 640px) {
   .degree-detail-inner { grid-template-columns: 1fr; }
   .degree-detail-inner[data-many="true"] {
@@ -536,8 +550,6 @@ section:last-of-type { border-bottom: none; }
   border-bottom: 1px solid var(--line);
   color: var(--ink-dim);
   text-transform: uppercase;
-  display: flex;
-  justify-content: space-between;
 }
 .term-card.in-progress .term-head { color: var(--amber); }
 .term-card .courses { padding: 10px 14px; display: flex; flex-direction: column; gap: 7px; }

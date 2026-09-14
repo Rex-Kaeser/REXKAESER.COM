@@ -1,4 +1,6 @@
 [
   { "keywords": ["solidworks", "cad", "fea"], "file": "cad-fea" },
-  { "keywords": ["agile plm"], "file": "agile-plm" }
+  { "keywords": ["agile plm"], "file": "agile-plm" },
+  { "keywords": ["C#", "Java", "C++", "Python", "Lua", "LabVIEW", "Arduino", "JavaScript", "HTML/CSS"], "file": "programming-skill" },
+  { "keywords": ["Shock"], "file": "shock-vibe" }
 ]
