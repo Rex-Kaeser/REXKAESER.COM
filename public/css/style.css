@@ -683,7 +683,12 @@ section:last-of-type { border-bottom: none; }
   padding-top: 16px;
   border-top: 1px dashed var(--line);
 }
-.term-card { position: relative; border: 1px solid var(--line); background: var(--bg-raised); }
+/* min-width:0 — a flex/grid item's automatic minimum size otherwise floors
+   at its content's min-content width, which can override the fixed width
+   set below (82% in the mobile carousel) once a course flips from its short
+   code to a longer title, shifting the card's real width and, with it, the
+   carousel's total scrollWidth out from under the current scroll position. */
+.term-card { position: relative; min-width: 0; border: 1px solid var(--line); background: var(--bg-raised); }
 .term-card.has-status { border-color: var(--badge-color, var(--amber)); border-style: dashed; }
 @media (max-width: 640px) {
   .degree-detail-inner { grid-template-columns: 1fr; }
