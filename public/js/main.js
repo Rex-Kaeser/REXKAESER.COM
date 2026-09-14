@@ -238,7 +238,7 @@ function buildCourseRow(c) {
   row.addEventListener("click", () => {
     const next = row.getAttribute("data-flipped") !== "true";
     document.querySelectorAll(".course-row").forEach(r => flipCourseRow(r, next));
-    courseFlipPausedUntil = Date.now() + 15000;
+    courseFlipPausedUntil = Date.now() + COURSE_FLIP_CLICK_OVERRIDE_MS;
   });
   return row;
 }
@@ -249,12 +249,14 @@ function flipCourseRow(row, force) {
   row.setAttribute("data-flipped", next ? "true" : "false");
 }
 
+const COURSE_FLIP_INTERVAL_MS = 5000;
+const COURSE_FLIP_CLICK_OVERRIDE_MS = 20000;
 let courseFlipPausedUntil = 0;
 function initCourseAutoFlip() {
   setInterval(() => {
     if (Date.now() < courseFlipPausedUntil) return;
     document.querySelectorAll(".course-row").forEach(row => flipCourseRow(row));
-  }, 3500);
+  }, COURSE_FLIP_INTERVAL_MS);
 }
 
 function buildTermCard(term) {
@@ -426,8 +428,12 @@ async function boot() {
     renderSkills(skills);
     renderCerts(certs);
     renderInterests(interests);
-    renderHighlights(highlights, education, experience);
+    // Auto-link before building highlight previews, so cloned cards inside
+    // the hover popover never get their own nested info-dot — a popup
+    // nested inside another hover-only popover is an awkward, hard-to-use
+    // interaction (moving toward it closes the outer one).
     autoLinkSnippets(snippets);
+    renderHighlights(highlights, education, experience);
   } catch (err) {
     console.error(err);
     document.body.insertAdjacentHTML("beforeend",
