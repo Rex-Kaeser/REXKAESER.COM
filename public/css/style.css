@@ -20,7 +20,10 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+/* Belt-and-suspenders alongside the <meta name="color-scheme"> tag in
+   index.html — tells the browser this page IS dark, so mobile/OS "force
+   dark" converters don't try to re-invert an already-dark design. */
+html { scroll-behavior: smooth; color-scheme: dark; }
 body {
   margin: 0;
   background: var(--bg);
@@ -82,7 +85,12 @@ img { max-width: 100%; }
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
   overflow: hidden;
+  transition: transform 0.25s ease;
 }
+/* Slid up out of view on scroll-down, restored on scroll-up — see
+   initTopbarAutoHide in main.js. Transform, not display/visibility, so the
+   sticky positioning underneath keeps working and the slide animates. */
+.topbar.topbar--hidden { transform: translateY(-100%); }
 .topbar .id {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -432,7 +440,7 @@ section:last-of-type { border-bottom: none; }
 .info-popup {
   display: none;
   position: absolute;
-  z-index: 9999;
+  z-index: 40; /* above page content, but below .topbar's 50 — never covers the nav */
   top: calc(100% + 8px);
   left: 0;
   min-width: 320px;
@@ -716,7 +724,11 @@ section:last-of-type { border-bottom: none; }
 .term-card.has-status .term-head { color: var(--badge-color, var(--amber)); }
 .term-card .courses { padding: 10px 14px; display: flex; flex-direction: column; gap: 7px; }
 .course-row { position: relative; cursor: pointer; font-size: 12.5px; }
-.course-row .face-stack { display: grid; }
+/* overflow:hidden, not just relying on opacity — the inactive face is still
+   fully laid out and slid 105% to one side, so without a hard clip here its
+   painted extent can leak into an ancestor's scrollable area even though
+   it's invisible, inflating the mobile carousel's scrollWidth. */
+.course-row .face-stack { display: grid; overflow: hidden; }
 .course-row .face {
   grid-area: 1 / 1;
   display: flex;

@@ -662,6 +662,35 @@ function initSpineLabels() {
   window.addEventListener("resize", scheduleSpineLayout);
 }
 
+/* ---------- Topbar auto-hide ---------- */
+function initTopbarAutoHide() {
+  const topbar = document.querySelector(".topbar");
+  if (!topbar) return;
+  let lastY = window.scrollY;
+  let ticking = false;
+
+  function update() {
+    ticking = false;
+    const y = window.scrollY;
+    const delta = y - lastY;
+    // Ignore sub-pixel/trackpad jitter, and never hide until scrolled past
+    // the bar's own height so it doesn't flicker away right at the top.
+    if (Math.abs(delta) < 4) return;
+    if (delta > 0 && y > topbar.offsetHeight) {
+      topbar.classList.add("topbar--hidden");
+    } else {
+      topbar.classList.remove("topbar--hidden");
+    }
+    lastY = y;
+  }
+
+  window.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }, { passive: true });
+}
+
 /* ---------- Reveal-on-scroll ---------- */
 function initReveal() {
   const targets = document.querySelectorAll(".reveal");
@@ -732,6 +761,7 @@ async function boot() {
     initCourseAutoFlip();
     initSnippetHoverClose();
     initSpineLabels();
+    initTopbarAutoHide();
     document.getElementById("year").textContent = new Date().getFullYear();
   }
 }
