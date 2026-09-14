@@ -87,7 +87,7 @@ function applyBlockBadges(node, item, { borderMatchesStatus = false } = {}) {
 
 /* ---------- Profile / hero + topbar + title block ---------- */
 function renderProfile(p) {
-  document.title = `${p.shortName} — ${p.title}`;
+  document.title = "Rex Kaeser - Mechanical Engineer";
 
   document.getElementById("topbar-id").innerHTML =
     `<b>${p.shortName}</b><span>&nbsp;/ ${p.shortTitle}</span>`;
@@ -605,8 +605,15 @@ function layoutSpineLabels() {
     const localVisibleTop = visibleTop - r.top;
     const localVisibleBottom = visibleBottom - r.top;
 
+    // True centering only once there's enough slack for a full padding's
+    // worth of margin on BOTH sides. Switching at visibleHeight >= naturalHeight
+    // (i.e. the instant it merely fits) meant the centered margin shrank to
+    // 0 right as the anchored branch — which starts at a full padding — took
+    // over, so the label would touch the edge for a moment before clipping
+    // ever began. Anchoring earlier (while there's still room to spare)
+    // keeps that padding guaranteed the whole time, clipping or not.
     let top;
-    if (visibleHeight >= naturalHeight) {
+    if (visibleHeight - naturalHeight >= 2 * SPINE_LABEL_PADDING) {
       top = localVisibleTop + (visibleHeight - naturalHeight) / 2;
     } else if (r.top < viewportTop) {
       // Only the card's lower portion is on-screen — hug the visible
