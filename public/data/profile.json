@@ -1,13 +1,19 @@
 {
+  "pageTitle": "Rex Kaeser - Mechanical Engineer",
   "name": "Rexton Kaeser",
   "shortName": "Rex Kaeser",
   "title": "Mechanical Engineering — Aerospace Track",
   "shortTitle": "Mechanical Engineering Student",
+  "kicker": "Mechanical Engineering · Colorado School of Mines",
+  "heroHeadline": { "plain": "Building hardware that ", "accent": "goes fast." },
   "tagline": "Mechanical engineering graduate student (4+1 B.S./M.S.) building hands-on hardware experience across aerospace, data storage, and motorsport.",
   "location": "Golden, Colorado",
   "email": "rexkaeser@gmail.com",
   "phone": "(970) 406-2638",
-  "status": "Open to opportunities",
+  "status": "Open to internships and co-ops",
+  "contactHeading": "Let's build something.",
+  "contactPitch": "Open to internship and co-op opportunities in mechanical and aerospace engineering. Reach out directly — I'll get back to you.",
+  "footerTagline": "Drawn, not traced.",
   "links": [
     { "label": "LinkedIn", "url": "https://www.linkedin.com/in/rexkaeser" },
     { "label": "Email", "url": "mailto:rexkaeser@gmail.com" }

@@ -25,6 +25,10 @@ function whenRange(start, end) {
   return `${start} – ${end}`;
 }
 
+// Interface chrome strings (button/section labels) — data/ui-labels.json.
+// Set once in boot(), before any render function that reads it runs.
+let UI = {};
+
 /* ---------- Badge system: any card (degree, experience, project, skill) can
    carry a left-edge type tab (item.type → badge-types.json "types") and/or a
    top-right status badge (item.status → badge-types.json "status"). Add the
@@ -87,13 +91,14 @@ function applyBlockBadges(node, item, { borderMatchesStatus = false } = {}) {
 
 /* ---------- Profile / hero + topbar + title block ---------- */
 function renderProfile(p) {
-  document.title = "Rex Kaeser - Mechanical Engineer";
+  document.title = p.pageTitle;
 
   document.getElementById("topbar-id").innerHTML =
     `<b>${p.shortName}</b><span>&nbsp;/ ${p.shortTitle}</span>`;
 
+  document.getElementById("hero-kicker").textContent = p.kicker;
   document.getElementById("hero-name").innerHTML =
-    `Building hardware that <span class="accent">goes fast.</span>`;
+    `${p.heroHeadline.plain}<span class="accent">${p.heroHeadline.accent}</span>`;
   document.getElementById("hero-tagline").textContent = p.tagline;
 
   const meta = document.getElementById("hero-meta");
@@ -104,10 +109,11 @@ function renderProfile(p) {
   );
 
   const actions = document.getElementById("hero-actions");
+  const linkedIn = p.links.find(l => l.label === "LinkedIn");
   actions.append(
-    el("a", { class: "btn primary", href: `mailto:${p.email}` }, "Email Me"),
-    el("a", { class: "btn", href: p.links.find(l => l.label === "LinkedIn")?.url || "#", target: "_blank", rel: "noopener" }, "LinkedIn"),
-    el("a", { class: "btn", href: "#contact" }, "Contact →")
+    el("a", { class: "btn primary", href: `mailto:${p.email}` }, UI.emailMe),
+    el("a", { class: "btn", href: linkedIn?.url || "#", target: "_blank", rel: "noopener" }, linkedIn?.label || "LinkedIn"),
+    el("a", { class: "btn", href: "#contact" }, UI.contact)
   );
 
   const tb = document.getElementById("title-block");
@@ -121,9 +127,12 @@ function renderProfile(p) {
     el("div", { class: "cell" }, [el("span", { class: "k" }, k.toUpperCase()), el("span", { class: "v" }, v)])
   ));
 
+  document.getElementById("contact-heading").textContent = p.contactHeading;
+  document.getElementById("contact-pitch").textContent = p.contactPitch;
   document.getElementById("contact-email").textContent = p.email;
   document.getElementById("contact-email").href = `mailto:${p.email}`;
   document.getElementById("contact-phone").textContent = p.phone;
+  document.getElementById("footer-copy").textContent = `${p.name} · ${p.footerTagline}`;
 }
 
 /* ---------- Experience ---------- */
@@ -147,7 +156,7 @@ function renderExperience(data) {
   grid.append(...data.featured.map(experienceCard));
 
   const compact = document.getElementById("experience-additional");
-  compact.appendChild(el("div", { class: "label" }, "Additional Experience"));
+  compact.appendChild(el("div", { class: "label" }, UI.additionalExperience));
   data.additional.forEach(item => {
     const row = el("div", { class: "compact-row" });
     const left = el("span", {}, [
@@ -186,7 +195,7 @@ function projectCard(p) {
     const detail = el("div", { class: "project-video-detail" }, [inner]);
 
     const toggle = el("button", { class: "expand-toggle", type: "button", "aria-expanded": "false" }, [
-      el("span", {}, "View Video"),
+      el("span", {}, UI.viewVideo),
       el("span", { class: "chevron", html: CHEVRON_SVG }),
     ]);
     toggle.addEventListener("click", () => toggleDegreeDetail(toggle, detail));
@@ -328,8 +337,9 @@ function renderCerts(data) {
     el("span", { class: "who" }, item.name),
     el("span", { class: "when" }, sub || ""),
   ]);
+  list.appendChild(el("div", { class: "label" }, UI.certifications));
   data.certifications.forEach(c => list.appendChild(mk(c, [c.issuer, c.date].filter(Boolean).join(" · "))));
-  const divider = el("div", { class: "label", style: "margin-top:20px" }, "Awards");
+  const divider = el("div", { class: "label", style: "margin-top:20px" }, UI.awards);
   list.appendChild(divider);
   data.awards.forEach(a => list.appendChild(mk(a, [a.issuer, a.date].filter(Boolean).join(" · "))));
 }
@@ -341,7 +351,7 @@ function renderInterests(data) {
     el("div", { class: "label" }, label),
     el("div", { class: "chip-row" }, items.map(i => el("span", { class: "chip" }, i))),
   ]);
-  wrap.append(mkGroup("Interests", data.interests), mkGroup("Community Service", data.service));
+  wrap.append(mkGroup(UI.interests, data.interests), mkGroup(UI.communityService, data.service));
 }
 
 /* ---------- Education ---------- */
@@ -465,7 +475,7 @@ function buildDegreeCard(d, { withTranscript = true, assignId = true } = {}) {
     detail.appendChild(inner);
 
     const toggle = el("button", { class: "expand-toggle", type: "button", "aria-expanded": "false" }, [
-      el("span", {}, "View Transcript"),
+      el("span", {}, UI.viewTranscript),
       el("span", { class: "chevron", html: CHEVRON_SVG }),
     ]);
     toggle.addEventListener("click", () => toggleDegreeDetail(toggle, detail));
@@ -488,7 +498,7 @@ function renderEducation(data) {
     inner.append(...compact.map(d => buildDegreeCard(d)));
 
     const toggle = el("button", { class: "expand-toggle degree-more-toggle", type: "button", "aria-expanded": "false" }, [
-      el("span", {}, `Show ${compact.length} More`),
+      el("span", {}, UI.showMore.replace("{n}", compact.length)),
       el("span", { class: "chevron", html: CHEVRON_SVG }),
     ]);
     toggle.addEventListener("click", () => toggleDegreeDetail(toggle, inner));
@@ -732,12 +742,13 @@ function initNavSpy() {
 
 async function boot() {
   try {
-    const [profile, experience, projects, education, skills, certs, interests, highlights, snippets, badgeTypes] = await Promise.all([
+    const [profile, experience, projects, education, skills, certs, interests, highlights, snippets, badgeTypes, uiLabels] = await Promise.all([
       getJSON("profile"), getJSON("experience"), getJSON("projects"),
       getJSON("education"), getJSON("skills"), getJSON("certifications"), getJSON("interests"),
-      getJSON("highlights"), loadSnippets(), getJSON("badge-types"),
+      getJSON("highlights"), loadSnippets(), getJSON("badge-types"), getJSON("ui-labels"),
     ]);
     BADGES = badgeTypes;
+    UI = uiLabels;
     renderProfile(profile);
     renderExperience(experience);
     renderProjects(projects);

@@ -40,7 +40,7 @@
 
   <main>
     <section class="hero wrap" id="top">
-      <p class="kicker">Mechanical Engineering · Colorado School of Mines</p>
+      <p class="kicker" id="hero-kicker"></p>
       <h1 id="hero-name">Loading…</h1>
       <p class="tagline" id="hero-tagline"></p>
       <div class="meta-row" id="hero-meta"></div>
@@ -75,9 +75,7 @@
         <div class="callout"><span class="mark">D</span><span class="leader"></span><h2>Skills</h2></div>
         <div class="skills-grid" id="skills-grid"></div>
 
-        <div class="compact-list" id="certs-grid" style="margin-top:40px">
-          <div class="label">Certifications</div>
-        </div>
+        <div class="compact-list" id="certs-grid" style="margin-top:40px"></div>
 
         <div class="compact-list" id="interests-row" style="display:flex; gap:40px; flex-wrap:wrap;"></div>
       </div>
@@ -87,8 +85,8 @@
       <div class="wrap">
         <div class="callout"><span class="mark">E</span><span class="leader"></span><h2>Contact</h2></div>
         <div class="contact-panel">
-          <h2>Let's build something.</h2>
-          <p>Open to internship and full-time opportunities in mechanical and aerospace engineering. Reach out directly — I'll get back to you.</p>
+          <h2 id="contact-heading"></h2>
+          <p id="contact-pitch"></p>
           <div class="actions">
             <a class="btn primary" id="contact-email" href="#">Email</a>
             <span class="btn" id="contact-phone" style="cursor:default"></span>
@@ -100,9 +98,9 @@
   </main>
 
   <footer class="site-footer">
-    &copy; <span id="year"></span> Rexton Kaeser · Drawn, not traced.
+    &copy; <span id="year"></span> <span id="footer-copy"></span>
   </footer>
 
-  <script src="/public/js/main.js?v=39"></script>
+  <script src="/public/js/main.js?v=41"></script>
 </body>
 </html>
