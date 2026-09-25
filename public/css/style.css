@@ -801,3 +801,15 @@ footer.site-footer { padding: 28px max(var(--frame-inset), 20px) 60px; text-alig
 
 /* Loading skeleton */
 .skel { color: var(--ink-faint); font-family: var(--font-mono); font-size: 12px; }
+
+/* ===== Print ===== */
+/* Each top-level section starts on its own printed page (the hero excluded —
+   it's already page 1). page-break-before is the legacy CSS2.1 alias kept
+   alongside break-before for older print engines that don't know the
+   Fragmentation Level 4 property. */
+@media print {
+  main > section:not(:first-child) {
+    break-before: page;
+    page-break-before: always;
+  }
+}

@@ -301,6 +301,13 @@ function autoLinkSnippets(snippets) {
   if (!snippets || !snippets.length) return;
   document.querySelectorAll(".chip, .tag, .compact-row").forEach(node => {
     if (node.classList.contains("has-info")) return;
+    // Never tag content inside a hover-preview clone — it's already nested
+    // inside one hover-only popover, so a snippet popup nested inside THAT
+    // would be an awkward, hard-to-use interaction (moving toward it closes
+    // the outer one). Checked explicitly rather than relied on call-order,
+    // since background-loaded sections now render at unpredictable times
+    // relative to when the hero's preview clones are built.
+    if (node.closest(".highlight-preview")) return;
     const text = node.textContent.toLowerCase();
     const snippet = snippets.find(s => s.keywords.some(k => text.includes(k.toLowerCase())));
     if (!snippet) return;
@@ -740,32 +747,44 @@ function initNavSpy() {
   sections.forEach(s => io.observe(s));
 }
 
+// Runs fn once the browser's had a moment to settle after the priority
+// render — requestIdleCallback where available (falls back to a fixed delay
+// on Safari, which doesn't implement it) so background loading never steals
+// a frame from the initial paint.
+function onIdle(fn, timeout = 1200) {
+  if ("requestIdleCallback" in window) requestIdleCallback(fn, { timeout });
+  else setTimeout(fn, 300);
+}
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function boot() {
+  // Phase 1 — priority: only what's needed for the hero, which is the one
+  // section guaranteed visible before any scrolling. Education/experience
+  // data is fetched here too (highlights reference specific records from
+  // both) but their full section renders are deferred to phase 2 below —
+  // resolving a couple of highlight cards is far less work than building
+  // every degree/experience card.
+  let education, experience, snippets;
   try {
-    const [profile, experience, projects, education, skills, certs, interests, highlights, snippets, badgeTypes, uiLabels] = await Promise.all([
-      getJSON("profile"), getJSON("experience"), getJSON("projects"),
-      getJSON("education"), getJSON("skills"), getJSON("certifications"), getJSON("interests"),
-      getJSON("highlights"), loadSnippets(), getJSON("badge-types"), getJSON("ui-labels"),
+    const [profile, uiLabels, badgeTypes, educationData, experienceData, highlights, snippetsData] = await Promise.all([
+      getJSON("profile"), getJSON("ui-labels"), getJSON("badge-types"),
+      getJSON("education"), getJSON("experience"), getJSON("highlights"), loadSnippets(),
     ]);
+    education = educationData;
+    experience = experienceData;
+    snippets = snippetsData;
     BADGES = badgeTypes;
     UI = uiLabels;
     renderProfile(profile);
-    renderExperience(experience);
-    renderProjects(projects);
-    renderEducation(education);
-    renderSkills(skills);
-    renderCerts(certs);
-    renderInterests(interests);
-    // Auto-link before building highlight previews, so cloned cards inside
-    // the hover popover never get their own nested info-dot — a popup
-    // nested inside another hover-only popover is an awkward, hard-to-use
-    // interaction (moving toward it closes the outer one).
-    autoLinkSnippets(snippets);
     renderHighlights(highlights, education, experience);
   } catch (err) {
     console.error(err);
     document.body.insertAdjacentHTML("beforeend",
       `<div style="position:fixed;bottom:16px;left:16px;background:#2a1414;border:1px solid #663;color:#fbb;padding:10px 14px;font-family:monospace;font-size:12px;z-index:999">Content failed to load: ${err.message}</div>`);
+    return;
   } finally {
     initReveal();
     initNavSpy();
@@ -775,6 +794,36 @@ async function boot() {
     initTopbarAutoHide();
     document.getElementById("year").textContent = new Date().getFullYear();
   }
+
+  // Phase 2 — background: everything below the fold. Paced a beat apart
+  // (not one instant batch) so it stays out of the way of the priority
+  // render above, while still reliably finishing well before a user actually
+  // scrolls down to any of it. Sections render top-to-bottom, matching the
+  // order a user would actually reach them.
+  onIdle(async () => {
+    try {
+      const [projects, skills, certs, interests] = await Promise.all([
+        getJSON("projects"), getJSON("skills"), getJSON("certifications"), getJSON("interests"),
+      ]);
+      renderEducation(education);
+      await wait(150);
+      renderExperience(experience);
+      await wait(150);
+      renderProjects(projects);
+      await wait(150);
+      renderSkills(skills);
+      renderCerts(certs);
+      renderInterests(interests);
+      autoLinkSnippets(snippets);
+      // Re-run for the .reveal targets and spine tabs that just appeared —
+      // both re-scan the DOM fresh each call, so this safely picks up
+      // everything phase 2 just added on top of what phase 1 already found.
+      initReveal();
+      initSpineLabels();
+    } catch (err) {
+      console.error(err);
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", boot);
