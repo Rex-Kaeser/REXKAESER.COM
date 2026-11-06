@@ -9,14 +9,14 @@
       "program": "M.S. Mechanical Engineering — Non-Thesis, 4+1 Accelerated Program",
       "start": "Aug 2026",
       "end": "Dec 2027",
-      "gpa": "3.3",
+      "gpa": "3.65",
       "note": null,
       "timeline": [
         { "term": "Spring 2026", "status": "complete", "courses": [
           { "code": "MEGN 554", "title": "Orbital Mechanics", "grade": "B+" }
         ]},
-        { "term": "Fall 2026", "status": "in-progress", "courses": [
-          { "code": "FEGN 525", "title": "Advanced FEA", "grade": "IP" }
+        { "term": "Fall 2026", "status": "complete", "courses": [
+          { "code": "FEGN 525", "title": "Advanced FEA", "grade": "A" }
         ]}
       ]
     },
@@ -84,7 +84,7 @@
           { "code": "EDNS 492", "title": "Capstone Design II", "grade": "IP" },
           { "code": "EENG 383", "title": "Embedded Systems", "grade": "IP" },
           { "code": "EENG 421", "title": "Semiconductor Device Physics & Design", "grade": "IP" },
-          { "code": "FEGN 525", "title": "Advanced FEA", "grade": "IP" },
+          { "code": "FEGN 525", "title": "Advanced FEA", "grade": "A" },
           { "code": "MEGN 414", "title": "Mechanics of Composite Materials", "grade": "IP" }
         ]}
       ]
